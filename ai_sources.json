@@ -1,0 +1,67 @@
+{
+  "tools": [
+    {
+      "name": "ChatGPT",
+      "company": "OpenAI",
+      "sources": [
+        "https://openai.com/news/rss.xml"
+      ]
+    },
+    {
+      "name": "Claude",
+      "company": "Anthropic",
+      "sources": [
+        "https://www.anthropic.com/news/rss.xml"
+      ]
+    },
+    {
+      "name": "Gemini",
+      "company": "Google",
+      "sources": [
+        "https://blog.google/technology/ai/rss/"
+      ]
+    },
+    {
+      "name": "Kimi",
+      "company": "月之暗面",
+      "sources": [
+        "https://www.moonshot.cn/news"
+      ]
+    },
+    {
+      "name": "DeepSeek",
+      "company": "DeepSeek",
+      "sources": [
+        "https://www.deepseek.com/news"
+      ]
+    },
+    {
+      "name": "通义千问",
+      "company": "阿里云",
+      "sources": [
+        "https://www.alibabacloud.com/blog"
+      ]
+    },
+    {
+      "name": "豆包",
+      "company": "字节跳动",
+      "sources": [
+        "https://www.volcengine.com/news"
+      ]
+    },
+    {
+      "name": "Midjourney",
+      "company": "Midjourney",
+      "sources": [
+        "https://www.midjourney.com/updates"
+      ]
+    },
+    {
+      "name": "Canva AI",
+      "company": "Canva",
+      "sources": [
+        "https://www.canva.com/newsroom/"
+      ]
+    }
+  ]
+}

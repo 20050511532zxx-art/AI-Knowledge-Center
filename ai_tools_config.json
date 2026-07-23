@@ -1,0 +1,131 @@
+{
+  "tools": [
+
+    {
+      "name": "ChatGPT",
+      "category": [
+        "内容生产",
+        "客服自动化",
+        "数据分析"
+      ],
+      "department": [
+        "运营团队",
+        "客服团队",
+        "数据团队"
+      ],
+      "business": [
+        "商品标题生成",
+        "客服话术优化",
+        "数据分析报告"
+      ],
+      "level": 5
+    },
+
+
+    {
+      "name": "Claude",
+      "category": [
+        "内容生产",
+        "知识管理",
+        "AI编程"
+      ],
+      "department": [
+        "运营团队",
+        "技术团队"
+      ],
+      "business": [
+        "长文本分析",
+        "代码开发",
+        "文档整理"
+      ],
+      "level": 5
+    },
+
+
+    {
+      "name": "Gemini",
+      "category": [
+        "数据分析",
+        "办公效率"
+      ],
+      "department": [
+        "运营团队",
+        "数据团队"
+      ],
+      "business": [
+        "数据整理",
+        "资料分析"
+      ],
+      "level": 4
+    },
+
+
+    {
+      "name": "Kimi",
+      "category": [
+        "知识管理",
+        "内容整理"
+      ],
+      "department": [
+        "运营团队"
+      ],
+      "business": [
+        "资料总结",
+        "市场调研"
+      ],
+      "level": 4
+    },
+
+
+    {
+      "name": "DeepSeek",
+      "category": [
+        "AI编程",
+        "数据分析"
+      ],
+      "department": [
+        "技术团队",
+        "数据团队"
+      ],
+      "business": [
+        "代码开发",
+        "数据处理"
+      ],
+      "level": 5
+    },
+
+
+    {
+      "name": "Midjourney",
+      "category": [
+        "图片生成"
+      ],
+      "department": [
+        "设计团队"
+      ],
+      "business": [
+        "商品图制作",
+        "营销素材生成"
+      ],
+      "level": 4
+    },
+
+
+    {
+      "name": "Canva AI",
+      "category": [
+        "设计生产"
+      ],
+      "department": [
+        "设计团队",
+        "运营团队"
+      ],
+      "business": [
+        "海报制作",
+        "营销图片"
+      ],
+      "level": 4
+    }
+
+  ]
+}

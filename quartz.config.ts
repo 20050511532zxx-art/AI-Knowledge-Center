@@ -16,8 +16,14 @@ const config: QuartzConfig = {
       provider: "plausible",
     },
     locale: "zh-CN",
-    baseUrl: "quartz.jzhao.xyz",
-    ignorePatterns: ["private", "templates", ".obsidian"],
+    baseUrl: "20050511532zxx-art.github.io/AI-Knowledge-Center",
+    ignorePatterns: [
+      "private",
+      "templates",
+      ".obsidian",
+      "AI情报中心/自动化/**",
+      "AI情报中心/AI日报.md",
+    ],
     defaultDateType: "created",
     theme: {
       fontOrigin: "googleFonts",

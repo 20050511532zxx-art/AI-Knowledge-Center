@@ -1,0 +1,10 @@
+{
+  "analysisRoot": "content/AI情报中心/投稿分析",
+  "toolLibraryRoot": "content/AI情报中心/AI工具库",
+  "updateLogRoot": "content/AI情报中心/工具更新日志",
+  "industryNewsRoot": "content/AI情报中心/行业动态",
+  "testRecommendationRoot": "content/AI情报中心/推荐测试",
+  "monthlySummaryRoot": "content/AI情报中心/月度总结",
+  "promptPath": "content/AI情报中心/自动化/投稿分析知识库整理提示词.md",
+  "minimumTestScore": 4
+}

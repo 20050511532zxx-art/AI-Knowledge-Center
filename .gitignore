@@ -4,3 +4,6 @@ public/
 .env
 .env.txt
 .DS_Store
+.runtime/
+.env
+.env.local

@@ -1,159 +1,175 @@
 import fs from "fs";
+import OpenAI from "openai";
+import dotenv from "dotenv";
+import { ProxyAgent, setGlobalDispatcher } from "undici";
 
 
-// 输入文件
+dotenv.config();
+
+
+// 设置 Clash代理
+
+const proxyAgent = new ProxyAgent(
+    "http://127.0.0.1:7897"
+);
+
+
+setGlobalDispatcher(proxyAgent);
+
+
+
+// OpenAI客户端
+
+const client = new OpenAI({
+
+    apiKey: process.env.OPENAI_API_KEY,
+
+    timeout:120000
+
+});
+
+
+
+
+// 输入
 
 const input =
 "./content/AI情报中心/工具更新记录/自动检测结果.md";
 
 
-// 输出文件
+
+// 输出
 
 const output =
 "./content/AI情报中心/工具更新记录/AI分析日报.md";
 
 
 
-// 读取检测结果
 
-let content =
-fs.readFileSync(
-input,
-"utf8"
+//读取内容
+
+let content = fs.readFileSync(
+    input,
+    "utf8"
+);
+
+
+// 测试限制长度
+
+content = content.slice(0,1500);
+
+
+
+
+
+async function analyze(){
+
+
+try{
+
+
+console.log(
+"正在请求GPT分析..."
 );
 
 
 
-// 关键词判断
-
-const keywords = [
-
-"update",
-"release",
-"launch",
-"model",
-"API",
-"feature",
-"agent",
-"AI",
-"upgrade"
-
-];
+const completion =
+await client.chat.completions.create({
 
 
+model:"gpt-4o-mini",
 
-let score = 0;
+
+messages:[
 
 
-keywords.forEach(
-word=>{
+{
+role:"system",
 
-if(
-content.toLowerCase()
-.includes(
-word.toLowerCase()
-)
+content:
+`
+你是一名跨境电商企业AI应用负责人。
 
-){
+分析以下AI工具更新信息。
 
-score++;
+输出：
+
+# AI工具名称
+
+# 更新内容总结
+
+# 更新价值评分（1-10）
+
+# 对跨境电商影响
+
+# 推荐应用部门
+
+# 可落地业务场景
+
+# 建议动作
+
+
+要求：
+结合跨境电商实际业务。
+`
+},
+
+
+{
+role:"user",
+
+content:content
 
 }
 
-}
 
-);
-
+]
 
 
+});
 
-// 生成报告
 
 
-let report = `---
+const result =
+completion.choices[0].message.content;
+
+
+
+const report =
+`
+---
 title: AI工具分析日报
 type: ai-analysis
+date:${new Date().toISOString().slice(0,10)}
 ---
+
 
 # 🧠 AI工具分析日报
 
 
-日期：
-
-${new Date()
-.toISOString()
-.slice(0,10)}
+${result}
 
 
 ---
 
-# 原始更新
+# 原始更新记录
 
 
 ${content}
-
-
-
----
-
-# AI运营判断
-
-
-
-## 更新价值评分
-
-
-${score}/10
-
-
-
-## 是否值得关注
-
-
-${
-score>=3
-?
-"⭐⭐⭐⭐ 高关注"
-:
-"⭐⭐ 一般关注"
-}
-
-
-
-## 适用场景
-
-
-- 客服自动化
-
-- 内容生产
-
-- 数据分析
-
-- 运营提效
-
-- 企业AI应用
-
-
-
-## 推荐动作
-
-
-- 查看官方更新
-
-- 测试新功能
-
-- 判断内部应用价值
-
-
 
 `;
 
 
 
 fs.writeFileSync(
+
 output,
+
 report,
+
 "utf8"
+
 );
 
 
@@ -161,3 +177,27 @@ report,
 console.log(
 "AI分析日报生成完成"
 );
+
+
+
+}
+
+catch(error){
+
+
+console.log(
+"AI分析失败"
+);
+
+
+console.log(error);
+
+
+}
+
+
+}
+
+
+
+analyze();

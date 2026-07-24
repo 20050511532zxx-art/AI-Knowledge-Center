@@ -1,0 +1,26 @@
+{
+  "enabled": true,
+  "targetRoot": "content/AI情报中心/AI工具库",
+  "enhancementRules": {
+    "officialSource": true,
+    "usageGuide": true,
+    "applicationScenario": true,
+    "operationSteps": true
+  },
+  "contentTemplate": {
+    "sections": [
+      "工具简介",
+      "官方入口",
+      "使用方法",
+      "操作步骤",
+      "电商应用场景",
+      "使用注意事项"
+    ]
+  },
+  "sourcePriority": [
+    "官方帮助中心",
+    "官方文档",
+    "官方博客",
+    "官方公告"
+  ]
+}

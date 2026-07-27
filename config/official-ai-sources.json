@@ -1,0 +1,34 @@
+{
+  "sources": [
+    {
+      "name": "OpenAI",
+      "url": "https://openai.com/news",
+      "category": "AI模型"
+    },
+    {
+      "name": "Anthropic",
+      "url": "https://www.anthropic.com/news",
+      "category": "AI模型"
+    },
+    {
+      "name": "Google AI",
+      "url": "https://blog.google/technology/ai/",
+      "category": "AI模型"
+    },
+    {
+      "name": "Runway",
+      "url": "https://runwayml.com/blog",
+      "category": "AI视频"
+    },
+    {
+      "name": "可灵AI",
+      "url": "https://klingai.com",
+      "category": "AI视频"
+    },
+    {
+      "name": "通义千问",
+      "url": "https://tongyi.aliyun.com",
+      "category": "AI应用"
+    }
+  ]
+}

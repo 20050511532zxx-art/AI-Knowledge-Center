@@ -1,52 +1,63 @@
 @echo off
-chcp 65001 > nul
 
 cd /d D:\obsidian\仓库\quartz-site
 
-
-set LOGFILE=automation\logs\AI-update.log
-
-
-echo ========================== >> %LOGFILE%
-echo AI Daily Update Start >> %LOGFILE%
-echo Time: %date% %time% >> %LOGFILE%
-echo ========================== >> %LOGFILE%
+echo ==========================
+echo AI Daily Update Start
+echo ==========================
 
 
-echo [1/5] Fetch AI official updates
-echo [1/5] Fetch AI official updates >> %LOGFILE%
+echo [1/7] Fetch AI official updates
 
-node automation\fetch-ai-official-updates.js >> %LOGFILE% 2>&1
-
-
-echo [2/5] Generate AI report
-echo [2/5] Generate AI report >> %LOGFILE%
-
-node automation\codex-ai-official-analysis.js >> %LOGFILE% 2>&1
+node automation\fetch-ai-official-updates.js
 
 
-echo [3/5] Build Quartz
-echo [3/5] Build Quartz >> %LOGFILE%
+echo.
+echo [2/7] Discover new AI tools
 
-call npx quartz build >> %LOGFILE% 2>&1
+node automation\discover-new-ai-tools.js
 
 
-echo [4/5] Git commit
-echo [4/5] Git commit >> %LOGFILE%
+echo.
+echo [3/7] Generate AI official report
+
+node automation\codex-ai-official-analysis.js
+
+
+echo.
+echo [4/7] Analyze new AI tools
+
+node automation\codex-ai-discovery-analysis.js
+
+
+echo.
+echo [5/7] Build Quartz
+
+call npx quartz build
+
+
+echo.
+echo Quartz finished
+
+
+echo.
+echo [6/7] Git commit
 
 git add .
-git commit -m "Daily AI official update" >> %LOGFILE% 2>&1
+
+git commit -m "Daily AI official update"
 
 
-echo [5/5] Push GitHub
-echo [5/5] Push GitHub >> %LOGFILE%
+echo.
+echo [7/7] Push GitHub
 
-git push >> %LOGFILE% 2>&1
-
-
-echo ========================== >> %LOGFILE%
-echo AI Daily Update Finished >> %LOGFILE%
-echo ========================== >> %LOGFILE%
+git push
 
 
-exit
+echo.
+echo ==========================
+echo AI Daily Update Finished
+echo ==========================
+
+
+pause

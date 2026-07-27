@@ -15,12 +15,9 @@ path.resolve(
 );
 
 
-// ================================
-// 输入文件
-// ================================
+// 输入：AI官方更新数据
 
-
-const updateFile =
+const inputFile =
 path.join(
     root,
     ".runtime",
@@ -29,6 +26,7 @@ path.join(
 );
 
 
+// AI工具数据库
 
 const databaseFile =
 path.join(
@@ -38,17 +36,14 @@ path.join(
 );
 
 
-
-// ================================
-// 输出目录
-// ================================
-
+// 输出：新的分类目录
 
 const outputDir =
 path.join(
     root,
     "content",
     "AI-Center",
+    "01_每日AI动态",
     "Official-Updates"
 );
 
@@ -70,22 +65,18 @@ path.join(
 
 
 console.log(
-    "START: Codex AI official analysis"
+"START: Codex AI official analysis"
 );
 
 
 
-// ================================
 // 读取数据
-// ================================
 
-
-const updates =
+const data =
 fs.readFileSync(
-    updateFile,
+    inputFile,
     "utf8"
 );
-
 
 
 const tools =
@@ -96,33 +87,30 @@ fs.readFileSync(
 
 
 
-// ================================
-// 构建Prompt
-// ================================
-
+// Prompt
 
 const prompt = `
 
-你是一名AI行业情报分析专家，
+你是一名AI行业情报分析专家。
+
 同时负责一家全域电商运营公司的AI战略研究。
 
 
 请根据以下两个数据源生成中文Markdown日报。
 
 
-【数据源1：AI官方最新动态】
+【AI官方动态数据】
 
-${updates}
+${data}
 
 
-
-【数据源2：AI工具数据库】
+【AI工具数据库】
 
 ${tools}
 
 
 
-生成要求：
+要求：
 
 1. 必须使用简体中文
 
@@ -132,13 +120,10 @@ ${tools}
 
 4. 不输出代码块
 
-5. 内容适合企业内部AI知识库
-
-6. 必须结合电商运营场景分析
+5. 内容适合企业AI知识库
 
 
-
-输出格式：
+格式：
 
 
 # AI官方动态日报
@@ -146,37 +131,33 @@ ${tools}
 
 ## 今日重点更新
 
-说明今天最重要的AI变化。
-
 
 ## 工具更新详情
 
+
 每个工具包含：
 
-### 工具名称
-
-- 公司：
-- 工具类别：
-- 最新变化：
-- 核心能力：
-- 适合岗位：
+- 公司
+- 工具类别
+- 最新变化
+- 核心能力
+- 适合岗位
 
 
 ## 电商运营价值
 
-从以下方向分析：
 
-- 商品内容生产
+分析：
+
 - 客服自动化
+- 商品内容生产
 - 数据分析
 - 运营提效
 - 营销素材生产
-- AI Agent应用
 
 
 ## 工具价值评分
 
-格式：
 
 |工具|行业价值|电商价值|推荐等级|
 |-|-|-|-|
@@ -184,54 +165,34 @@ ${tools}
 
 ## 是否值得关注
 
-分：
-
-- S级重点关注
-- A级建议测试
-- B级持续观察
-
 
 ## 行动建议
 
-给出具体可执行建议。
 
-
-
-注意：
-
-不要编造不存在的更新。
-
-如果官方没有明确更新，
-请说明暂无确认信息。
-
+不要编造不存在的信息。
 
 `;
 
 
 
-// ================================
-// 调用Codex
-// ================================
-
-
 console.log(
-    "Calling Codex..."
+"Calling Codex..."
 );
 
 
 
 const promptFile =
 path.join(
-    process.env.TEMP,
-    "codex-prompt.txt"
+process.env.TEMP,
+"codex-prompt.txt"
 );
 
 
 
 fs.writeFileSync(
-    promptFile,
-    prompt,
-    "utf8"
+promptFile,
+prompt,
+"utf8"
 );
 
 
@@ -240,40 +201,39 @@ const result =
 execSync(
 `type "${promptFile}" | codex exec --model gpt-5.6`,
 {
-    encoding:"utf8",
-    maxBuffer:1024*1024*30,
-    shell:"cmd.exe"
+encoding:"utf8",
+maxBuffer:1024*1024*30,
+shell:"cmd.exe"
 }
 );
 
 
 
-// ================================
-// 保存Markdown
-// ================================
-
+// 创建目录
 
 if(
 !fs.existsSync(outputDir)
 ){
 
 fs.mkdirSync(
-    outputDir,
-    {
-        recursive:true
-    }
+outputDir,
+{
+recursive:true
+}
 );
 
 }
 
 
 
+// 写入Markdown
+
 fs.writeFileSync(
-    outputFile,
-    result,
-    {
-        encoding:"utf8"
-    }
+outputFile,
+result,
+{
+encoding:"utf8"
+}
 );
 
 

@@ -1,0 +1,14 @@
+{
+  "outputRoot": "content/AI-Center/Official-Updates",
+  "maxItemsPerSource": 5,
+  "language": "zh-CN",
+  "includeCommerceAnalysis": true,
+  "categories": [
+    "电商AI",
+    "视频生成",
+    "图片生成",
+    "大模型",
+    "AI助手",
+    "设计工具"
+  ]
+}

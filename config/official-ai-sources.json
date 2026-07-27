@@ -2,33 +2,87 @@
   "sources": [
     {
       "name": "OpenAI",
-      "url": "https://openai.com/news",
-      "category": "AI模型"
+      "category": "大模型",
+      "official": true,
+      "url": "https://openai.com/index/",
+      "updatePage": "https://openai.com/index/"
     },
     {
-      "name": "Anthropic",
+      "name": "Anthropic Claude",
+      "category": "大模型",
+      "official": true,
       "url": "https://www.anthropic.com/news",
-      "category": "AI模型"
+      "updatePage": "https://www.anthropic.com/news"
     },
     {
-      "name": "Google AI",
+      "name": "Google Gemini",
+      "category": "大模型",
+      "official": true,
       "url": "https://blog.google/technology/ai/",
-      "category": "AI模型"
+      "updatePage": "https://blog.google/technology/ai/"
+    },
+    {
+      "name": "Midjourney",
+      "category": "AI绘图",
+      "official": true,
+      "url": "https://www.midjourney.com/news",
+      "updatePage": "https://www.midjourney.com/news"
+    },
+    {
+      "name": "可灵AI Kling",
+      "category": "视频生成",
+      "official": true,
+      "url": "https://klingai.com/",
+      "updatePage": "https://klingai.com/"
+    },
+    {
+      "name": "豆包AI",
+      "category": "AI助手",
+      "official": true,
+      "url": "https://www.doubao.com/",
+      "updatePage": "https://www.doubao.com/"
+    },
+    {
+      "name": "即梦AI",
+      "category": "视频图片生成",
+      "official": true,
+      "url": "https://jimeng.jianying.com/",
+      "updatePage": "https://jimeng.jianying.com/"
     },
     {
       "name": "Runway",
-      "url": "https://runwayml.com/blog",
-      "category": "AI视频"
+      "category": "视频生成",
+      "official": true,
+      "url": "https://runwayml.com/",
+      "updatePage": "https://runwayml.com/"
     },
     {
-      "name": "可灵AI",
-      "url": "https://klingai.com",
-      "category": "AI视频"
+      "name": "Pika",
+      "category": "视频生成",
+      "official": true,
+      "url": "https://pika.art/",
+      "updatePage": "https://pika.art/"
     },
     {
-      "name": "通义千问",
-      "url": "https://tongyi.aliyun.com",
-      "category": "AI应用"
+      "name": "Canva AI",
+      "category": "设计AI",
+      "official": true,
+      "url": "https://www.canva.com/newsroom/",
+      "updatePage": "https://www.canva.com/newsroom/"
+    },
+    {
+      "name": "Shopify AI",
+      "category": "电商AI",
+      "official": true,
+      "url": "https://www.shopify.com/editions",
+      "updatePage": "https://www.shopify.com/editions"
+    },
+    {
+      "name": "Amazon AI",
+      "category": "电商AI",
+      "official": true,
+      "url": "https://www.amazon.science/",
+      "updatePage": "https://www.amazon.science/"
     }
   ]
 }

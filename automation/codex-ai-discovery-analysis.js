@@ -4,55 +4,35 @@ import { execSync } from "child_process";
 import { fileURLToPath } from "url";
 
 
-const __filename =
-fileURLToPath(import.meta.url);
-
-
-const __dirname =
-path.dirname(__filename);
-
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 
 const root =
 path.resolve(
-    __dirname,
-    ".."
+__dirname,
+".."
 );
 
 
 
-// 新工具发现数据
-
-const discoveryFile =
+const inputFile =
 path.join(
-    root,
-    ".runtime",
-    "ai-monitor",
-    "new-ai-tools.json"
+root,
+".runtime",
+"ai-monitor",
+"new-ai-tools.json"
 );
 
 
-
-// 工具数据库
-
-const databaseFile =
-path.join(
-    root,
-    "automation",
-    "ai-tools-database.json"
-);
-
-
-
-// 输出目录
 
 const outputDir =
 path.join(
-    root,
-    "content",
-    "AI-Center",
-    "02_AI工具发现",
-    "New-Tool-Discovery"
+root,
+"content",
+"AI-Center",
+"02_AI工具发现",
+"新AI工具发现"
 );
 
 
@@ -78,124 +58,68 @@ console.log(
 
 
 
-// 读取
-
-const discoveries =
+const data =
 fs.readFileSync(
-    discoveryFile,
-    "utf8"
+inputFile,
+"utf8"
 );
 
 
-
-const database =
-fs.readFileSync(
-    databaseFile,
-    "utf8"
-);
-
-
-
-// Prompt
 
 const prompt = `
 
-你是一名AI行业研究专家。
+你是一名AI工具评估专家。
 
-同时负责一家全域电商运营公司的AI工具战略。
-
-
-请分析下面发现的新AI工具。
-
-
-【新发现AI工具】
-
-${discoveries}
-
-
-【已有AI工具数据库】
-
-${database}
-
-
-
-生成中文Markdown报告。
+请根据下面的新AI工具发现数据，
+生成适合全域电商运营公司的中文Markdown分析报告。
 
 
 要求：
 
-1. 简体中文
-
-2. 不输出代码块
-
-3. 不编造不存在的信息
+1. 必须使用简体中文
+2. 输出纯Markdown
+3. 不输出解释
+4. 不输出代码块
 
 
 格式：
 
 
-# 新AI工具发现评估
+# 新AI工具评估报告
 
 
-## 今日发现工具
+## 今日发现的新工具
 
 
-### 工具名称
+## 工具能力分析
 
 
-基本信息：
-
-- 公司
-- 来源
-- 类别
+## 电商业务适用场景
 
 
-## 电商价值分析
+## 是否建议测试
 
 
-分析：
-
-- 客服自动化
-- 商品运营
-- 数据分析
-- 内容生产
-- 营销应用
+## 推荐等级
 
 
-## 综合评分
+## 后续行动建议
 
 
-|工具|成熟度|电商价值|推荐等级|
-|-|-|-|-|
 
+数据：
 
-## 是否加入AI工具数据库
-
-
-分：
-
-- 推荐加入
-- 持续观察
-- 不建议加入
-
-
-## 建议行动
+${data}
 
 
 `;
 
 
 
-console.log(
-"Calling Codex..."
-);
-
-
-
 const promptFile =
 path.join(
 process.env.TEMP,
-"codex-discovery-prompt.txt"
+"codex-new-tool-prompt.txt"
 );
 
 
@@ -208,30 +132,36 @@ prompt,
 
 
 
+console.log(
+"Calling Codex..."
+);
+
+
+
 const result =
 execSync(
 `type "${promptFile}" | codex exec --model gpt-5.6`,
 {
 encoding:"utf8",
-maxBuffer:1024*1024*30,
+maxBuffer:1024*1024*20,
 shell:"cmd.exe"
 }
 );
 
 
 
-// 创建目录
-
+if(
+!fs.existsSync(outputDir)
+){
 fs.mkdirSync(
 outputDir,
 {
 recursive:true
 }
 );
+}
 
 
-
-// 保存
 
 fs.writeFileSync(
 outputFile,

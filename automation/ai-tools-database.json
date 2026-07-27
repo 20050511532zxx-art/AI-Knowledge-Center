@@ -1,0 +1,45 @@
+{
+  "tools": [
+    {
+      "name": "OpenAI",
+      "company": "OpenAI",
+      "category": "大模型/AI助手",
+      "industry": [
+        "客服",
+        "运营",
+        "数据分析",
+        "内容生成"
+      ],
+      "priority": "S",
+      "official_url": "https://openai.com",
+      "status": "active"
+    },
+    {
+      "name": "Claude",
+      "company": "Anthropic",
+      "category": "大模型/AI助手",
+      "industry": [
+        "客服",
+        "文案",
+        "代码",
+        "知识管理"
+      ],
+      "priority": "S",
+      "official_url": "https://claude.ai",
+      "status": "active"
+    },
+    {
+      "name": "Gemini",
+      "company": "Google",
+      "category": "大模型",
+      "industry": [
+        "数据分析",
+        "办公自动化",
+        "内容生成"
+      ],
+      "priority": "S",
+      "official_url": "https://gemini.google.com",
+      "status": "active"
+    }
+  ]
+}

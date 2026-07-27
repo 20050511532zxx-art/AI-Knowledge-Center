@@ -11,95 +11,97 @@ const __dirname = path.dirname(__filename);
 const root = path.resolve(__dirname, "..");
 
 
-const outputPath =
+// ================================
+// AI工具数据库
+// ================================
+
+const configPath =
 path.join(
-root,
-".runtime",
-"ai-monitor",
-"official-updates.json"
+    root,
+    "automation",
+    "ai-tools-database.json"
+);
+
+
+if (!fs.existsSync(configPath)) {
+
+    console.error(
+        "AI tools database not found:"
+    );
+
+    console.error(configPath);
+
+    process.exit(1);
+
+}
+
+
+const config =
+JSON.parse(
+    fs.readFileSync(
+        configPath,
+        "utf8"
+    )
 );
 
 
 
-const targets = [
+const targets =
+config.tools
+.map(tool => ({
 
-{
-name:"OpenAI",
-url:"https://openai.com/news/"
-},
+    name: tool.name,
 
-{
-name:"Anthropic Claude",
-url:"https://www.anthropic.com/news"
-},
+    url: tool.official_url
 
-{
-name:"Google Gemini",
-url:"https://blog.google/technology/ai/"
-},
-
-{
-name:"Midjourney",
-url:"https://www.midjourney.com/news"
-},
-
-{
-name:"可灵AI Kling",
-url:"https://klingai.com/"
-},
-
-{
-name:"豆包AI",
-url:"https://www.doubao.com/"
-},
-
-{
-name:"即梦AI",
-url:"https://jimeng.jianying.com/"
-},
-
-{
-name:"Runway",
-url:"https://runwayml.com/"
-},
-
-{
-name:"Pika",
-url:"https://pika.art/"
-},
-
-{
-name:"Canva AI",
-url:"https://www.canva.com/newsroom/"
-},
-
-{
-name:"Shopify AI",
-url:"https://www.shopify.com/news"
-},
-
-{
-name:"Amazon AI",
-url:"https://www.amazon.science/"
-}
-
-];
+}))
+.filter(
+    item => item.url
+);
 
 
+
+// ================================
+// 输出路径
+// ================================
+
+const outputPath =
+path.join(
+    root,
+    ".runtime",
+    "ai-monitor",
+    "official-updates.json"
+);
+
+
+
+// ================================
+// 主程序
+// ================================
 
 async function main(){
 
 
 console.log(
-"START: AI news extractor"
+    "START: AI news extractor"
+);
+
+
+
+console.log(
+    "Loaded AI tools:",
+    targets.length
 );
 
 
 
 const browser =
 await chromium.launch({
-headless:true
+
+    headless:true
+
 });
+
 
 
 const page =
@@ -107,16 +109,20 @@ await browser.newPage();
 
 
 
-let results=[];
+let results = [];
 
 
+
+// ================================
+// 循环抓取
+// ================================
 
 for(const item of targets){
 
 
 console.log(
-"Scanning:",
-item.name
+    "Scanning:",
+    item.name
 );
 
 
@@ -125,12 +131,17 @@ try{
 
 
 await page.goto(
-item.url,
-{
-waitUntil:"domcontentloaded",
-timeout:60000
-}
+
+    item.url,
+
+    {
+        waitUntil:"domcontentloaded",
+
+        timeout:60000
+    }
+
 );
+
 
 
 await page.waitForTimeout(5000);
@@ -145,6 +156,7 @@ let title =
 document.title;
 
 
+
 let text =
 document.body.innerText
 .replace(/\s+/g," ")
@@ -154,9 +166,9 @@ document.body.innerText
 
 return {
 
-title,
+    title,
 
-text
+    text
 
 };
 
@@ -167,37 +179,44 @@ text
 
 results.push({
 
-name:item.name,
+    name:item.name,
 
-url:item.url,
+    url:item.url,
 
-title:data.title,
+    title:data.title,
 
-summary:data.text,
+    summary:data.text,
 
-time:
-new Date()
-.toISOString(),
+    time:
+    new Date().toISOString(),
 
-status:"success"
+    status:"success"
+
 
 });
 
 
+
 }
+
+
 
 catch(e){
 
 
+
 results.push({
 
-name:item.name,
+    name:item.name,
 
-url:item.url,
+    url:item.url,
 
-status:"failed",
+    status:"failed",
 
-error:e.message
+    error:e.message,
+
+    time:
+    new Date().toISOString()
 
 });
 
@@ -205,8 +224,14 @@ error:e.message
 }
 
 
+
 }
 
+
+
+// ================================
+// 保存结果
+// ================================
 
 
 await browser.close();
@@ -214,22 +239,33 @@ await browser.close();
 
 
 fs.mkdirSync(
-path.dirname(outputPath),
-{
-recursive:true
-}
+
+    path.dirname(outputPath),
+
+    {
+        recursive:true
+    }
+
 );
 
 
 
 fs.writeFileSync(
-outputPath,
-JSON.stringify(
-results,
-null,
-2
-),
-"utf8"
+
+    outputPath,
+
+    JSON.stringify(
+
+        results,
+
+        null,
+
+        2
+
+    ),
+
+    "utf8"
+
 );
 
 
@@ -239,9 +275,11 @@ console.log(
 );
 
 
+
 console.log(
 outputPath
 );
+
 
 
 }

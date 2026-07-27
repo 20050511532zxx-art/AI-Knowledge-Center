@@ -8,10 +8,11 @@
         "客服",
         "运营",
         "数据分析",
-        "内容生成"
+        "内容生成",
+        "Agent自动化"
       ],
       "priority": "S",
-      "official_url": "https://openai.com",
+      "official_url": "https://openai.com/news/",
       "status": "active"
     },
     {
@@ -22,10 +23,11 @@
         "客服",
         "文案",
         "代码",
-        "知识管理"
+        "知识管理",
+        "Agent"
       ],
       "priority": "S",
-      "official_url": "https://claude.ai",
+      "official_url": "https://www.anthropic.com/news",
       "status": "active"
     },
     {
@@ -35,10 +37,136 @@
       "industry": [
         "数据分析",
         "办公自动化",
-        "内容生成"
+        "内容生成",
+        "Agent"
       ],
       "priority": "S",
-      "official_url": "https://gemini.google.com",
+      "official_url": "https://blog.google/technology/ai/",
+      "status": "active"
+    },
+    {
+      "name": "Midjourney",
+      "company": "Midjourney",
+      "category": "AI图片生成",
+      "industry": [
+        "商品主图",
+        "视觉设计",
+        "营销素材",
+        "广告创意"
+      ],
+      "priority": "A",
+      "official_url": "https://www.midjourney.com/news",
+      "status": "active"
+    },
+    {
+      "name": "Kling AI",
+      "company": "快手",
+      "category": "AI视频生成",
+      "industry": [
+        "商品视频",
+        "短视频营销",
+        "广告素材",
+        "直播预热视频"
+      ],
+      "priority": "A",
+      "official_url": "https://klingai.com/",
+      "status": "active"
+    },
+    {
+      "name": "豆包AI",
+      "company": "字节跳动",
+      "category": "AI助手/内容生成",
+      "industry": [
+        "客服",
+        "文案",
+        "办公自动化",
+        "内容生产"
+      ],
+      "priority": "A",
+      "official_url": "https://www.doubao.com/",
+      "status": "active"
+    },
+    {
+      "name": "即梦AI",
+      "company": "字节跳动",
+      "category": "AI图片/视频生成",
+      "industry": [
+        "商品图片",
+        "电商设计",
+        "短视频制作",
+        "营销素材"
+      ],
+      "priority": "A",
+      "official_url": "https://jimeng.jianying.com/",
+      "status": "active"
+    },
+    {
+      "name": "Runway",
+      "company": "Runway",
+      "category": "AI视频生成",
+      "industry": [
+        "广告视频",
+        "品牌内容",
+        "营销素材",
+        "视频创作"
+      ],
+      "priority": "A",
+      "official_url": "https://runwayml.com/",
+      "status": "active"
+    },
+    {
+      "name": "Pika",
+      "company": "Pika",
+      "category": "AI视频生成",
+      "industry": [
+        "社交媒体内容",
+        "广告创意",
+        "短视频制作"
+      ],
+      "priority": "B",
+      "official_url": "https://pika.art/",
+      "status": "active"
+    },
+    {
+      "name": "Canva AI",
+      "company": "Canva",
+      "category": "AI设计工具",
+      "industry": [
+        "电商设计",
+        "营销海报",
+        "社交媒体素材",
+        "品牌设计"
+      ],
+      "priority": "A",
+      "official_url": "https://www.canva.com/newsroom/",
+      "status": "active"
+    },
+    {
+      "name": "Shopify AI",
+      "company": "Shopify",
+      "category": "AI电商工具",
+      "industry": [
+        "商品管理",
+        "智能购物",
+        "电商Agent",
+        "独立站运营"
+      ],
+      "priority": "S",
+      "official_url": "https://www.shopify.com/news",
+      "status": "active"
+    },
+    {
+      "name": "Amazon AI",
+      "company": "Amazon",
+      "category": "AI电商/云计算",
+      "industry": [
+        "电商推荐",
+        "数据分析",
+        "智能运营",
+        "机器人"
+      ],
+      "priority": "A",
+      "official_url": "https://www.amazon.science/",
       "status": "active"
     }
   ]

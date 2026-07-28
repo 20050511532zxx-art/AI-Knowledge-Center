@@ -1,19 +1,14 @@
 import { QuartzComponent, QuartzComponentConstructor } from "./types"
 import AIAutoList from "./AIAutoList"
 
-
 const AIHome: QuartzComponent = (props) => {
 
-
-  if(props.fileData.slug !== "index"){
+  if (props.fileData.slug !== "index") {
     return null
   }
 
-
   return (
-
     <div>
-
 
       <AIAutoList
         title="🔥 最新AI动态"
@@ -22,7 +17,6 @@ const AIHome: QuartzComponent = (props) => {
         {...props}
       />
 
-
       <AIAutoList
         title="🔍 最新AI工具发现"
         keyword="AI工具发现"
@@ -30,14 +24,8 @@ const AIHome: QuartzComponent = (props) => {
         {...props}
       />
 
-
     </div>
-
   )
-
 }
 
-
-
-export default (()=>AIHome)
-satisfies QuartzComponentConstructor
+export default (() => AIHome) satisfies QuartzComponentConstructor

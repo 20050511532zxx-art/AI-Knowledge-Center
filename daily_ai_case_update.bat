@@ -1,4 +1,5 @@
 @echo off
+chcp 65001
 
 cd /d D:\obsidian\仓库\quartz-site
 
@@ -6,7 +7,6 @@ cd /d D:\obsidian\仓库\quartz-site
 echo ==========================
 echo 开始同步飞书AI案例
 echo ==========================
-
 
 node feishu_ai_case_sync.mjs
 

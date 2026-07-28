@@ -18,9 +18,15 @@ export const sharedPageComponents: SharedLayout = {
 export const defaultContentPageLayout: PageLayout = {
   beforeBody: [
     Component.ConditionalRender({
+      component: Component.AIHome(),
+      condition: (page) => page.fileData.slug === "index",
+    }),
+
+    Component.ConditionalRender({
       component: Component.Breadcrumbs(),
       condition: (page) => page.fileData.slug !== "index",
     }),
+
     Component.ArticleTitle(),
     Component.ContentMeta(),
     Component.TagList(),
@@ -40,6 +46,7 @@ export const defaultContentPageLayout: PageLayout = {
     }),
     Component.Explorer(),
   ],
+
   right: [
     Component.Graph(),
     Component.DesktopOnly(Component.TableOfContents()),
@@ -47,9 +54,14 @@ export const defaultContentPageLayout: PageLayout = {
   ],
 }
 
-// components for pages that display lists of pages  (e.g. tags or folders)
+// components for pages that display lists of pages
 export const defaultListPageLayout: PageLayout = {
-  beforeBody: [Component.Breadcrumbs(), Component.ArticleTitle(), Component.ContentMeta()],
+  beforeBody: [
+    Component.Breadcrumbs(),
+    Component.ArticleTitle(),
+    Component.ContentMeta(),
+  ],
+
   left: [
     Component.PageTitle(),
     Component.MobileOnly(Component.Spacer()),
@@ -64,5 +76,6 @@ export const defaultListPageLayout: PageLayout = {
     }),
     Component.Explorer(),
   ],
+
   right: [],
 }

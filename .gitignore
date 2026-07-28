@@ -7,3 +7,13 @@ public/
 .runtime/
 .env
 .env.local
+
+
+# 飞书密钥
+.feishu.env
+
+# 飞书测试文件
+feishu_*_test.mjs
+
+# 日志文件
+*.log

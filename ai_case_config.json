@@ -8,5 +8,30 @@
     "name": "财务+AI数字化解决案例",
     "department": "财务部",
     "document_id": "Uq78whyMCim8QGkC5ufc9mpKnQc"
+  },
+  {
+    "name": "职能+AI数字化解决案例",
+    "department": "职能中心",
+    "document_id": "JNHaw82eZiJWLsk1MM8cqp4PnWd"
+  },
+  {
+    "name": "采购+AI数字化解决案例",
+    "department": "采购部",
+    "document_id": "PvdCwMWshix1LikFGAEcg668nrc"
+  },
+  {
+    "name": "国内运营+AI数字化解决案例",
+    "department": "国内运营部",
+    "document_id": "ADpqw8kiOidhQgkHszEcVjOFnMf"
+  },
+  {
+    "name": "跨境运营+AI数字化解决案例",
+    "department": "跨境运营部",
+    "document_id": "OpvQw2PGUiBSVmkM3LIcvObsnig"
+  },
+  {
+    "name": "仓储+AI数字化解决案例",
+    "department": "仓储部",
+    "document_id": "CUpHwHLLWilgzJkqA1mcy6lKnOf"
   }
 ]

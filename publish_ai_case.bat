@@ -1,4 +1,5 @@
 @echo off
+chcp 65001 > nul
 
 cd /d D:\obsidian\仓库\quartz-site
 

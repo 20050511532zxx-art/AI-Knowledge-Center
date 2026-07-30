@@ -9,9 +9,8 @@ dotenv.config({
 });
 
 
-
 // =====================================
-// 飞书配置
+// 飞书应用配置
 // =====================================
 
 const APP_ID =
@@ -24,21 +23,7 @@ process.env.FEISHU_APP_SECRET;
 
 
 // =====================================
-// 同步配置
-// =====================================
-
-
-const CONTENT_DIR =
-"./content/AI案例库";
-
-
-const ASSET_DIR =
-"./content/AI案例库";
-
-
-
-// =====================================
-// 案例列表
+// 飞书案例链接配置
 // =====================================
 
 const CASE_LIST = [
@@ -49,11 +34,13 @@ const CASE_LIST = [
         wiki_token:"Mnxjwiw1picy1Uk22QVcQGWAnbf"
     },
 
+
     {
         name:"财务+AI数字化解决案例",
         department:"财务部",
         wiki_token:"Uq78whyMCim8QGkC5ufc9mpKnQc"
     },
+
 
     {
         name:"职能+AI数字化解决案例",
@@ -61,11 +48,13 @@ const CASE_LIST = [
         wiki_token:"JNHaw82eZiJWLsk1MM8cqp4PnWd"
     },
 
+
     {
         name:"采购+AI数字化解决案例",
         department:"采购部",
         wiki_token:"ADpqw8kiOidhQgkHszEcVjOFnMf"
     },
+
 
     {
         name:"国内运营+AI数字化解决案例",
@@ -73,11 +62,13 @@ const CASE_LIST = [
         wiki_token:"PvdCwMWshix1LikFGAEcg668nrc"
     },
 
+
     {
         name:"跨境运营+AI数字化解决案例",
         department:"跨境运营",
         wiki_token:"OpvQw2PGUiBSVmkM3LIcvObsnig"
     },
+
 
     {
         name:"仓储+AI数字化解决案例",
@@ -89,37 +80,26 @@ const CASE_LIST = [
 
 
 
-
 // =====================================
-// 工具函数
+// Quartz路径
 // =====================================
 
+const CONTENT_DIR =
+"./content/AI案例库";
 
-function ensureDir(dir){
 
-    if(
-        !fs.existsSync(dir)
-    ){
+const ASSET_DIR =
+"./content/AI案例库";
 
-        fs.mkdirSync(
-            dir,
-            {
-                recursive:true
-            }
-        );
-
-    }
-
-}
 
 
 
 // =====================================
-// 获取飞书token
+// 获取tenant_access_token
 // =====================================
-
 
 async function getTenantToken(){
+
 
     const res =
     await axios.post(
@@ -137,10 +117,10 @@ async function getTenantToken(){
 
 
 
-// =====================================
-// Wiki转换Docx
-// =====================================
 
+// =====================================
+// Wiki Token转换真实docx token
+// =====================================
 
 async function getRealDocumentId(
     wikiToken,
@@ -168,8 +148,9 @@ async function getRealDocumentId(
 
 
     console.log(
-        "解析:",
-        node.title
+        "解析文档:",
+        node.title,
+        node.obj_type
     );
 
 
@@ -245,10 +226,33 @@ async function getDocumentBlocks(
 
 
 
+// =====================================
+// 创建目录
+// =====================================
+
+function ensureDir(
+    dir
+){
+
+    if(
+        !fs.existsSync(dir)
+    ){
+
+        fs.mkdirSync(
+            dir,
+            {
+                recursive:true
+            }
+        );
+
+    }
+
+}
+
 
 
 // =====================================
-// 下载图片
+// 下载飞书图片
 // =====================================
 
 async function downloadImage(
@@ -257,9 +261,12 @@ async function downloadImage(
     token
 ){
 
-    ensureDir(
-        path.dirname(savePath)
-    );
+    const dir =
+    path.dirname(savePath);
+
+
+    ensureDir(dir);
+
 
 
     const url =
@@ -289,9 +296,8 @@ async function downloadImage(
 
 
 
-
 // =====================================
-// 获取block文字
+// 处理文本
 // =====================================
 
 function getBlockText(
@@ -301,29 +307,29 @@ function getBlockText(
     let text = "";
 
 
+    const keys =
+    Object.keys(block);
+
+
+
     for(
-        const key of Object.keys(block)
+        const key of keys
     ){
 
-        const item =
-        block[key];
-
-
         if(
-            item &&
-            item.elements
+            block[key]?.elements
         ){
 
             for(
-                const element of item.elements
+                const el of block[key].elements
             ){
 
                 if(
-                    element.text_run
+                    el.text_run
                 ){
 
                     text +=
-                    element.text_run.content;
+                    el.text_run.content;
 
                 }
 
@@ -334,92 +340,10 @@ function getBlockText(
     }
 
 
-    return text.trim();
-
-}
-
-
-
-
-// =====================================
-// 判断标题等级
-// =====================================
-
-function getHeadingLevel(
-    block
-){
-
-    const type =
-    block.block_type;
-
-
-    if(
-        type === 3
-    ){
-
-        return 1;
-
-    }
-
-
-    if(
-        type === 4
-    ){
-
-        return 2;
-
-    }
-
-
-    if(
-        type === 5
-    ){
-
-        return 3;
-
-    }
-
-
-    return 0;
-
-}
-
-
-
-
-
-// =====================================
-// 识别图片block
-// =====================================
-
-function isImageBlock(
-    block
-){
-
-    return (
-        block.block_type === 27 &&
-        block.image
-    );
-
-}
-
-
-
-
-// =====================================
-// 识别表格block
-// =====================================
-
-function isTableBlock(
-    block
-){
-
-    return (
-        block.block_type === 31
-    );
+    return text;
 
 }// =====================================
-// 生成Quartz增强Markdown
+// blocks转换Markdown
 // =====================================
 
 function blocksToMarkdown(
@@ -429,228 +353,15 @@ function blocksToMarkdown(
 
     let md = "";
 
-    let i = 0;
 
 
-    while(i < blocks.length){
-
-
-        const block = blocks[i];
-
+    for(
+        const block of blocks
+    ){
 
         const text =
         getBlockText(block);
 
-
-
-        const nextBlock =
-        blocks[i + 1];
-
-
-        const nextText =
-        nextBlock
-        ?
-        getBlockText(nextBlock)
-        :
-        "";
-
-
-
-        // =====================
-        // 图片
-        // =====================
-
-        if(
-            isImageBlock(block)
-        ){
-
-            const imageToken =
-            block.image.token;
-
-
-            if(
-                imageMap[imageToken]
-            ){
-
-                md +=
-`
-<div class="ai-image">
-
-![](${imageMap[imageToken]})
-
-</div>
-
-`;
-
-            }
-
-
-            i++;
-
-            continue;
-
-        }
-
-
-
-
-
-        // =====================
-        // 标题颜色卡片
-        // =====================
-
-        if(text){
-
-
-            let cardClass = "";
-
-            let icon = "";
-
-
-
-            // 项目名称
-            if(
-                text.length < 30 &&
-                (
-                    text.includes("项目名称") ||
-                    text.includes("项目介绍")
-                )
-            ){
-
-                cardClass =
-                "ai-card-blue";
-
-                icon =
-                "📌";
-
-            }
-
-
-
-            // 项目定级
-
-            else if(
-                text.length < 30 &&
-                (
-                    text.includes("项目定级") ||
-                    text.includes("项目等级")
-                )
-            ){
-
-                cardClass =
-                "ai-card-gray";
-
-                icon =
-                "⭐";
-
-            }
-
-
-
-            // 业务痛点
-
-            else if(
-                text.length < 30 &&
-                (
-                    text.includes("业务痛点") ||
-                    text.includes("问题")
-                )
-            ){
-
-                cardClass =
-                "ai-card-yellow";
-
-                icon =
-                "⚠️";
-
-            }
-
-
-
-
-            // AI解决方案
-
-            else if(
-                text.length < 30 &&
-                (
-                    text.includes("解决方案") ||
-                    text.includes("AI方案") ||
-                    text.includes("AI解决方案")
-                )
-            ){
-
-                cardClass =
-                "ai-card-purple";
-
-                icon =
-                "🤖";
-
-            }
-
-
-
-
-            // 提效结果
-
-            else if(
-                text.length < 30 &&
-                (
-                    text.includes("提效结果") ||
-                    text.includes("质量优化结果") ||
-                    text.includes("项目成果")
-                )
-            ){
-
-                cardClass =
-                "ai-card-green";
-
-                icon =
-                "🚀";
-
-            }
-
-
-
-
-
-            // 如果是标题
-
-            if(
-                cardClass
-            ){
-
-
-                md +=
-`
-<div class="${cardClass}">
-
-<h3>
-${icon} ${text}
-</h3>
-
-</div>
-
-`;
-
-
-
-                i++;
-
-                continue;
-
-            }
-
-
-
-
-        }
-
-
-
-
-        // =====================
-        // 普通正文
-        // =====================
 
 
         if(text){
@@ -661,7 +372,28 @@ ${icon} ${text}
         }
 
 
-        i++;
+
+        if(
+            block.block_type === 27 &&
+            block.image
+        ){
+
+            const imageToken =
+            block.image.token;
+
+
+
+            if(
+                imageMap[imageToken]
+            ){
+
+                md +=
+                `![](${imageMap[imageToken]})\n\n`;
+
+            }
+
+        }
+
 
     }
 
@@ -669,30 +401,6 @@ ${icon} ${text}
     return md;
 
 }
-
-
-
-
-// =====================================
-// 生成页面头信息
-// =====================================
-
-function createFrontMatter(
-    item
-){
-
-    return `
----
-title: ${item.name}
-category: AI案例库
-department: ${item.department}
-source: 飞书知识库
----
-
-`;
-
-}
-
 
 
 
@@ -712,11 +420,16 @@ async function syncCase(
     );
 
 
-
     const documentId =
     await getRealDocumentId(
         item.wiki_token,
         token
+    );
+
+
+    console.log(
+        "docx:",
+        documentId
     );
 
 
@@ -726,7 +439,6 @@ async function syncCase(
         documentId,
         token
     );
-
 
 
     console.log(
@@ -751,35 +463,33 @@ async function syncCase(
     );
 
 
-
     ensureDir(saveDir);
 
     ensureDir(assetDir);
 
 
 
-    const imageMap = {};
+    let imageMap = {};
 
 
-
-    // -----------------------------
-    // 下载全部图片
-    // -----------------------------
 
     for(
         const block of blocks
     ){
 
         if(
-            isImageBlock(block)
+            block.block_type === 27 &&
+            block.image
         ){
 
             const imageToken =
             block.image.token;
 
 
+
             const imageName =
-            `${imageToken}.png`;
+            imageToken + ".png";
+
 
 
             const savePath =
@@ -800,14 +510,14 @@ async function syncCase(
 
 
                 imageMap[imageToken] =
-                `/AI案例库/${item.department}/${item.name}/${imageName}`;
+`/AI案例库/${item.department}/${item.name}/${imageName}`;
 
 
             }
             catch(e){
 
                 console.log(
-                    "图片失败:",
+                    "图片下载失败:",
                     imageToken
                 );
 
@@ -820,8 +530,6 @@ async function syncCase(
 
 
     const markdown =
-    createFrontMatter(item)
-    +
     blocksToMarkdown(
         blocks,
         imageMap
@@ -829,15 +537,26 @@ async function syncCase(
 
 
 
+    const frontMatter =
+`---
+title: ${item.name}
+category: AI案例库
+department: ${item.department}
+source: 飞书知识库
+---
+
+`;
+
+
+
     fs.writeFileSync(
         path.join(
             saveDir,
-            `${item.name}.md`
+            item.name + ".md"
         ),
-        markdown,
+        frontMatter + markdown,
         "utf8"
     );
-
 
 
     console.log(
@@ -845,22 +564,24 @@ async function syncCase(
         item.name
     );
 
-}// =====================================
+}
+
+
+
+
+// =====================================
 // 主程序
 // =====================================
 
 async function main(){
-
 
     console.log(
         "开始同步AI案例库..."
     );
 
 
-
     const token =
     await getTenantToken();
-
 
 
     console.log(
@@ -873,31 +594,10 @@ async function main(){
         const item of CASE_LIST
     ){
 
-        try{
-
-
-            await syncCase(
-                item,
-                token
-            );
-
-
-        }
-        catch(error){
-
-
-            console.log(
-                "同步失败:",
-                item.name
-            );
-
-
-            console.log(
-                error.message
-            );
-
-
-        }
+        await syncCase(
+            item,
+            token
+        );
 
     }
 
@@ -906,7 +606,6 @@ async function main(){
     console.log(
         "\n全部同步完成"
     );
-
 
 }
 

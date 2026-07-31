@@ -3,6 +3,10 @@ import path from "path";
 import axios from "axios";
 import dotenv from "dotenv";
 
+import {
+    renderFeishuBlocks
+} from "./feishu_renderer.js";
+
 
 dotenv.config({
     path: ".feishu.env"
@@ -27,7 +31,6 @@ process.env.FEISHU_APP_SECRET;
 // 同步配置
 // =====================================
 
-
 const CONTENT_DIR =
 "./content/AI案例库";
 
@@ -48,42 +51,6 @@ const CASE_LIST = [
         department:"客服部",
         wiki_token:"Mnxjwiw1picy1Uk22QVcQGWAnbf"
     },
-
-    {
-        name:"财务+AI数字化解决案例",
-        department:"财务部",
-        wiki_token:"Uq78whyMCim8QGkC5ufc9mpKnQc"
-    },
-
-    {
-        name:"职能+AI数字化解决案例",
-        department:"职能部",
-        wiki_token:"JNHaw82eZiJWLsk1MM8cqp4PnWd"
-    },
-
-    {
-        name:"采购+AI数字化解决案例",
-        department:"采购部",
-        wiki_token:"ADpqw8kiOidhQgkHszEcVjOFnMf"
-    },
-
-    {
-        name:"国内运营+AI数字化解决案例",
-        department:"国内运营",
-        wiki_token:"PvdCwMWshix1LikFGAEcg668nrc"
-    },
-
-    {
-        name:"跨境运营+AI数字化解决案例",
-        department:"跨境运营",
-        wiki_token:"OpvQw2PGUiBSVmkM3LIcvObsnig"
-    },
-
-    {
-        name:"仓储+AI数字化解决案例",
-        department:"仓储部",
-        wiki_token:"CUpHwHLLWilgzJkqA1mcy6lKnOf"
-    }
 
 ];
 
@@ -114,6 +81,8 @@ function ensureDir(dir){
 
 
 
+
+
 // =====================================
 // 获取飞书token
 // =====================================
@@ -134,6 +103,8 @@ async function getTenantToken(){
     return res.data.tenant_access_token;
 
 }
+
+
 
 
 
@@ -175,7 +146,13 @@ async function getRealDocumentId(
 
     return node.obj_token;
 
-}// =====================================
+}
+
+
+
+
+
+// =====================================
 // 获取文档blocks
 // =====================================
 
@@ -189,10 +166,12 @@ async function getDocumentBlocks(
     let pageToken = "";
 
 
+
     while(true){
 
         let url =
         `https://open.feishu.cn/open-apis/docx/v1/documents/${documentId}/blocks?page_size=500`;
+
 
 
         if(pageToken){
@@ -201,6 +180,7 @@ async function getDocumentBlocks(
             `&page_token=${pageToken}`;
 
         }
+
 
 
         const res =
@@ -215,13 +195,16 @@ async function getDocumentBlocks(
         );
 
 
+
         const data =
         res.data.data;
+
 
 
         blocks.push(
             ...(data.items || [])
         );
+
 
 
         if(
@@ -233,8 +216,10 @@ async function getDocumentBlocks(
         }
 
 
+
         pageToken =
         data.page_token;
+
 
     }
 
@@ -287,9 +272,6 @@ async function downloadImage(
 
 }
 
-
-
-
 // =====================================
 // 获取block文字
 // =====================================
@@ -341,8 +323,9 @@ function getBlockText(
 
 
 
+
 // =====================================
-// 判断标题等级
+// 标题等级
 // =====================================
 
 function getHeadingLevel(
@@ -353,27 +336,21 @@ function getHeadingLevel(
     block.block_type;
 
 
-    if(
-        type === 3
-    ){
+    if(type === 3){
 
         return 1;
 
     }
 
 
-    if(
-        type === 4
-    ){
+    if(type === 4){
 
         return 2;
 
     }
 
 
-    if(
-        type === 5
-    ){
+    if(type === 5){
 
         return 3;
 
@@ -389,12 +366,11 @@ function getHeadingLevel(
 
 
 // =====================================
-// 识别图片block
+// Block类型判断
 // =====================================
 
-function isImageBlock(
-    block
-){
+
+function isImageBlock(block){
 
     return (
         block.block_type === 27 &&
@@ -405,272 +381,75 @@ function isImageBlock(
 
 
 
-
-// =====================================
-// 识别表格block
-// =====================================
-
-function isTableBlock(
-    block
-){
+function isTableBlock(block){
 
     return (
         block.block_type === 31
     );
 
-}// =====================================
-// 生成Quartz增强Markdown
-// =====================================
+}
 
-function blocksToMarkdown(
-    blocks,
-    imageMap
-){
 
-    let md = "";
 
-    let i = 0;
+function isColumnBlock(block){
 
-
-    while(i < blocks.length){
-
-
-        const block = blocks[i];
-
-
-        const text =
-        getBlockText(block);
-
-
-
-        const nextBlock =
-        blocks[i + 1];
-
-
-        const nextText =
-        nextBlock
-        ?
-        getBlockText(nextBlock)
-        :
-        "";
-
-
-
-        // =====================
-        // 图片
-        // =====================
-
-        if(
-            isImageBlock(block)
-        ){
-
-            const imageToken =
-            block.image.token;
-
-
-            if(
-                imageMap[imageToken]
-            ){
-
-                md +=
-`
-<div class="ai-image">
-
-![](${imageMap[imageToken]})
-
-</div>
-
-`;
-
-            }
-
-
-            i++;
-
-            continue;
-
-        }
-
-
-
-
-
-        // =====================
-        // 标题颜色卡片
-        // =====================
-
-        if(text){
-
-
-            let cardClass = "";
-
-            let icon = "";
-
-
-
-            // 项目名称
-            if(
-                text.length < 30 &&
-                (
-                    text.includes("项目名称") ||
-                    text.includes("项目介绍")
-                )
-            ){
-
-                cardClass =
-                "ai-card-blue";
-
-                icon =
-                "📌";
-
-            }
-
-
-
-            // 项目定级
-
-            else if(
-                text.length < 30 &&
-                (
-                    text.includes("项目定级") ||
-                    text.includes("项目等级")
-                )
-            ){
-
-                cardClass =
-                "ai-card-gray";
-
-                icon =
-                "⭐";
-
-            }
-
-
-
-            // 业务痛点
-
-            else if(
-                text.length < 30 &&
-                (
-                    text.includes("业务痛点") ||
-                    text.includes("问题")
-                )
-            ){
-
-                cardClass =
-                "ai-card-yellow";
-
-                icon =
-                "⚠️";
-
-            }
-
-
-
-
-            // AI解决方案
-
-            else if(
-                text.length < 30 &&
-                (
-                    text.includes("解决方案") ||
-                    text.includes("AI方案") ||
-                    text.includes("AI解决方案")
-                )
-            ){
-
-                cardClass =
-                "ai-card-purple";
-
-                icon =
-                "🤖";
-
-            }
-
-
-
-
-            // 提效结果
-
-            else if(
-                text.length < 30 &&
-                (
-                    text.includes("提效结果") ||
-                    text.includes("质量优化结果") ||
-                    text.includes("项目成果")
-                )
-            ){
-
-                cardClass =
-                "ai-card-green";
-
-                icon =
-                "🚀";
-
-            }
-
-
-
-
-
-            // 如果是标题
-
-            if(
-                cardClass
-            ){
-
-
-                md +=
-`
-<div class="${cardClass}">
-
-<h3>
-${icon} ${text}
-</h3>
-
-</div>
-
-`;
-
-
-
-                i++;
-
-                continue;
-
-            }
-
-
-
-
-        }
-
-
-
-
-        // =====================
-        // 普通正文
-        // =====================
-
-
-        if(text){
-
-            md +=
-            text + "\n\n";
-
-        }
-
-
-        i++;
-
-    }
-
-
-    return md;
+    return (
+        block.block_type === 24
+    );
 
 }
 
 
+
+
+
+// =====================================
+// 普通文字格式化
+// =====================================
+
+function formatText(text){
+
+    if(!text){
+
+        return "";
+
+    }
+
+
+    return text
+    .replace(/\n+/g,"\n")
+    .trim();
+
+}
+
+
+
+
+
+// =====================================
+// 获取子block内容
+// =====================================
+
+
+function getChildrenText(
+    parentId,
+    blocks
+){
+
+    return blocks
+    .filter(
+        b =>
+        b.parent_id === parentId
+    )
+    .map(
+        b =>
+        formatText(
+            getBlockText(b)
+        )
+    )
+    .filter(Boolean);
+
+}
 
 
 // =====================================
@@ -727,7 +506,15 @@ async function syncCase(
         token
     );
 
-
+fs.writeFileSync(
+    "blocks.json",
+    JSON.stringify(
+        blocks,
+        null,
+        2
+    ),
+    "utf8"
+);
 
     console.log(
         "blocks:",
@@ -741,6 +528,7 @@ async function syncCase(
         CONTENT_DIR,
         item.department
     );
+
 
 
     const assetDir =
@@ -758,28 +546,35 @@ async function syncCase(
 
 
 
+
     const imageMap = {};
 
 
 
-    // -----------------------------
-    // 下载全部图片
-    // -----------------------------
+
+    // =========================
+    // 下载图片
+    // =========================
+
 
     for(
         const block of blocks
     ){
 
+
         if(
             isImageBlock(block)
         ){
+
 
             const imageToken =
             block.image.token;
 
 
+
             const imageName =
             `${imageToken}.png`;
+
 
 
             const savePath =
@@ -792,6 +587,7 @@ async function syncCase(
 
             try{
 
+
                 await downloadImage(
                     imageToken,
                     savePath,
@@ -799,33 +595,42 @@ async function syncCase(
                 );
 
 
+
                 imageMap[imageToken] =
                 `/AI案例库/${item.department}/${item.name}/${imageName}`;
+
 
 
             }
             catch(e){
 
+
                 console.log(
-                    "图片失败:",
+                    "图片下载失败:",
                     imageToken
                 );
 
+
             }
 
+
         }
+
 
     }
 
 
 
+
+
     const markdown =
-    createFrontMatter(item)
-    +
-    blocksToMarkdown(
-        blocks,
-        imageMap
-    );
+createFrontMatter(item)
++
+renderFeishuBlocks(
+    blocks,
+    imageMap
+);
+
 
 
 
@@ -845,9 +650,16 @@ async function syncCase(
         item.name
     );
 
-}// =====================================
+}
+
+
+
+
+
+// =====================================
 // 主程序
 // =====================================
+
 
 async function main(){
 
@@ -866,6 +678,7 @@ async function main(){
     console.log(
         "token成功"
     );
+
 
 
 
@@ -898,6 +711,7 @@ async function main(){
 
 
         }
+
 
     }
 

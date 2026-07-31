@@ -248,3 +248,277 @@ article {
     max-width:900px;
 
 }
+
+// =====================
+// 飞书左右分栏
+// =====================
+
+.two-column {
+
+    display: flex;
+
+    gap: 20px;
+
+    width: 100%;
+
+    margin: 20px 0;
+
+}
+
+
+.column-left,
+.column-right {
+
+    flex: 1;
+
+    padding: 20px;
+
+    border-radius: 12px;
+
+    background: #f7f9fc;
+
+}
+.before-title{
+
+    display:inline-block;
+
+    padding:8px 20px;
+
+    background:#fff1f0;
+
+    color:#ff4d4f;
+
+    border-radius:8px;
+
+    font-weight:bold;
+
+    margin:10px 10px 10px 0;
+
+}
+
+
+
+.after-title{
+
+    display:inline-block;
+
+    padding:8px 20px;
+
+    background:#f0fff4;
+
+    color:#52c41a;
+
+    border-radius:8px;
+
+    font-weight:bold;
+
+    margin:10px 0;
+
+}
+/* =====================================
+   飞书表格样式
+===================================== */
+
+
+.feishu-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    margin:24px 0;
+
+    font-size:16px;
+
+    line-height:1.8;
+
+}
+
+
+
+.feishu-table td{
+
+    border:1px solid #e5e7eb;
+
+    padding:12px 16px;
+
+    text-align:left;
+
+    vertical-align:middle;
+
+}
+
+
+
+.feishu-table tr:first-child td{
+
+    font-weight:600;
+
+    background:#f7f8fa;
+
+}
+
+
+
+.feishu-table tr:hover{
+
+    background:#fafafa;
+
+}
+
+
+
+.feishu-table td:first-child{
+
+    width:70%;
+
+}
+
+
+
+.feishu-table td:last-child{
+
+    width:30%;
+
+    text-align:center;
+
+    font-weight:500;
+
+}
+
+/* =====================================
+   飞书卡片
+===================================== */
+
+
+.ai-card{
+
+    padding:18px 24px;
+
+    margin:24px 0;
+
+    border-radius:12px;
+
+}
+
+
+
+.ai-card h3{
+
+    margin:0;
+
+    font-size:20px;
+
+}
+
+
+
+.ai-card-yellow{
+
+    background:#fff8e8;
+
+    border-left:5px solid #f5a623;
+
+}
+
+
+
+.ai-card-purple{
+
+    background:#f5f0ff;
+
+    border-left:5px solid #8b5cf6;
+
+}
+
+
+
+.ai-card-green{
+
+    background:#f0fff4;
+
+    border-left:5px solid #22c55e;
+
+}
+/* 飞书双栏 */
+
+.feishu-columns{
+
+    display:flex;
+
+    gap:24px;
+
+    margin:24px 0;
+
+}
+
+
+.feishu-column{
+
+    flex:1;
+
+    padding:20px;
+
+    background:#fafafa;
+
+    border-radius:12px;
+
+}
+/* Before 标题 */
+
+.before-title{
+
+    background:#fff1f0;
+
+    border:1px solid #ffccc7;
+
+    border-left:5px solid #f5222d;
+
+    color:#cf1322;
+
+    padding:12px 18px;
+
+    border-radius:10px;
+
+    font-weight:600;
+
+    margin:20px 0 10px 0;
+
+}
+
+
+
+/* After 标题 */
+
+.after-title{
+
+    background:#f6ffed;
+
+    border:1px solid #b7eb8f;
+
+    border-left:5px solid #52c41a;
+
+    color:#389e0d;
+
+    padding:12px 18px;
+
+    border-radius:10px;
+
+    font-weight:600;
+
+    margin:20px 0 10px 0;
+
+}
+.feishu-callout{
+
+    background:#fff7e6;
+
+    border:1px solid #ffd591;
+
+    border-radius:10px;
+
+    padding:16px 20px;
+
+    margin:20px 0;
+
+}

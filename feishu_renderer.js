@@ -374,24 +374,28 @@ function renderChildren(
 
 
     // =====================================
-    // 飞书表格处理
-    // block_type 32 = 单元格
-    // =====================================
+// 飞书表格处理
+// block_type 31 = 表格主体
+// =====================================
 
+if(
+    block.block_type === 31 &&
+    block.table
+){
 
     const tableCells =
-    children.filter(
-        item =>
-        item.block_type === 32
-    );
+    block.table.cells
+    .map(
+        id =>
+        findBlock(
+            id,
+            blocks
+        )
+    )
+    .filter(Boolean);
 
 
-
-    if(
-        tableCells.length > 0
-    ){
-
-        html += `
+    html += `
 
 <table class="feishu-table">
 
@@ -400,68 +404,57 @@ function renderChildren(
 `;
 
 
+    const values = [];
 
-        const values = [];
+
+    tableCells.forEach(
+        cell=>{
+
+            values.push(
+                getCellText(
+                    cell,
+                    blocks
+                )
+            );
+
+        }
+    );
 
 
-tableCells.forEach(
-    cell=>{
+    const columnSize =
+    block.table.property?.column_size || 2;
 
-        values.push(
-            getCellText(
-                cell,
-                blocks
-            )
-        );
+
+    for(
+        let i = 0;
+        i < values.length;
+        i += columnSize
+    ){
+
+        html += `<tr>`;
+
+
+        for(
+            let j = 0;
+            j < columnSize;
+            j++
+        ){
+
+            html += `
+<td>
+${values[i+j] || ""}
+</td>
+`;
+
+        }
+
+
+        html += `</tr>`;
 
     }
-);
 
-
-
-html += `
-
-<tr>
-
-`;
-
-
-
-for(
-    let i = 0;
-    i < values.length;
-    i += 2
-){
 
     html += `
-
-<tr>
-
-<td>
-${values[i] || ""}
-</td>
-
-<td>
-${values[i+1] || ""}
-</td>
-
-</tr>
-
-`;
-
-}
-
-
-
-html += `
-
-</tr>
-
-`;
-
-
-
-        html += `
 
 </tbody>
 
@@ -470,10 +463,9 @@ html += `
 `;
 
 
+    return html;
 
-        return html;
-
-    }
+}
 
 
 
@@ -530,7 +522,28 @@ function renderBlock(
 
     const text =
     getText(block);
+// =====================================
+// 跳过已经特殊处理的内容
+// 防止重复渲染
+// =====================================
 
+if(
+    text.includes("Before-原来业务流程") ||
+    text.includes("After-AI工作流程") ||
+    text.includes("解决方案：")
+){
+
+    return "";
+
+}
+
+if(
+    text.startsWith("覆盖部门")
+){
+
+    return "";
+
+}
 // =====================================
 // Before / After 标题识别
 // =====================================

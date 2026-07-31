@@ -425,14 +425,7 @@ C
 
 <tbody>
 
-
-
 <tr>
-
-
-
-<tr>
-
 <td>
 项目名称
 </td>
@@ -440,13 +433,7 @@ C
 <td>
 项目定级
 </td>
-
-</tr>
-
-
-
-<tr>
-
+</tr><tr>
 <td>
 多平台退款分析软件
 </td>
@@ -454,13 +441,7 @@ C
 <td>
 S
 </td>
-
-</tr>
-
-
-
-<tr>
-
+</tr><tr>
 <td>
 客服聊天记录质检分析
 </td>
@@ -468,13 +449,7 @@ S
 <td>
 S
 </td>
-
-</tr>
-
-
-
-<tr>
-
+</tr><tr>
 <td>
 AI外呼系统
 </td>
@@ -482,13 +457,7 @@ AI外呼系统
 <td>
 A
 </td>
-
-</tr>
-
-
-
-<tr>
-
+</tr><tr>
 <td>
 E店/S店/亚马逊三平台马帮建退款单
 </td>
@@ -496,13 +465,7 @@ E店/S店/亚马逊三平台马帮建退款单
 <td>
 A
 </td>
-
-</tr>
-
-
-
-<tr>
-
+</tr><tr>
 <td>
 多平台退款率分析软件
 </td>
@@ -510,13 +473,7 @@ A
 <td>
 A
 </td>
-
-</tr>
-
-
-
-<tr>
-
+</tr><tr>
 <td>
 跨境进口退款核对工具
 </td>
@@ -524,13 +481,7 @@ A
 <td>
 B
 </td>
-
-</tr>
-
-
-
-<tr>
-
+</tr><tr>
 <td>
 亚马逊发货物流查询AI
 </td>
@@ -538,13 +489,7 @@ B
 <td>
 B
 </td>
-
-</tr>
-
-
-
-<tr>
-
+</tr><tr>
 <td>
 探域机器人使用
 </td>
@@ -552,13 +497,7 @@ B
 <td>
 B
 </td>
-
-</tr>
-
-
-
-<tr>
-
+</tr><tr>
 <td>
 大疆激活查询软件
 </td>
@@ -566,13 +505,7 @@ B
 <td>
 C
 </td>
-
-</tr>
-
-
-
-<tr>
-
+</tr><tr>
 <td>
 长租售后查询关联订单筛选
 </td>
@@ -580,13 +513,7 @@ C
 <td>
 C
 </td>
-
-</tr>
-
-
-
-<tr>
-
+</tr><tr>
 <td>
 美客多跟单软件(测试中)
 </td>
@@ -594,13 +521,7 @@ C
 <td>
 /
 </td>
-
-</tr>
-
-
-
-<tr>
-
+</tr><tr>
 <td>
 跨境韩国本土店退货跟单软件(测试中)
 </td>
@@ -608,13 +529,7 @@ C
 <td>
 /
 </td>
-
-</tr>
-
-
-
-<tr>
-
+</tr><tr>
 <td>
 微信聊天记录分析系统(测试中)
 </td>
@@ -622,14 +537,7 @@ C
 <td>
 /
 </td>
-
 </tr>
-
-
-
-</tr>
-
-
 
 </tbody>
 
@@ -786,22 +694,6 @@ Befor-原来业务流程
 
 
 
-<div class="after-title">
-
-After-AI工作流程
-
-</div>
-
-
-
-</div>
-
-
-
-<div class="after-title">
-
-After-AI工作流程
-
 </div>
 
 
@@ -852,12 +744,6 @@ After-AI工作流程
 
 
 <div class="feishu-column">
-
-
-
-<div class="feishu-text">
-解决方案：
-</div>
 
 
 
@@ -1136,18 +1022,6 @@ After-AI工作流程
 
 
 
-<div class="feishu-text">
-覆盖部门：全新电商中心（大疆售后）、全域流量赋能中心、租赁电商中心
-</div>
-
-
-
-</div>
-
-
-
-<div class="feishu-text">
-覆盖部门：全新电商中心（大疆售后）、全域流量赋能中心、租赁电商中心
 </div>
 
 
@@ -1201,22 +1075,6 @@ Befor-原来业务流程
 
 
 
-<div class="after-title">
-
-After-AI工作流程
-
-</div>
-
-
-
-</div>
-
-
-
-<div class="after-title">
-
-After-AI工作流程
-
 </div>
 
 
@@ -1249,12 +1107,6 @@ After-AI工作流程
 
 
 <div class="feishu-column">
-
-
-
-<div class="feishu-text">
-解决方案：
-</div>
 
 
 
@@ -1421,22 +1273,6 @@ Befor-原来业务流程
 
 
 
-<div class="after-title">
-
-After-AI工作流程
-
-</div>
-
-
-
-</div>
-
-
-
-<div class="after-title">
-
-After-AI工作流程
-
 </div>
 
 
@@ -1481,12 +1317,6 @@ After-AI工作流程
 
 
 <div class="feishu-column">
-
-
-
-<div class="feishu-text">
-解决方案：
-</div>
 
 
 
@@ -1708,22 +1538,6 @@ Befor-原来业务流程
 
 
 
-<div class="after-title">
-
-After-AI工作流程
-
-</div>
-
-
-
-</div>
-
-
-
-<div class="after-title">
-
-After-AI工作流程
-
 </div>
 
 
@@ -1768,12 +1582,6 @@ After-AI工作流程
 
 
 <div class="feishu-column">
-
-
-
-<div class="feishu-text">
-解决方案：
-</div>
 
 
 
@@ -2272,14 +2080,7 @@ AI按照固定步骤处理每一笔订单，不容易受到人员熟练程度、
 
 <tbody>
 
-
-
 <tr>
-
-
-
-<tr>
-
 <td>
 平台
 </td>
@@ -2287,12 +2088,6 @@ AI按照固定步骤处理每一笔订单，不容易受到人员熟练程度、
 <td>
 话术生成率
 </td>
-
-</tr>
-
-
-
-<tr>
 
 <td>
 采纳率
@@ -2302,25 +2097,13 @@ AI按照固定步骤处理每一笔订单，不容易受到人员熟练程度、
 风控率
 </td>
 
-</tr>
-
-
-
-<tr>
-
 <td>
 人机协作率
 </td>
-
+</tr><tr>
 <td>
 淘宝
 </td>
-
-</tr>
-
-
-
-<tr>
 
 <td>
 70%左右
@@ -2329,12 +2112,6 @@ AI按照固定步骤处理每一笔订单，不容易受到人员熟练程度、
 <td>
 20%左右
 </td>
-
-</tr>
-
-
-
-<tr>
 
 <td>
 20%左右
@@ -2343,13 +2120,7 @@ AI按照固定步骤处理每一笔订单，不容易受到人员熟练程度、
 <td>
 45%左右
 </td>
-
-</tr>
-
-
-
-<tr>
-
+</tr><tr>
 <td>
 拼多多
 </td>
@@ -2357,12 +2128,6 @@ AI按照固定步骤处理每一笔订单，不容易受到人员熟练程度、
 <td>
 70%左右
 </td>
-
-</tr>
-
-
-
-<tr>
 
 <td>
 18%左右
@@ -2372,25 +2137,13 @@ AI按照固定步骤处理每一笔订单，不容易受到人员熟练程度、
 15%左右
 </td>
 
-</tr>
-
-
-
-<tr>
-
 <td>
 35%左右（租赁除外，租赁人机协作率稳定在70%左右，主要原因是产品少，接待人数少导致）
 </td>
-
+</tr><tr>
 <td>
 抖店
 </td>
-
-</tr>
-
-
-
-<tr>
 
 <td>
 70%左右
@@ -2400,12 +2153,6 @@ AI按照固定步骤处理每一笔订单，不容易受到人员熟练程度、
 20%左右
 </td>
 
-</tr>
-
-
-
-<tr>
-
 <td>
 19%左右
 </td>
@@ -2413,13 +2160,7 @@ AI按照固定步骤处理每一笔订单，不容易受到人员熟练程度、
 <td>
 35%左右
 </td>
-
-</tr>
-
-
-
-<tr>
-
+</tr><tr>
 <td>
 京东
 </td>
@@ -2427,12 +2168,6 @@ AI按照固定步骤处理每一笔订单，不容易受到人员熟练程度、
 <td>
 70%左右
 </td>
-
-</tr>
-
-
-
-<tr>
 
 <td>
 21%左右
@@ -2442,27 +2177,10 @@ AI按照固定步骤处理每一笔订单，不容易受到人员熟练程度、
 19%左右
 </td>
 
-</tr>
-
-
-
-<tr>
-
 <td>
 35%左右
 </td>
-
-<td>
-
-</td>
-
 </tr>
-
-
-
-</tr>
-
-
 
 </tbody>
 
@@ -2652,18 +2370,6 @@ AI按照固定步骤处理每一笔订单，不容易受到人员熟练程度、
 
 
 
-<div class="feishu-text">
-覆盖部门：跨境电商中心
-</div>
-
-
-
-</div>
-
-
-
-<div class="feishu-text">
-覆盖部门：跨境电商中心
 </div>
 
 
@@ -2717,22 +2423,6 @@ Befor-原来业务流程
 
 
 
-<div class="after-title">
-
-After-AI工作流程
-
-</div>
-
-
-
-</div>
-
-
-
-<div class="after-title">
-
-After-AI工作流程
-
 </div>
 
 
@@ -2777,12 +2467,6 @@ After-AI工作流程
 
 
 <div class="feishu-column">
-
-
-
-<div class="feishu-text">
-解决方案：
-</div>
 
 
 
@@ -2973,22 +2657,6 @@ Befor-原来业务流程
 
 
 
-<div class="after-title">
-
-After-AI工作流程
-
-</div>
-
-
-
-</div>
-
-
-
-<div class="after-title">
-
-After-AI工作流程
-
 </div>
 
 
@@ -3027,12 +2695,6 @@ After-AI工作流程
 
 
 <div class="feishu-column">
-
-
-
-<div class="feishu-text">
-解决方案：
-</div>
 
 
 
@@ -3207,18 +2869,6 @@ AI可以自动完成物流状态查询，并将异常订单保存下来，缩短
 
 
 
-<div class="feishu-text">
-覆盖部门：全新电商中心
-</div>
-
-
-
-</div>
-
-
-
-<div class="feishu-text">
-覆盖部门：全新电商中心
 </div>
 
 
@@ -3272,22 +2922,6 @@ Befor-原来业务流程
 
 
 
-<div class="after-title">
-
-After-AI工作流程
-
-</div>
-
-
-
-</div>
-
-
-
-<div class="after-title">
-
-After-AI工作流程
-
 </div>
 
 
@@ -3332,12 +2966,6 @@ After-AI工作流程
 
 
 <div class="feishu-column">
-
-
-
-<div class="feishu-text">
-解决方案：
-</div>
 
 
 
@@ -3483,18 +3111,6 @@ After-AI工作流程
 
 
 
-<div class="feishu-text">
-覆盖部门：全新电商中心
-</div>
-
-
-
-</div>
-
-
-
-<div class="feishu-text">
-覆盖部门：全新电商中心
 </div>
 
 
@@ -3548,22 +3164,6 @@ Befor-原来业务流程
 
 
 
-<div class="after-title">
-
-After-AI工作流程
-
-</div>
-
-
-
-</div>
-
-
-
-<div class="after-title">
-
-After-AI工作流程
-
 </div>
 
 
@@ -3590,12 +3190,6 @@ After-AI工作流程
 
 
 <div class="feishu-column">
-
-
-
-<div class="feishu-text">
-解决方案：
-</div>
 
 
 
@@ -3669,18 +3263,6 @@ After-AI工作流程
 
 
 
-<div class="feishu-text">
-覆盖部门：跨境电商中心
-</div>
-
-
-
-</div>
-
-
-
-<div class="feishu-text">
-覆盖部门：跨境电商中心
 </div>
 
 
@@ -3734,22 +3316,6 @@ Befor-原来业务流程
 
 
 
-<div class="after-title">
-
-After-AI工作流程
-
-</div>
-
-
-
-</div>
-
-
-
-<div class="after-title">
-
-After-AI工作流程
-
 </div>
 
 
@@ -3800,12 +3366,6 @@ After-AI工作流程
 
 
 <div class="feishu-column">
-
-
-
-<div class="feishu-text">
-解决方案：
-</div>
 
 
 
@@ -3914,18 +3474,6 @@ AI覆盖大部分数据处理环节，人工由“全流程操作”转变为“
 
 
 
-<div class="feishu-text">
-覆盖部门：跨境电商中心
-</div>
-
-
-
-</div>
-
-
-
-<div class="feishu-text">
-覆盖部门：跨境电商中心
 </div>
 
 
@@ -3978,22 +3526,6 @@ Befor-原来业务流程
 <div class="feishu-callout">
 
 
-
-<div class="after-title">
-
-After-AI工作流程
-
-</div>
-
-
-
-</div>
-
-
-
-<div class="after-title">
-
-After-AI工作流程
 
 </div>
 
@@ -4057,12 +3589,6 @@ After-AI工作流程
 
 
 <div class="feishu-column">
-
-
-
-<div class="feishu-text">
-解决方案：
-</div>
 
 
 

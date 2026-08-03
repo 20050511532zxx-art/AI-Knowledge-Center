@@ -1,0 +1,10 @@
+**完成结果**
+- **原因：** 主脚本优先解析到 `codex.cmd`，导致已生成的 4617 字节提示词未可靠传入 stdin，Codex 返回 `No prompt provided via stdin.`。
+- **修正：** 优先使用原生 `codex.exe`，并以共享读取方式处理尚在释放的输出日志，同时刷新退出码；未降低 sandbox、审批或来源限制。见 `仓库/AI工具数据库/AI情报中心/自动化/每日AI情报更新.ps1:32`、`仓库/AI工具数据库/AI情报中心/自动化/每日AI情报自检修复.ps1:59`。
+- **今日情报：** 扫描 18 个工具档案、20 个官方入口；得到 8 条候选，其中有效 3 条、重复 4 条、忽略 1 条、无法确认 0 条。
+- 有效更新包括 OpenAI 官方 Terraform Provider、ChatGPT for Academic Researchers，以及 Sign in with ChatGPT Beta 扩大开放。citeturn525876view0turn212097view0
+- GitHub Models API 于 **2026 年 7 月 30 日**停服，但公告发布于 **2026 年 7 月 1 日**，因超出 24—48 小时窗口标记为忽略。citeturn657298search0
+- 已生成 `仓库/AI工具数据库/AI情报中心/工具更新记录/2026-07-30 工具更新记录.md:6`。
+- 已生成 `仓库/AI工具数据库/AI情报中心/每日AI快报/2026-07-30 每日AI快报.md:6`。
+- 已仅追加两条有效更新至 `仓库/AI工具数据库/AI工具档案/AI数据分析经营诊断/ChatGPT.md:46`。
+- 两个脚本均通过 PowerShell 语法解析；主任务烟雾测试返回 `0`，并正确识别今日文件已存在后安全跳过。未删除文件、未修改 Excel、未覆盖历史内容。

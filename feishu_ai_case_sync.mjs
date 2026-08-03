@@ -3,16 +3,80 @@ import path from "path";
 import axios from "axios";
 import dotenv from "dotenv";
 
-import {
-    renderFeishuBlocks
-} from "./feishu_renderer.js";
-
-
 dotenv.config({
     path: ".feishu.env"
 });
 
+import {
+    renderFeishuBlocks
+} from "./feishu_renderer.js";
 
+// ===============================
+// 读取飞书Sheet
+// ===============================
+
+async function loadSheetData(
+    blocks,
+    documentId,
+    token
+){
+
+    for(
+        const block of blocks
+    ){
+
+        if(
+            block.block_type === 30 &&
+            block.sheet
+        ){
+
+            console.log(
+                "发现Sheet:",
+                block.sheet.token
+            );
+
+
+            // 当前只保留表格标识
+            // 飞书嵌入表格无法直接通过spreadsheet_token读取
+
+            block.sheet.data = null;
+
+
+       const blockUrl =
+`https://open.feishu.cn/open-apis/docx/v1/documents/${documentId}/blocks/${block.block_id}`;
+
+console.log(
+    "读取Sheet参数:",
+    {
+        documentId,
+        blockId:block.block_id,
+        tokenLength:token?.length
+    }
+);
+
+const blockRes =
+await axios.get(
+    blockUrl,
+    {
+        headers:{
+            Authorization:
+            `Bearer ${token}`
+        }
+    }
+);
+
+
+console.log(
+    "Sheet block详情:",
+    JSON.stringify(
+        blockRes.data,
+        null,
+        2
+    )
+);
+  }
+    }
+         }
 
 // =====================================
 // 飞书配置
@@ -24,6 +88,16 @@ process.env.FEISHU_APP_ID;
 
 const APP_SECRET =
 process.env.FEISHU_APP_SECRET;
+
+console.log(
+    "APP_ID:",
+    APP_ID
+);
+
+console.log(
+    "APP_SECRET长度:",
+    APP_SECRET?.length
+);
 
 
 
@@ -94,13 +168,25 @@ async function getTenantToken(){
     await axios.post(
         "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal",
         {
-            app_id:APP_ID,
-            app_secret:APP_SECRET
+            app_id: APP_ID,
+            app_secret: APP_SECRET
         }
     );
 
 
-    return res.data.tenant_access_token;
+    const token =
+    res.data.tenant_access_token;
+console.log(
+    "飞书返回:",
+    JSON.stringify(res.data)
+);
+
+    console.log(
+        "tenant_access_token获取成功"
+    );
+
+
+    return token;
 
 }
 
@@ -119,7 +205,7 @@ async function getRealDocumentId(
 ){
 
     const url =
-    `https://open.feishu.cn/open-apis/wiki/v2/spaces/get_node?token=${wikiToken}`;
+    `https://open.feishu.cn/open-apis/wiki/v2/nodes/${wikiToken}`;
 
 
     const res =
@@ -134,17 +220,16 @@ async function getRealDocumentId(
     );
 
 
-    const node =
-    res.data.data.node;
-
-
     console.log(
-        "解析:",
-        node.title
+        JSON.stringify(
+            res.data,
+            null,
+            2
+        )
     );
 
 
-    return node.obj_token;
+    return res.data.data.node.obj_token;
 
 }
 
@@ -161,6 +246,12 @@ async function getDocumentBlocks(
     token
 ){
 
+console.log(
+    "getDocumentBlocks收到token:",
+    token?.slice(0,20),
+    "长度:",
+    token?.length
+);
     let blocks = [];
 
     let pageToken = "";
@@ -169,8 +260,8 @@ async function getDocumentBlocks(
 
     while(true){
 
-        let url =
-        `https://open.feishu.cn/open-apis/docx/v1/documents/${documentId}/blocks?page_size=500`;
+       let url =
+`https://open.feishu.cn/open-apis/docx/v1/documents/${documentId}/blocks?page_size=500&document_revision_id=-1`;
 
 
 
@@ -492,11 +583,9 @@ async function syncCase(
 
 
 
-    const documentId =
-    await getRealDocumentId(
-        item.wiki_token,
-        token
-    );
+   const documentId =
+item.wiki_token;
+
 
 
 
@@ -521,7 +610,142 @@ fs.writeFileSync(
         blocks.length
     );
 
+console.log(
+    "表格数量:",
+    blocks.filter(
+        b =>
+        b.block_type === 31
+    ).length
+);
 
+console.log(
+    "所有block类型:",
+    [...new Set(
+        blocks.map(
+            b=>b.block_type
+        )
+    )]
+);
+
+console.log(
+"31类型:",
+JSON.stringify(
+blocks.filter(
+b=>b.block_type===31
+),
+null,
+2
+)
+);
+
+
+console.log(
+"32类型:",
+JSON.stringify(
+blocks.filter(
+b=>b.block_type===32
+),
+null,
+2
+)
+);
+
+
+console.log(
+    "24类型数量:",
+    blocks.filter(
+        b=>b.block_type===24
+    ).length
+);
+
+
+console.log(
+    "25类型数量:",
+    blocks.filter(
+        b=>b.block_type===25
+    ).length
+);
+
+console.log(
+"22类型:",
+JSON.stringify(
+blocks.filter(
+b=>b.block_type===22
+),
+null,
+2
+)
+);
+
+
+console.log(
+"13类型:",
+JSON.stringify(
+blocks.filter(
+b=>b.block_type===13
+),
+null,
+2
+)
+);
+
+
+console.log(
+"30类型:",
+JSON.stringify(
+blocks.filter(
+b=>b.block_type===30
+),
+null,
+2
+)
+);
+
+console.log(
+"25完整结构:",
+JSON.stringify(
+    blocks.find(
+        b=>b.block_type===25
+    ),
+    null,
+    2
+)
+);
+
+console.log(
+"25子节点完整:",
+JSON.stringify(
+    blocks.filter(
+        b =>
+        b.parent_id === "D0PMdH5Pfop6PNxqGN3cdLiwnGg"
+    ),
+    null,
+    2
+)
+);
+
+console.log(
+    "24示例:",
+    JSON.stringify(
+        blocks.find(
+            b=>b.block_type===24
+        ),
+        null,
+        2
+    )
+);
+
+
+console.log(
+    "25示例:",
+    JSON.stringify(
+        blocks.find(
+            b=>b.block_type===25
+        ),
+        null,
+        2
+    )
+);
 
     const saveDir =
     path.join(
@@ -623,14 +847,20 @@ fs.writeFileSync(
 
 
 
-    const markdown =
+   await loadSheetData(
+    blocks,
+    documentId,
+    token
+);
+
+
+const markdown = 
 createFrontMatter(item)
 +
 renderFeishuBlocks(
     blocks,
     imageMap
 );
-
 
 
 
@@ -660,70 +890,62 @@ renderFeishuBlocks(
 // 主程序
 // =====================================
 
-
 async function main(){
 
+    try{
 
-    console.log(
-        "开始同步AI案例库..."
-    );
-
-
-
-    const token =
-    await getTenantToken();
+        console.log(
+            "开始同步AI案例库..."
+        );
 
 
-
-    console.log(
-        "token成功"
-    );
+        const token =
+        await getTenantToken();
 
 
+        console.log(
+            "token长度:",
+            token.length
+        );
 
 
-    for(
-        const item of CASE_LIST
-    ){
-
-        try{
-
+        for(
+            const item of CASE_LIST
+        ){
 
             await syncCase(
                 item,
                 token
             );
 
-
         }
-        catch(error){
 
 
-            console.log(
-                "同步失败:",
-                item.name
-            );
-
-
-            console.log(
-                error.message
-            );
-
-
-        }
+        console.log(
+            "全部同步完成"
+        );
 
 
     }
+    catch(e){
+
+        console.log(
+            "同步出现错误:"
+        );
 
 
+        console.log(
+            e.response?.data || e.message
+        );
 
-    console.log(
-        "\n全部同步完成"
-    );
 
+        console.log(
+            e
+        );
+
+    }
 
 }
-
 
 
 main();

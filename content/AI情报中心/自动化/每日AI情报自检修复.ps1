@@ -56,6 +56,27 @@ function ConvertTo-CommandLineArgument {
     }
     return '"' + $Value + '"'
 }
+function Read-SharedTextFile {
+    param([string]$Path)
+    $stream = [System.IO.File]::Open(
+        $Path,
+        [System.IO.FileMode]::Open,
+        [System.IO.FileAccess]::Read,
+        [System.IO.FileShare]::ReadWrite
+    )
+    try {
+        $reader = New-Object System.IO.StreamReader($stream, [System.Text.Encoding]::UTF8, $true)
+        try {
+            return $reader.ReadToEnd()
+        }
+        finally {
+            $reader.Dispose()
+        }
+    }
+    finally {
+        $stream.Dispose()
+    }
+}
 
 function Invoke-CodexProcess {
     param(
@@ -82,15 +103,17 @@ function Invoke-CodexProcess {
     }
 
     $process.WaitForExit()
+    $process.Refresh()
+    $exitCode = $process.ExitCode
     foreach ($outputPath in @($stdoutPath, $stderrPath)) {
         if (Test-Path -LiteralPath $outputPath) {
-            $outputText = [System.IO.File]::ReadAllText($outputPath)
+            $outputText = Read-SharedTextFile -Path $outputPath
             if ($outputText) {
                 [System.IO.File]::AppendAllText($logPath, $outputText, (New-Object System.Text.UTF8Encoding($false)))
             }
         }
     }
-    return $process.ExitCode
+    return $exitCode
 }
 
 $runLock = $null

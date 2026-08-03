@@ -18,7 +18,7 @@ $lastMessagePath = Join-Path $logDir "$timestamp 执行报告.txt"
 $promptInputPath = Join-Path $logDir "$timestamp Codex输入.txt"
 $stdoutPath = Join-Path $logDir "$timestamp Codex标准输出.log"
 $stderrPath = Join-Path $logDir "$timestamp Codex错误输出.log"
-$lockPath = Join-Path $automationDir '每日AI情报运行.lock'
+$mutexName = 'Local\ObsidianDailyAIIntelligenceUpdate'
 $maxRuntimeMinutes = 25
 
 New-Item -ItemType Directory -Path $logDir -Force | Out-Null
@@ -52,6 +52,27 @@ function ConvertTo-CommandLineArgument {
     }
     return '"' + $Value + '"'
 }
+function Read-SharedTextFile {
+    param([string]$Path)
+    $stream = [System.IO.File]::Open(
+        $Path,
+        [System.IO.FileMode]::Open,
+        [System.IO.FileAccess]::Read,
+        [System.IO.FileShare]::ReadWrite
+    )
+    try {
+        $reader = New-Object System.IO.StreamReader($stream, [System.Text.Encoding]::UTF8, $true)
+        try {
+            return $reader.ReadToEnd()
+        }
+        finally {
+            $reader.Dispose()
+        }
+    }
+    finally {
+        $stream.Dispose()
+    }
+}
 
 function Invoke-CodexProcess {
     param(
@@ -77,25 +98,33 @@ function Invoke-CodexProcess {
     }
 
     $process.WaitForExit()
+    $process.Refresh()
+    $exitCode = $process.ExitCode
     foreach ($outputPath in @($stdoutPath, $stderrPath)) {
         if (Test-Path -LiteralPath $outputPath) {
-            $outputText = [System.IO.File]::ReadAllText($outputPath)
+            $outputText = Read-SharedTextFile -Path $outputPath
             if ($outputText) {
                 [System.IO.File]::AppendAllText($logPath, $outputText, (New-Object System.Text.UTF8Encoding($false)))
             }
         }
     }
-    return $process.ExitCode
+    return $exitCode
 }
 
-$runLock = $null
+$runMutex = $null
+$mutexAcquired = $false
 try {
     Write-Log '每日 AI 情报任务开始。'
 
+    $runMutex = New-Object System.Threading.Mutex($false, $mutexName)
     try {
-        $runLock = [System.IO.File]::Open($lockPath, 'OpenOrCreate', 'ReadWrite', 'None')
+        $mutexAcquired = $runMutex.WaitOne(0)
     }
-    catch [System.IO.IOException] {
+    catch [System.Threading.AbandonedMutexException] {
+        $mutexAcquired = $true
+        Write-Log '检测到上次任务异常退出后遗留的互斥量，已安全接管本次运行。'
+    }
+    if (-not $mutexAcquired) {
         Write-Log '检测到另一项每日 AI 情报任务正在运行，本次跳过以避免并发写入。'
         exit 0
     }
@@ -127,6 +156,7 @@ try {
         '--search',
         '--ask-for-approval', 'never',
         'exec',
+        '--model', 'gpt-5.5',
         '--sandbox', 'workspace-write',
         '--skip-git-repo-check',
         '--ephemeral',
@@ -159,7 +189,10 @@ catch {
     exit 1
 }
 finally {
-    if ($runLock) {
-        $runLock.Dispose()
+    if ($runMutex) {
+        if ($mutexAcquired) {
+            $runMutex.ReleaseMutex()
+        }
+        $runMutex.Dispose()
     }
 }

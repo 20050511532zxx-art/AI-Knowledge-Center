@@ -144,10 +144,12 @@ function getCellText(
     blocks
 ){
 
-    let html = "";
+    let text = "";
 
 
-    if(!cell.children){
+    if(
+        !cell.children
+    ){
 
         return "";
 
@@ -168,40 +170,8 @@ function getCellText(
 
             if(child){
 
-
-                html +=
+                text +=
                 getText(child);
-
-
-                // 如果单元格里面还有嵌套内容
-                if(
-                    child.children
-                ){
-
-                    child.children.forEach(
-                        childId=>{
-
-
-                            const subChild =
-                            findBlock(
-                                childId,
-                                blocks
-                            );
-
-
-                            if(subChild){
-
-                                html +=
-                                getText(subChild);
-
-                            }
-
-
-                        }
-                    );
-
-                }
-
 
             }
 
@@ -211,7 +181,7 @@ function getCellText(
 
 
 
-    return html.trim();
+    return text.trim();
 
 }
 
@@ -404,37 +374,25 @@ function renderChildren(
 
 
     // =====================================
-    // 飞书表格处理
-    // block_type 32 = 单元格
-    // =====================================
-
-
-    const tableCells =
-children.filter(
-    item =>
-    item.block_type === 32
-);
-
-
+// 飞书表格处理
+// block_type 31 = 表格主体
+// =====================================
 
 if(
-    tableCells.length > 0
+    block.block_type === 31 &&
+    block.table
 ){
 
-    const parentTable =
-    block.table;
-
-
-
-    const columnSize =
-    parentTable &&
-    parentTable.property &&
-    parentTable.property.column_size
-    ?
-    parentTable.property.column_size
-    :
-    2;
-
+    const tableCells =
+    block.table.cells
+    .map(
+        id =>
+        findBlock(
+            id,
+            blocks
+        )
+    )
+    .filter(Boolean);
 
 
     html += `
@@ -446,60 +404,54 @@ if(
 `;
 
 
+    const values = [];
+
+
+    tableCells.forEach(
+        cell=>{
+
+            values.push(
+                getCellText(
+                    cell,
+                    blocks
+                )
+            );
+
+        }
+    );
+
+
+    const columnSize =
+    block.table.property?.column_size || 2;
+
 
     for(
         let i = 0;
-        i < tableCells.length;
+        i < values.length;
         i += columnSize
     ){
 
-
-        html += `
-
-<tr>
-
-`;
+        html += `<tr>`;
 
 
+        for(
+            let j = 0;
+            j < columnSize;
+            j++
+        ){
 
-        const rowCells =
-        tableCells.slice(
-            i,
-            i + columnSize
-        );
-
-
-
-        rowCells.forEach(
-            cell=>{
-
-
-                html += `
-
+            html += `
 <td>
-
-${getCellText(
-    cell,
-    blocks
-)}
-
+${values[i+j] || ""}
 </td>
-
 `;
 
-            }
-        );
+        }
 
 
-
-        html += `
-
-</tr>
-
-`;
+        html += `</tr>`;
 
     }
-
 
 
     html += `
@@ -509,7 +461,6 @@ ${getCellText(
 </table>
 
 `;
-
 
 
     return html;
@@ -528,14 +479,6 @@ ${getCellText(
 
     children.forEach(
     child=>{
-
-
-        // 跳过表格单元格，避免内容重复渲染
-        if(
-            child.block_type === 32
-        ){
-            return;
-        }
 
 
         html +=
@@ -579,7 +522,28 @@ function renderBlock(
 
     const text =
     getText(block);
+// =====================================
+// 跳过已经特殊处理的内容
+// 防止重复渲染
+// =====================================
 
+if(
+    text.includes("Before-原来业务流程") ||
+    text.includes("After-AI工作流程") ||
+    text.includes("解决方案：")
+){
+
+    return "";
+
+}
+
+if(
+    text.startsWith("覆盖部门")
+){
+
+    return "";
+
+}
 // =====================================
 // Before / After 标题识别
 // =====================================
@@ -859,11 +823,6 @@ else if(
     block.block_type === 19
 ){
 
-console.log(
-    "进入callout:",
-    block.block_id
-);
-
     html += `
 
 <div class="feishu-callout">
@@ -880,44 +839,14 @@ ${renderChildren(
 
 }
 
-  //============================
+   //============================
 // 飞书表格主体
-// block_type 31
 //============================
 
 else if(
-    block.block_type === 31 &&
-    block.table
+    block.table &&
+    block.table.cells
 ){
-
-    const cellIds =
-    block.table.cells ||
-    block.children ||
-    [];
-
-
-    const cells =
-    cellIds
-    .map(
-        id =>
-        findBlock(
-            id,
-            blocks
-        )
-    )
-    .filter(Boolean);
-
-
-
-    const columnSize =
-    block.table.property &&
-    block.table.property.column_size
-    ?
-    block.table.property.column_size
-    :
-    1;
-
-
 
     html += `
 
@@ -925,40 +854,30 @@ else if(
 
 <tbody>
 
-`;
-
-
-
-    for(
-        let i = 0;
-        i < cells.length;
-        i += columnSize
-    ){
-
-        html += `
-
 <tr>
-
 `;
 
 
+    block.table.cells.forEach(
+        cellId=>{
 
-        cells
-        .slice(
-            i,
-            i + columnSize
-        )
-        .forEach(
-            cell=>{
+            const cell =
+            findBlock(
+                cellId,
+                blocks
+            );
 
+
+            if(cell){
 
                 html += `
 
 <td>
 
-${getCellText(
+${renderChildren(
     cell,
-    blocks
+    blocks,
+    imageMap
 )}
 
 </td>
@@ -966,20 +885,14 @@ ${getCellText(
 `;
 
             }
-        );
 
-
-        html += `
-
-</tr>
-
-`;
-
-    }
-
+        }
+    );
 
 
     html += `
+
+</tr>
 
 </tbody>
 
@@ -987,85 +900,9 @@ ${getCellText(
 
 `;
 
-
-
 }
 
-//================================
-// 飞书Grid布局
-// block_type 24
-//================================
 
-else if(
-    block.block_type === 24
-){
-
-    html += `
-
-<div class="feishu-grid">
-
-`;
-
-
-
-    block.children.forEach(
-        id=>{
-
-            const column =
-            findBlock(
-                id,
-                blocks
-            );
-
-
-            if(column){
-
-                html += `
-
-<div class="feishu-grid-column">
-
-${renderChildren(
-    column,
-    blocks,
-    imageMap
-)}
-
-</div>
-
-`;
-
-            }
-
-
-        }
-    );
-
-
-
-    html += `
-
-</div>
-
-`;
-
-}
-
-//============================
-// 飞书Grid列
-// block_type 25
-//============================
-
-else if(
-    block.block_type === 25
-){
-
-    html += renderChildren(
-        block,
-        blocks,
-        imageMap
-    );
-
-}
 
 //============================
 //图片
@@ -1099,266 +936,7 @@ else if(
     }
 
 
-//================================
-// 飞书在线表格（图片替代）
-// block_type 30
-//================================
 
-else if(
-    block.block_type === 30 &&
-    block.sheet
-){
-
-    let sheetImage = "";
-
-
-   let sheetImage =
-"提效结果.png";
-
-
-
-    html += `
-
-<div class="feishu-sheet">
-
-
-<div class="feishu-sheet-title">
-📊 飞书在线表格
-</div>
-
-
-
-<div class="feishu-sheet-box">
-
-
-${
-sheetImage
-?
-`
-<img
-src="/提效结果.png"
-style="
-width:100%;
-max-width:900px;
-border-radius:8px;
-"
-/>
-}
-
-//================================
-// 飞书普通表格
-// block_type 31
-//================================
-
-else if(
-    block.block_type === 31 &&
-    block.table
-){
-
-html += `
-
-<table class="feishu-real-table">
-
-<tbody>
-
-`;
-
-const cells =
-block.table.cells;
-
-
-const columnSize =
-block.table.property.column_size;
-
-
-
-for(
-let i=0;
-i<cells.length;
-i+=columnSize
-){
-
-html += "<tr>";
-
-
-for(
-let j=0;
-j<columnSize;
-j++
-){
-
-const cellId =
-cells[i+j];
-
-
-const cell =
-blocks.find(
-b=>b.block_id===cellId
-);
-
-
-let text="";
-
-
-if(cell){
-
-const textBlock =
-blocks.find(
-b=>b.parent_id===cell.block_id
-);
-
-
-if(
-textBlock?.text?.elements
-){
-
-text =
-textBlock.text.elements
-.map(
-e=>e.text_run?.content || ""
-)
-.join("");
-
-}
-
-}
-
-
-html += `
-
-<td>
-${text}
-</td>
-
-`;
-
-}
-
-
-html += "</tr>";
-
-}
-
-
-html += `
-
-</tbody>
-
-</table>
-
-`;
-
-}
-//================================
-// 飞书表格真实内容
-// block_type 31
-//================================
-
-else if(
-    block.block_type === 31 &&
-    block.table
-){
-
-    html += `
-
-<table class="feishu-real-table">
-
-<tbody>
-
-`;
-
-
-const cells =
-block.table.cells || [];
-
-
-const columnSize =
-block.table.property?.column_size || 1;
-
-
-
-for(
-let i = 0;
-i < cells.length;
-i += columnSize
-){
-
-    html += "<tr>";
-
-
-    for(
-        let j = 0;
-        j < columnSize;
-        j++
-    ){
-
-        const cellId =
-        cells[i+j];
-
-
-        let text = "";
-
-
-        const cellBlock =
-        blocks.find(
-            b =>
-            b.block_id === cellId
-        );
-
-
-        if(cellBlock && cellBlock.children){
-
-            for(
-                const childId of cellBlock.children
-            ){
-
-                const child =
-                blocks.find(
-                    b =>
-                    b.block_id === childId
-                );
-
-
-                if(
-                    child &&
-                    child.text_run
-                ){
-
-                    text +=
-                    child.text_run.content;
-
-                }
-
-            }
-
-        }
-
-
-        html += `
-
-<td>
-${text}
-</td>
-
-`;
-
-    }
-
-
-    html += "</tr>";
-
-}
-
-
-html += `
-
-</tbody>
-
-</table>
-
-`;
-
-}
 
 
     // =========================
@@ -1366,29 +944,12 @@ html += `
     // =========================
 
 
-    const noChildrenRender = [
-
-    19, // callout
-    27, // 图片
-    31  // 表格
-
-];
-
-
-if(
-    !noChildrenRender.includes(
-        block.block_type
-    )
-){
-
     html +=
     renderChildren(
         block,
         blocks,
         imageMap
     );
-
-}
 
 // =====================================
 // 未识别block兜底
@@ -1439,6 +1000,7 @@ function renderFeishuBlocks(
     let html = "";
 
 
+
     const rootBlocks =
     blocks.filter(
         block =>
@@ -1446,8 +1008,10 @@ function renderFeishuBlocks(
     );
 
 
+
     rootBlocks.forEach(
         block=>{
+
 
             html +=
             renderBlock(
@@ -1456,8 +1020,10 @@ function renderFeishuBlocks(
                 imageMap
             );
 
+
         }
     );
+
 
 
     return html;

@@ -18,18 +18,15 @@ source: 飞书知识库
 
 <tbody>
 
+
+
 <tr>
 
 
+
 <td>
 
-
-
-<div class="feishu-text">
 项目名称
-</div>
-
-
 
 </td>
 
@@ -37,377 +34,7 @@ source: 飞书知识库
 
 <td>
 
-
-
-<div class="feishu-text">
 项目定级
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-多平台退款分析软件
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-S
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-客服聊天记录质检分析
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-S
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-AI外呼系统
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-A
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-E店/S店/亚马逊三平台马帮建退款单
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-A
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-多平台退款率分析软件
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-A
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-跨境进口退款核对工具
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-B
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-亚马逊发货物流查询AI
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-B
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-探域机器人使用
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-B
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-大疆激活查询软件
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-C
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-长租售后查询关联订单筛选
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-C
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-美客多跟单软件(测试中)
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-/
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-跨境韩国本土店退货跟单软件(测试中)
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-/
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-微信聊天记录分析系统(测试中)
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-/
-</div>
-
-
 
 </td>
 
@@ -415,129 +42,319 @@ C
 
 </tr>
 
-</tbody>
 
-</table>
-
-
-
-<table class="feishu-table">
-
-<tbody>
 
 <tr>
-<td>
-项目名称
-</td>
+
+
 
 <td>
-项目定级
-</td>
-</tr><tr>
-<td>
+
 多平台退款分析软件
+
 </td>
 
+
+
 <td>
+
 S
-</td>
-</tr><tr>
-<td>
-客服聊天记录质检分析
+
 </td>
 
-<td>
-S
-</td>
-</tr><tr>
-<td>
-AI外呼系统
-</td>
 
-<td>
-A
-</td>
-</tr><tr>
-<td>
-E店/S店/亚马逊三平台马帮建退款单
-</td>
 
-<td>
-A
-</td>
-</tr><tr>
-<td>
-多平台退款率分析软件
-</td>
-
-<td>
-A
-</td>
-</tr><tr>
-<td>
-跨境进口退款核对工具
-</td>
-
-<td>
-B
-</td>
-</tr><tr>
-<td>
-亚马逊发货物流查询AI
-</td>
-
-<td>
-B
-</td>
-</tr><tr>
-<td>
-探域机器人使用
-</td>
-
-<td>
-B
-</td>
-</tr><tr>
-<td>
-大疆激活查询软件
-</td>
-
-<td>
-C
-</td>
-</tr><tr>
-<td>
-长租售后查询关联订单筛选
-</td>
-
-<td>
-C
-</td>
-</tr><tr>
-<td>
-美客多跟单软件(测试中)
-</td>
-
-<td>
-/
-</td>
-</tr><tr>
-<td>
-跨境韩国本土店退货跟单软件(测试中)
-</td>
-
-<td>
-/
-</td>
-</tr><tr>
-<td>
-微信聊天记录分析系统(测试中)
-</td>
-
-<td>
-/
-</td>
 </tr>
+
+
+
+<tr>
+
+
+
+<td>
+
+客服聊天记录质检分析
+
+</td>
+
+
+
+<td>
+
+S
+
+</td>
+
+
+
+</tr>
+
+
+
+<tr>
+
+
+
+<td>
+
+AI外呼系统
+
+</td>
+
+
+
+<td>
+
+A
+
+</td>
+
+
+
+</tr>
+
+
+
+<tr>
+
+
+
+<td>
+
+E店/S店/亚马逊三平台马帮建退款单
+
+</td>
+
+
+
+<td>
+
+A
+
+</td>
+
+
+
+</tr>
+
+
+
+<tr>
+
+
+
+<td>
+
+多平台退款率分析软件
+
+</td>
+
+
+
+<td>
+
+A
+
+</td>
+
+
+
+</tr>
+
+
+
+<tr>
+
+
+
+<td>
+
+跨境进口退款核对工具
+
+</td>
+
+
+
+<td>
+
+B
+
+</td>
+
+
+
+</tr>
+
+
+
+<tr>
+
+
+
+<td>
+
+亚马逊发货物流查询AI
+
+</td>
+
+
+
+<td>
+
+B
+
+</td>
+
+
+
+</tr>
+
+
+
+<tr>
+
+
+
+<td>
+
+探域机器人使用
+
+</td>
+
+
+
+<td>
+
+B
+
+</td>
+
+
+
+</tr>
+
+
+
+<tr>
+
+
+
+<td>
+
+大疆激活查询软件
+
+</td>
+
+
+
+<td>
+
+C
+
+</td>
+
+
+
+</tr>
+
+
+
+<tr>
+
+
+
+<td>
+
+长租售后查询关联订单筛选
+
+</td>
+
+
+
+<td>
+
+C
+
+</td>
+
+
+
+</tr>
+
+
+
+<tr>
+
+
+
+<td>
+
+美客多跟单软件(测试中)
+
+</td>
+
+
+
+<td>
+
+/
+
+</td>
+
+
+
+</tr>
+
+
+
+<tr>
+
+
+
+<td>
+
+跨境韩国本土店退货跟单软件(测试中)
+
+</td>
+
+
+
+<td>
+
+/
+
+</td>
+
+
+
+</tr>
+
+
+
+<tr>
+
+
+
+<td>
+
+微信聊天记录分析系统(测试中)
+
+</td>
+
+
+
+<td>
+
+/
+
+</td>
+
+
+
+</tr>
+
+
 
 </tbody>
 
@@ -608,24 +425,6 @@ C
 
 
 
-<div class="feishu-text">
-项目介绍：
-</div>
-
-
-
-<div class="feishu-text">
-系统通过Skill技能包自动完成平台登录、聊天记录导出、数据分析及H5报告生成，将原来需要人工逐条查询、判断和统计的流程转变为自动化执行。
-</div>
-
-
-
-<div class="feishu-text">
-以100人聊天记录为例，处理时间由原来的1.5—2小时缩短至15分钟以内，单次节省1.25—1.75小时，时间降幅达到83%—88%，处理效率提升至原来的6—8倍；分析准确率由70%—80%提升至90%以上，错误及遗漏问题预计减少50%—67%；单次直接人工成本由约70元降低至接近0元。同时，系统统一了跨平台分析口径，减少主观判断，使聊天记录分析从人工抽查转向批量化、标准化和数据化管理，为客服质检、问题发现、商机提炼及管理决策提供更加及时、完整的数据支持。
-</div>
-
-
-
 <div class="feishu-columns">
 
 <div class="feishu-column">
@@ -675,14 +474,6 @@ Befor-原来业务流程
 
 
 
-<div class="before-title">
-
-Befor-原来业务流程
-
-</div>
-
-
-
 </div>
 
 
@@ -691,6 +482,14 @@ Befor-原来业务流程
 
 
 <div class="feishu-callout">
+
+
+
+<div class="after-title">
+
+After-AI工作流程
+
+</div>
 
 
 
@@ -744,6 +543,12 @@ Befor-原来业务流程
 
 
 <div class="feishu-column">
+
+
+
+<div class="feishu-text">
+解决方案：
+</div>
 
 
 
@@ -819,36 +624,6 @@ Befor-原来业务流程
 
 
 
-</div>
-
-
-
-<div class="feishu-text">
-效果对比
-</div>
-
-
-
-<div class="feishu-list">
-• 耗   时：由原来1.5-2小时降低至15min内
-</div>
-
-
-
-<div class="feishu-list">
-• 准确率：由原来70-80%提升90%
-</div>
-
-
-
-<div class="feishu-list">
-• 效率提升：提升80%，节省大量工时
-</div>
-
-
-
-<div class="feishu-list">
-• 人力成本：由原来70元/次降低到≈0元
 </div>
 
 
@@ -955,30 +730,6 @@ Befor-原来业务流程
 
 
 
-<div class="feishu-text">
-数据库介绍
-</div>
-
-
-
-<div class="feishu-text">
-搭建客服聊天记录本地数据库，每日自动沉淀原始聊天数据，并通过AI对客户需求和高频问题进行分类分析。
-</div>
-
-
-
-<div class="feishu-text">
-目前已分析9,227名客户、46,807条有效消息，自动归纳为12类需求，识别出套餐配件、售后退换、价格优惠、产品选购和物流查询等核心问题。
-</div>
-
-
-
-<div class="feishu-text">
-分析结果通过云端H5页面展示，支持按店铺和日期查询，并同步呈现客户原话、问题占比、处理优先级及AI优化建议，为商品页面优化、客服话术完善、售后流程改进和销售转化提升提供数据支持。
-</div>
-
-
-
 <div class="feishu-image">
 
 <img src="/AI案例库/客服部/客服+AI数字化解决案例/C1lpbIBmmotILBxUIwMcHkCdnze.png">
@@ -1022,6 +773,12 @@ Befor-原来业务流程
 
 
 
+<div class="feishu-text">
+覆盖部门：全新电商中心（大疆售后）、全域流量赋能中心、租赁电商中心
+</div>
+
+
+
 </div>
 
 
@@ -1056,14 +813,6 @@ Befor-原来业务流程
 
 
 
-<div class="before-title">
-
-Befor-原来业务流程
-
-</div>
-
-
-
 </div>
 
 
@@ -1072,6 +821,14 @@ Befor-原来业务流程
 
 
 <div class="feishu-callout">
+
+
+
+<div class="after-title">
+
+After-AI工作流程
+
+</div>
 
 
 
@@ -1107,6 +864,12 @@ Befor-原来业务流程
 
 
 <div class="feishu-column">
+
+
+
+<div class="feishu-text">
+解决方案：
+</div>
 
 
 
@@ -1254,14 +1017,6 @@ Befor-原来业务流程
 
 
 
-<div class="before-title">
-
-Befor-原来业务流程
-
-</div>
-
-
-
 </div>
 
 
@@ -1270,6 +1025,14 @@ Befor-原来业务流程
 
 
 <div class="feishu-callout">
+
+
+
+<div class="after-title">
+
+After-AI工作流程
+
+</div>
 
 
 
@@ -1317,6 +1080,12 @@ Befor-原来业务流程
 
 
 <div class="feishu-column">
+
+
+
+<div class="feishu-text">
+解决方案：
+</div>
 
 
 
@@ -1452,24 +1221,6 @@ Befor-原来业务流程
 
 
 
-<div class="feishu-text">
-跨境售后退款业务，已完成S店、E店马帮退款单及亚马逊退货单三项自动化工具建设。工具将原来“人工获取退库单—登录马帮—判断退款状态—选择类型—建单入库”的多步骤流程，优化为“人工获取退库单—AI自动判断—自动建单及入库”。
-</div>
-
-
-
-<div class="feishu-text">
-其中，S店和E店单笔建单时间由1—2分钟缩短至约20秒，亚马逊退货单缩短至约10秒，整体处理效率提升至原来的3—12倍。三项工具合计每月节省约23小时，全年预计节省276小时，相当于释放34.5个工作日。
-</div>
-
-
-
-<div class="feishu-text">
-在质量方面，系统将不同店铺的判断条件和操作步骤分别固化，减少退款状态错判、类型选错、信息填写错误、漏建及重复建单等问题，使退款建单工作从依赖人工经验转向标准化、自动化执行。
-</div>
-
-
-
 <div class="feishu-columns">
 
 <div class="feishu-column">
@@ -1519,14 +1270,6 @@ Befor-原来业务流程
 
 
 
-<div class="before-title">
-
-Befor-原来业务流程
-
-</div>
-
-
-
 </div>
 
 
@@ -1535,6 +1278,14 @@ Befor-原来业务流程
 
 
 <div class="feishu-callout">
+
+
+
+<div class="after-title">
+
+After-AI工作流程
+
+</div>
 
 
 
@@ -1585,6 +1336,12 @@ Befor-原来业务流程
 
 
 
+<div class="feishu-text">
+解决方案：
+</div>
+
+
+
 <div class="feishu-list">
 • 人工从跟单表获取退库单
 </div>
@@ -1622,6 +1379,37 @@ Befor-原来业务流程
 <div class="ai-card ai-card-green">
 
 <h3>🚀 提效结果/质量优化结果</h3>
+
+</div>
+
+
+
+<div class="feishu-sheet">
+
+
+<div class="feishu-sheet-title">
+📊 飞书在线表格
+</div>
+
+
+
+<div class="feishu-sheet-box">
+
+
+
+<img
+src="/AI案例库/提效结果.png"
+style="
+width:100%;
+max-width:900px;
+border-radius:8px;
+"
+/>
+
+
+
+</div>
+
 
 </div>
 
@@ -1715,18 +1503,15 @@ AI按照固定步骤处理每一笔订单，不容易受到人员熟练程度、
 
 <tbody>
 
+
+
 <tr>
 
 
+
 <td>
 
-
-
-<div class="feishu-text">
 平台
-</div>
-
-
 
 </td>
 
@@ -1734,13 +1519,7 @@ AI按照固定步骤处理每一笔订单，不容易受到人员熟练程度、
 
 <td>
 
-
-
-<div class="feishu-text">
 话术生成率
-</div>
-
-
 
 </td>
 
@@ -1748,13 +1527,7 @@ AI按照固定步骤处理每一笔订单，不容易受到人员熟练程度、
 
 <td>
 
-
-
-<div class="feishu-text">
 采纳率
-</div>
-
-
 
 </td>
 
@@ -1762,13 +1535,7 @@ AI按照固定步骤处理每一笔订单，不容易受到人员熟练程度、
 
 <td>
 
-
-
-<div class="feishu-text">
 风控率
-</div>
-
-
 
 </td>
 
@@ -1776,293 +1543,7 @@ AI按照固定步骤处理每一笔订单，不容易受到人员熟练程度、
 
 <td>
 
-
-
-<div class="feishu-text">
 人机协作率
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-淘宝
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-70%左右
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-20%左右
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-20%左右
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-45%左右
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-拼多多
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-70%左右
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-18%左右
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-15%左右
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-35%左右（租赁除外，租赁人机协作率稳定在70%左右，主要原因是产品少，接待人数少导致）
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-抖店
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-70%左右
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-20%左右
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-19%左右
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-35%左右
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-京东
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-70%左右
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-21%左右
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-19%左右
-</div>
-
-
-
-</td>
-
-
-
-<td>
-
-
-
-<div class="feishu-text">
-35%左右
-</div>
-
-
 
 </td>
 
@@ -2070,117 +1551,199 @@ AI按照固定步骤处理每一笔订单，不容易受到人员熟练程度、
 
 </tr>
 
-</tbody>
 
-</table>
-
-
-
-<table class="feishu-table">
-
-<tbody>
 
 <tr>
-<td>
-平台
-</td>
+
+
 
 <td>
-话术生成率
-</td>
 
-<td>
-采纳率
-</td>
-
-<td>
-风控率
-</td>
-
-<td>
-人机协作率
-</td>
-</tr><tr>
-<td>
 淘宝
+
 </td>
 
+
+
 <td>
+
 70%左右
+
 </td>
 
+
+
 <td>
+
 20%左右
+
 </td>
 
+
+
 <td>
+
 20%左右
+
 </td>
 
+
+
 <td>
+
 45%左右
-</td>
-</tr><tr>
-<td>
-拼多多
+
 </td>
 
-<td>
-70%左右
-</td>
 
-<td>
-18%左右
-</td>
 
-<td>
-15%左右
-</td>
-
-<td>
-35%左右（租赁除外，租赁人机协作率稳定在70%左右，主要原因是产品少，接待人数少导致）
-</td>
-</tr><tr>
-<td>
-抖店
-</td>
-
-<td>
-70%左右
-</td>
-
-<td>
-20%左右
-</td>
-
-<td>
-19%左右
-</td>
-
-<td>
-35%左右
-</td>
-</tr><tr>
-<td>
-京东
-</td>
-
-<td>
-70%左右
-</td>
-
-<td>
-21%左右
-</td>
-
-<td>
-19%左右
-</td>
-
-<td>
-35%左右
-</td>
 </tr>
+
+
+
+<tr>
+
+
+
+<td>
+
+拼多多
+
+</td>
+
+
+
+<td>
+
+70%左右
+
+</td>
+
+
+
+<td>
+
+18%左右
+
+</td>
+
+
+
+<td>
+
+15%左右
+
+</td>
+
+
+
+<td>
+
+35%左右（租赁除外，租赁人机协作率稳定在70%左右，主要原因是产品少，接待人数少导致）
+
+</td>
+
+
+
+</tr>
+
+
+
+<tr>
+
+
+
+<td>
+
+抖店
+
+</td>
+
+
+
+<td>
+
+70%左右
+
+</td>
+
+
+
+<td>
+
+20%左右
+
+</td>
+
+
+
+<td>
+
+19%左右
+
+</td>
+
+
+
+<td>
+
+35%左右
+
+</td>
+
+
+
+</tr>
+
+
+
+<tr>
+
+
+
+<td>
+
+京东
+
+</td>
+
+
+
+<td>
+
+70%左右
+
+</td>
+
+
+
+<td>
+
+21%左右
+
+</td>
+
+
+
+<td>
+
+19%左右
+
+</td>
+
+
+
+<td>
+
+35%左右
+
+</td>
+
+
+
+</tr>
+
+
 
 </tbody>
 
@@ -2256,60 +1819,6 @@ AI按照固定步骤处理每一笔订单，不容易受到人员熟练程度、
 
 
 
-<div class="feishu-text">
-1、效率提升：
-</div>
-
-
-
-<div class="feishu-list">
-• 探域除租赁以外综合能提升客服大概20%-30%的工作效率
-</div>
-
-
-
-<div class="feishu-list">
-• 租赁能提升客服60%左右效率
-</div>
-
-
-
-<div class="feishu-text">
-2、人效优化进度：
-</div>
-
-
-
-<div class="feishu-list">
-• 全新售前：全新售前已经提报了名单到主管层，正在执行相应的动作
-</div>
-
-
-
-<div class="feishu-list">
-• 全新售后：售后进行了拆分，整合到售前端分别给刘琦菁和周子晴管理
-</div>
-
-
-
-<div class="feishu-list">
-• 租赁售后：租赁把售前和售后进行了整合，这样租赁能节省1个人头
-</div>
-
-
-
-<div class="feishu-text">
-业务线部门能优化人员主要是两个原因:
-</div>
-
-
-
-<div class="feishu-text">
-业务下滑和探域提升的效率，和客服三级负责人沟通过一次，如果实现人员优化，业务和探域的占比原因大概是7:3
-</div>
-
-
-
 <h2 class="feishu-heading">
 六、跨境进口退款核对工具
 </h2>
@@ -2348,25 +1857,13 @@ AI按照固定步骤处理每一笔订单，不容易受到人员熟练程度、
 
 
 
-<div class="feishu-text">
-案例介绍：
-</div>
-
-
-
-<div class="feishu-text">
-工具主要服务于跨境电商中心，将原来需要人工完成的数据获取、规则筛选、IP单号查询和在线文档填写流程，优化为“人工获取数据—AI自动筛选及查询—固定格式输出—人工确认归档”。上线后，每日可节省约15分钟，每月节省约7—8小时，预计全年释放84—96小时，相当于10.5—12个工作日。
-</div>
-
-
-
-<div class="feishu-text">
-除工时节省外，工具通过固化筛选规则、自动匹配订单与IP单号、统一输出格式，有效降低了人工漏筛、错查、复制错误及数据错位等问题。同时保留最终人工确认环节，在提高处理效率的基础上保障退款核对结果的准确性和可控性，实现跨境退款核对流程的标准化、稳定化和可复用化。
-</div>
-
-
-
 <div class="feishu-callout">
+
+
+
+<div class="feishu-text">
+覆盖部门：跨境电商中心
+</div>
 
 
 
@@ -2404,14 +1901,6 @@ Befor-原来业务流程
 
 
 
-<div class="before-title">
-
-Befor-原来业务流程
-
-</div>
-
-
-
 </div>
 
 
@@ -2420,6 +1909,14 @@ Befor-原来业务流程
 
 
 <div class="feishu-callout">
+
+
+
+<div class="after-title">
+
+After-AI工作流程
+
+</div>
 
 
 
@@ -2467,6 +1964,12 @@ Befor-原来业务流程
 
 
 <div class="feishu-column">
+
+
+
+<div class="feishu-text">
+解决方案：
+</div>
 
 
 
@@ -2638,14 +2141,6 @@ Befor-原来业务流程
 
 
 
-<div class="before-title">
-
-Befor-原来业务流程
-
-</div>
-
-
-
 </div>
 
 
@@ -2654,6 +2149,14 @@ Befor-原来业务流程
 
 
 <div class="feishu-callout">
+
+
+
+<div class="after-title">
+
+After-AI工作流程
+
+</div>
 
 
 
@@ -2698,6 +2201,12 @@ Befor-原来业务流程
 
 
 
+<div class="feishu-text">
+解决方案：
+</div>
+
+
+
 <div class="feishu-list">
 • ai全自动查询所有订单物流状态
 </div>
@@ -2727,6 +2236,37 @@ Befor-原来业务流程
 <div class="ai-card ai-card-green">
 
 <h3>🚀 提效结果/质量优化结果</h3>
+
+</div>
+
+
+
+<div class="feishu-sheet">
+
+
+<div class="feishu-sheet-title">
+📊 飞书在线表格
+</div>
+
+
+
+<div class="feishu-sheet-box">
+
+
+
+<img
+src="/AI案例库/提效结果.png"
+style="
+width:100%;
+max-width:900px;
+border-radius:8px;
+"
+/>
+
+
+
+</div>
+
 
 </div>
 
@@ -2869,6 +2409,12 @@ AI可以自动完成物流状态查询，并将异常订单保存下来，缩短
 
 
 
+<div class="feishu-text">
+覆盖部门：全新电商中心
+</div>
+
+
+
 </div>
 
 
@@ -2903,14 +2449,6 @@ Befor-原来业务流程
 
 
 
-<div class="before-title">
-
-Befor-原来业务流程
-
-</div>
-
-
-
 </div>
 
 
@@ -2919,6 +2457,14 @@ Befor-原来业务流程
 
 
 <div class="feishu-callout">
+
+
+
+<div class="after-title">
+
+After-AI工作流程
+
+</div>
 
 
 
@@ -2969,6 +2515,12 @@ Befor-原来业务流程
 
 
 
+<div class="feishu-text">
+解决方案：
+</div>
+
+
+
 <div class="feishu-list">
 • 流程全部实现AI自动化
 </div>
@@ -2992,6 +2544,37 @@ Befor-原来业务流程
 <div class="ai-card ai-card-green">
 
 <h3>🚀 提效结果/质量优化结果</h3>
+
+</div>
+
+
+
+<div class="feishu-sheet">
+
+
+<div class="feishu-sheet-title">
+📊 飞书在线表格
+</div>
+
+
+
+<div class="feishu-sheet-box">
+
+
+
+<img
+src="/AI案例库/提效结果.png"
+style="
+width:100%;
+max-width:900px;
+border-radius:8px;
+"
+/>
+
+
+
+</div>
+
 
 </div>
 
@@ -3101,13 +2684,13 @@ Befor-原来业务流程
 
 
 
-<div class="feishu-text">
-“长租售后查询关联订单筛选”属于售后数据查询类自动化项目，主要解决人工跨多个Excel表格筛选关联订单效率低、重复操作多的问题。项目通过AI自动检索多个表格并匹配订单信息，将原来的人工查询流程转变为自动化查询流程。
-</div>
-
-
-
 <div class="feishu-callout">
+
+
+
+<div class="feishu-text">
+覆盖部门：全新电商中心
+</div>
 
 
 
@@ -3145,14 +2728,6 @@ Befor-原来业务流程
 
 
 
-<div class="before-title">
-
-Befor-原来业务流程
-
-</div>
-
-
-
 </div>
 
 
@@ -3161,6 +2736,14 @@ Befor-原来业务流程
 
 
 <div class="feishu-callout">
+
+
+
+<div class="after-title">
+
+After-AI工作流程
+
+</div>
 
 
 
@@ -3190,6 +2773,12 @@ Befor-原来业务流程
 
 
 <div class="feishu-column">
+
+
+
+<div class="feishu-text">
+解决方案：
+</div>
 
 
 
@@ -3227,6 +2816,37 @@ Befor-原来业务流程
 
 
 
+<div class="feishu-sheet">
+
+
+<div class="feishu-sheet-title">
+📊 飞书在线表格
+</div>
+
+
+
+<div class="feishu-sheet-box">
+
+
+
+<img
+src="/AI案例库/提效结果.png"
+style="
+width:100%;
+max-width:900px;
+border-radius:8px;
+"
+/>
+
+
+
+</div>
+
+
+</div>
+
+
+
 <h2 class="feishu-heading">
 十、美客多跟单软件（调试中）
 </h2>
@@ -3253,13 +2873,13 @@ Befor-原来业务流程
 
 
 
-<div class="feishu-text">
-属于跨境售后订单跟踪自动化项目，主要解决美客多平台售后业务中订单数据获取、状态判断、翻译整理、表格匹配等重复性工作耗时较长的问题。目前项目处于调试阶段，预计上线后可显著减少售后人员的数据处理投入。
-</div>
-
-
-
 <div class="feishu-callout">
+
+
+
+<div class="feishu-text">
+覆盖部门：跨境电商中心
+</div>
 
 
 
@@ -3297,14 +2917,6 @@ Befor-原来业务流程
 
 
 
-<div class="before-title">
-
-Befor-原来业务流程
-
-</div>
-
-
-
 </div>
 
 
@@ -3313,6 +2925,14 @@ Befor-原来业务流程
 
 
 <div class="feishu-callout">
+
+
+
+<div class="after-title">
+
+After-AI工作流程
+
+</div>
 
 
 
@@ -3366,6 +2986,12 @@ Befor-原来业务流程
 
 
 <div class="feishu-column">
+
+
+
+<div class="feishu-text">
+解决方案：
+</div>
 
 
 
@@ -3439,6 +3065,37 @@ AI覆盖大部分数据处理环节，人工由“全流程操作”转变为“
 
 
 
+<div class="feishu-sheet">
+
+
+<div class="feishu-sheet-title">
+📊 飞书在线表格
+</div>
+
+
+
+<div class="feishu-sheet-box">
+
+
+
+<img
+src="/AI案例库/提效结果.png"
+style="
+width:100%;
+max-width:900px;
+border-radius:8px;
+"
+/>
+
+
+
+</div>
+
+
+</div>
+
+
+
 <h2 class="feishu-heading">
 十一、跨境韩国本土店退货跟单软件（调试中）
 </h2>
@@ -3471,6 +3128,12 @@ AI覆盖大部分数据处理环节，人工由“全流程操作”转变为“
 
 
 <div class="feishu-callout">
+
+
+
+<div class="feishu-text">
+覆盖部门：跨境电商中心
+</div>
 
 
 
@@ -3508,14 +3171,6 @@ Befor-原来业务流程
 
 
 
-<div class="before-title">
-
-Befor-原来业务流程
-
-</div>
-
-
-
 </div>
 
 
@@ -3524,6 +3179,14 @@ Befor-原来业务流程
 
 
 <div class="feishu-callout">
+
+
+
+<div class="after-title">
+
+After-AI工作流程
+
+</div>
 
 
 
@@ -3589,6 +3252,12 @@ Befor-原来业务流程
 
 
 <div class="feishu-column">
+
+
+
+<div class="feishu-text">
+解决方案：
+</div>
 
 
 

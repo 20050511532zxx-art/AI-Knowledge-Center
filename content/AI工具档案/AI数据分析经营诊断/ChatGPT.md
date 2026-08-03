@@ -42,3 +42,25 @@
 ## 下一步行动
 
 - 正式采用前核实数据处理条款、最新价格、商用授权和特殊事件，并以工具官方信息为准。
+
+## 更新记录
+
+### 2026-07-29
+
+**更新类型：** 新用户群体开放、专用工作区、访问计划
+
+**更新内容：** OpenAI 面向符合条件的学术研究人员推出 ChatGPT for Academic Researchers 专用工作区。经验证且受雇于或隶属于认可学位授予机构的研究人员，可获得 12 个月免费访问。
+
+**官方来源：**
+
+- https://help.openai.com/en/articles/6825453-chatgpt-release-notes
+
+### 2026-07-29
+
+**更新类型：** 账号能力、第三方应用集成
+
+**更新内容：** OpenAI 扩大 Sign in with ChatGPT Beta，用户可使用 ChatGPT 账号创建或登录支持该能力的第三方应用；官方表示将逐步扩展到更多应用。
+
+**官方来源：**
+
+- https://help.openai.com/en/articles/6825453-chatgpt-release-notes

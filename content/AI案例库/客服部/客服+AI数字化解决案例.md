@@ -1425,37 +1425,7 @@ After-AI工作流程
 
 
 
-<div class="feishu-sheet">
-
-
-<div class="feishu-sheet-title">
-
-📊 飞书在线表格
-
-</div>
-
-
-
-<div class="feishu-sheet-box">
-
-
-<a
-
-href="https://feishu.cn/sheets/Q2pKsaAdUhw5JStYjlMcIaX1nFj_pzwD7N"
-
-target="_blank"
-
->
-
-打开飞书原表
-
-</a>
-
-
-</div>
-
-
-</div>
+![](/images/feishu/Q2pKsaAdUhw5JStYjlMcIaX1nFj_pzwD7N.png)
 
 
 
@@ -2330,37 +2300,7 @@ ai全自动查询所有订单物流状态
 
 
 
-<div class="feishu-sheet">
-
-
-<div class="feishu-sheet-title">
-
-📊 飞书在线表格
-
-</div>
-
-
-
-<div class="feishu-sheet-box">
-
-
-<a
-
-href="https://feishu.cn/sheets/Q2pKsaAdUhw5JStYjlMcIaX1nFj_MVooFA"
-
-target="_blank"
-
->
-
-打开飞书原表
-
-</a>
-
-
-</div>
-
-
-</div>
+![](/images/feishu/Q2pKsaAdUhw5JStYjlMcIaX1nFj_MVooFA.png)
 
 
 
@@ -2660,37 +2600,7 @@ After-AI工作流程
 
 
 
-<div class="feishu-sheet">
-
-
-<div class="feishu-sheet-title">
-
-📊 飞书在线表格
-
-</div>
-
-
-
-<div class="feishu-sheet-box">
-
-
-<a
-
-href="https://feishu.cn/sheets/Q2pKsaAdUhw5JStYjlMcIaX1nFj_Ewhfhg"
-
-target="_blank"
-
->
-
-打开飞书原表
-
-</a>
-
-
-</div>
-
-
-</div>
+![](/images/feishu/Q2pKsaAdUhw5JStYjlMcIaX1nFj_Ewhfhg.png)
 
 
 
@@ -2934,37 +2844,7 @@ After-AI工作流程
 
 
 
-<div class="feishu-sheet">
-
-
-<div class="feishu-sheet-title">
-
-📊 飞书在线表格
-
-</div>
-
-
-
-<div class="feishu-sheet-box">
-
-
-<a
-
-href="https://feishu.cn/sheets/Q2pKsaAdUhw5JStYjlMcIaX1nFj_RlJCwl"
-
-target="_blank"
-
->
-
-打开飞书原表
-
-</a>
-
-
-</div>
-
-
-</div>
+![](/images/feishu/Q2pKsaAdUhw5JStYjlMcIaX1nFj_RlJCwl.png)
 
 
 
@@ -3184,37 +3064,7 @@ AI覆盖大部分数据处理环节，人工由“全流程操作”转变为“
 
 
 
-<div class="feishu-sheet">
-
-
-<div class="feishu-sheet-title">
-
-📊 飞书在线表格
-
-</div>
-
-
-
-<div class="feishu-sheet-box">
-
-
-<a
-
-href="https://feishu.cn/sheets/Q2pKsaAdUhw5JStYjlMcIaX1nFj_TK9Bte"
-
-target="_blank"
-
->
-
-打开飞书原表
-
-</a>
-
-
-</div>
-
-
-</div>
+![](/images/feishu/Q2pKsaAdUhw5JStYjlMcIaX1nFj_TK9Bte.png)
 
 
 

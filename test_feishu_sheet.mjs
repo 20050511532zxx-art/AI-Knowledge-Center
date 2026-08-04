@@ -7,5 +7,5 @@ const url =
 
 await screenshotFeishuSheet(
     url,
-    "测试在线表格"
+    "Q2pKsaAdUhw5JStYjlMcIaX1nFj_pzwD7N"
 );

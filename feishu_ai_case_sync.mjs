@@ -11,6 +11,11 @@ import {
     renderFeishuBlocks
 } from "./feishu_renderer.js";
 
+import {
+    screenshotFeishuSheet
+}
+from "./feishu_sheet_screenshot.mjs";
+
 // ===============================
 // 读取飞书Sheet
 // ===============================
@@ -590,10 +595,39 @@ item.wiki_token;
 
 
     const blocks =
-    await getDocumentBlocks(
-        documentId,
-        token
-    );
+await getDocumentBlocks(
+    documentId,
+    token
+);
+
+
+// 自动截图在线表格
+
+for(
+    const block of blocks
+){
+
+    if(
+        block.block_type === 30 &&
+        block.sheet
+    ){
+
+        const sheetToken =
+        block.sheet.token;
+
+
+        const sheetUrl =
+        `https://feishu.cn/sheets/${sheetToken}`;
+
+
+        await screenshotFeishuSheet(
+            sheetUrl,
+            sheetToken
+        );
+
+    }
+
+}
 
 console.log(
     "所有block类型:",

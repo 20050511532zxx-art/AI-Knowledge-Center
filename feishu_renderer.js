@@ -969,39 +969,9 @@ function renderSheet(
 
 
 
-    return `
+  return `
 
-<div class="feishu-sheet">
-
-
-<div class="feishu-sheet-title">
-
-📊 飞书在线表格
-
-</div>
-
-
-
-<div class="feishu-sheet-box">
-
-
-<a
-
-href="https://feishu.cn/sheets/${token}"
-
-target="_blank"
-
->
-
-打开飞书原表
-
-</a>
-
-
-</div>
-
-
-</div>
+![](/images/feishu/${token}.png)
 
 `;
 

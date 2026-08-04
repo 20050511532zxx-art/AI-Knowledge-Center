@@ -1,123 +1,19 @@
 // =====================================
-// 飞书通用递归渲染器 V2
-// 第一部分
+// 飞书文档渲染器 V5
+// Part 1
+//
+// 目标：
+// 1. 恢复正文解析
+// 2. 恢复标题结构
+// 3. 保留原同步逻辑
 // =====================================
-
-
-
-// =====================================
-// 获取文字
-// =====================================
-
-function getText(block){
-
-    let text = "";
-
-
-    function parseElements(elements){
-
-        if(!elements){
-            return;
-        }
-
-
-        elements.forEach(
-            item=>{
-
-
-                if(
-                    item.text_run
-                ){
-
-                    text +=
-                    item.text_run.content;
-
-                }
-
-
-                else if(
-                    item.mention
-                ){
-
-                    text +=
-                    item.mention.text || "";
-
-                }
-
-
-                else if(
-                    item.content
-                ){
-
-                    text +=
-                    item.content;
-
-                }
-
-
-            }
-        );
-
-    }
-
-
-
-
-    const keys = [
-
-        "text",
-
-        "page",
-
-        "bullet",
-
-        "heading1",
-
-        "heading2",
-
-        "heading3",
-
-        "heading4",
-
-        "heading5"
-
-    ];
-
-
-
-    keys.forEach(
-        key=>{
-
-
-            if(
-                block[key]
-            ){
-
-                parseElements(
-                    block[key].elements
-                );
-
-            }
-
-
-        }
-    );
-
-
-
-    return text.trim();
-
-}
-
-
 
 
 
 
 // =====================================
-// 根据ID寻找block
+// 基础查找
 // =====================================
-
 
 function findBlock(
     id,
@@ -134,20 +30,56 @@ function findBlock(
 
 
 
+
 // =====================================
-// 获取表格单元格文字
+// 获取子节点
 // =====================================
 
-
-function getCellText(
-    cell,
+function getChildren(
+    block,
     blocks
 ){
 
-    let html = "";
+    if(
+        !block ||
+        !block.children
+    ){
+
+        return [];
+
+    }
 
 
-    if(!cell.children){
+
+    return block.children
+    .map(
+        id =>
+        findBlock(
+            id,
+            blocks
+        )
+    )
+    .filter(Boolean);
+
+}
+
+
+
+
+
+// =====================================
+// 飞书文字解析
+// 支持：
+// text
+// heading
+// bullet
+// =====================================
+
+function getText(
+    block
+){
+
+    if(!block){
 
         return "";
 
@@ -155,63 +87,146 @@ function getCellText(
 
 
 
-    cell.children.forEach(
-        id=>{
+    let text = "";
 
 
-            const child =
-            findBlock(
-                id,
-                blocks
-            );
+
+    let elements = [];
 
 
-            if(child){
+
+    if(
+        block.text &&
+        block.text.elements
+    ){
+
+        elements =
+        block.text.elements;
+
+    }
 
 
-                html +=
-                getText(child);
+
+    else if(
+        block.heading1 &&
+        block.heading1.elements
+    ){
+
+        elements =
+        block.heading1.elements;
+
+    }
 
 
-                // 如果单元格里面还有嵌套内容
-                if(
-                    child.children
-                ){
 
-                    child.children.forEach(
-                        childId=>{
+    else if(
+        block.heading2 &&
+        block.heading2.elements
+    ){
 
+        elements =
+        block.heading2.elements;
 
-                            const subChild =
-                            findBlock(
-                                childId,
-                                blocks
-                            );
+    }
 
 
-                            if(subChild){
 
-                                html +=
-                                getText(subChild);
+    else if(
+        block.heading3 &&
+        block.heading3.elements
+    ){
 
-                            }
+        elements =
+        block.heading3.elements;
+
+    }
 
 
-                        }
-                    );
 
-                }
+    else if(
+        block.bullet &&
+        block.bullet.elements
+    ){
 
+        elements =
+        block.bullet.elements;
+
+    }
+
+else if(
+    block.ordered &&
+    block.ordered.elements
+)
+{
+
+    elements =
+    block.ordered.elements;
+
+}
+
+
+else if(
+    block.code &&
+    block.code.elements
+)
+{
+
+    elements =
+    block.code.elements;
+
+}
+
+
+else if(
+    block.quote &&
+    block.quote.elements
+)
+{
+
+    elements =
+    block.quote.elements;
+
+}
+
+    elements.forEach(
+        item=>{
+
+
+            if(
+                item.text_run
+            ){
+
+                text +=
+                item.text_run.content || "";
 
             }
 
 
+            else if(
+                item.mention
+            ){
+
+                text +=
+                item.mention.text || "";
+
+            }
+else if(
+    item.text_run &&
+    item.text_run.content
+)
+{
+
+    text +=
+    item.text_run.content;
+
+}
+
         }
     );
 
 
 
-    return html.trim();
+    return text.trim();
 
 }
 
@@ -219,47 +234,18 @@ function getCellText(
 
 
 
-
-
 // =====================================
-// 判断是否等级字段
+// 判断block类型
 // =====================================
 
-
-function isLevelText(text){
-
-    if(!text){
-        return false;
-    }
-
-
-    return /^[A-Z]$/.test(
-        text.trim()
-    );
-
-}
-
-
-
-
-
-
-// =====================================
-// 判断是否分隔符
-// =====================================
-
-
-function isSeparator(text){
-
-    if(!text){
-        return false;
-    }
-
+function hasHeading(
+    block
+){
 
     return (
-        text === "/" ||
-        text === "-" ||
-        text === "—"
+        block.heading1 ||
+        block.heading2 ||
+        block.heading3
     );
 
 }
@@ -268,94 +254,149 @@ function isSeparator(text){
 
 
 
+function hasText(
+    block
+){
+
+    return (
+        block.text ||
+        block.bullet
+    );
+
+}
+
+
+
+
 
 // =====================================
-// 自动识别字段列表
+// 表格单元格文字
 // =====================================
 
-
-function detectFieldGroup(
-    children,
+function getCellText(
+    cell,
     blocks
 ){
 
-    const result = [];
+    if(!cell){
+        return "";
+    }
 
 
-
-    for(
-        let i = 0;
-        i < children.length;
-        i++
-    ){
+    let result = "";
 
 
-        const current =
-        children[i];
+    function scan(block){
+
+        if(!block){
+            return;
+        }
 
 
-        const currentText =
-        getText(current);
+        const text =
+        getText(block);
 
 
+        if(text){
 
-        const next =
-        children[i+1];
-
-
-
-        const nextText =
-        next ?
-        getText(next)
-        :
-        "";
-
-
-
-        // 名称 + 等级
-
-        if(
-            next &&
-            isLevelText(nextText)
-        ){
-
-            result.push({
-
-                name:
-                currentText,
-
-                level:
-                nextText
-
-            });
-
-
-            i++;
-
-
-            continue;
+            result += text;
 
         }
 
 
-        result.push({
 
-            text:
-            currentText
+        if(block.children){
 
-        });
+            block.children.forEach(
+                id=>{
 
+                    const child =
+                    findBlock(
+                        id,
+                        blocks
+                    );
+
+
+                    scan(child);
+
+                }
+            );
+
+        }
 
     }
 
 
-    return result;
+
+    scan(cell);
+
+
+    return result.trim();
+
+}
+
+
+
+
+
+// =====================================
+// 图片映射
+// =====================================
+
+function getImageUrl(
+    token,
+    imageMap
+){
+
+    if(
+        !token
+    ){
+
+        return "";
+
+    }
+
+
+
+    return (
+        imageMap[token]
+        ||
+        ""
+    );
+
+}
+
+
+
+
+
+// =====================================
+// 判断是否在callout
+// =====================================
+
+function isInsideCallout(
+    block,
+    blocks
+){
+
+    const parent =
+    findBlock(
+        block.parent_id,
+        blocks
+    );
+
+
+
+    return (
+        parent &&
+        parent.block_type === 19
+    );
 
 }
 
 // =====================================
-// 第二部分
-// renderChildren + renderBlock
+// Part 2
+// 核心渲染
 // =====================================
 
 
@@ -367,16 +408,123 @@ function detectFieldGroup(
 // 渲染子节点
 // =====================================
 
-
 function renderChildren(
     block,
     blocks,
-    imageMap
+    imageMap={}
 ){
 
+    let html = "";
+
+    const children =
+    getChildren(
+        block,
+        blocks
+    );
+
+
+    children.forEach(
+        child=>{
+
+            // 普通表格
+            if(
+                child.block_type === 31 &&
+                child.table
+            ){
+
+                html += renderTable(
+                    child,
+                    blocks
+                );
+
+                return;
+
+            }
+
+
+            // 飞书在线表格
+            if(
+                child.block_type === 30 &&
+                child.sheet
+            ){
+
+                html += renderSheet(
+                    child
+                );
+
+                return;
+
+            }
+
+
+
+            html +=
+            renderBlock(
+                child,
+                blocks,
+                imageMap
+            );
+
+
+        }
+    );
+
+
+    return html;
+
+}
+
+
+
+
+
+
+
+
+// =====================================
+// 判断标题样式
+// =====================================
+
+function renderTitle(
+    text,
+    level=2
+){
+
+    return `
+
+<div class="feishu-title level-${level}">
+
+${text}
+
+</div>
+
+`;
+
+}
+
+
+
+
+
+
+
+
+// =====================================
+// 主渲染函数
+// =====================================
+
+function renderBlock(
+    block,
+    blocks,
+    imageMap={}
+){
+
+    let html = "";
+
+
+    // 跳过表格单元格
     if(
-        !block.children ||
-        block.children.length === 0
+        block.block_type === 32
     ){
 
         return "";
@@ -385,360 +533,21 @@ function renderChildren(
 
 
 
-    let html = "";
-
-
-
-    const children =
-    block.children
-    .map(
-        id =>
-        findBlock(
-            id,
-            blocks
-        )
-    )
-    .filter(Boolean);
-
-
-
-
-    // =====================================
-    // 飞书表格处理
-    // block_type 32 = 单元格
-    // =====================================
-
-
-    const tableCells =
-children.filter(
-    item =>
-    item.block_type === 32
-);
-
-
-
-if(
-    tableCells.length > 0
-){
-
-    const parentTable =
-    block.table;
-
-
-
-    const columnSize =
-    parentTable &&
-    parentTable.property &&
-    parentTable.property.column_size
-    ?
-    parentTable.property.column_size
-    :
-    2;
-
-
-
-    html += `
-
-<table class="feishu-table">
-
-<tbody>
-
-`;
-
-
-
-    for(
-        let i = 0;
-        i < tableCells.length;
-        i += columnSize
-    ){
-
-
-        html += `
-
-<tr>
-
-`;
-
-
-
-        const rowCells =
-        tableCells.slice(
-            i,
-            i + columnSize
-        );
-
-
-
-        rowCells.forEach(
-            cell=>{
-
-
-                html += `
-
-<td>
-
-${getCellText(
-    cell,
-    blocks
-)}
-
-</td>
-
-`;
-
-            }
-        );
-
-
-
-        html += `
-
-</tr>
-
-`;
-
-    }
-
-
-
-    html += `
-
-</tbody>
-
-</table>
-
-`;
-
-
-
-    return html;
-
-}
-
-
-
-
-
-
-    // =====================================
-    // 普通内容
-    // =====================================
-
-
-    children.forEach(
-    child=>{
-
-
-        // 跳过表格单元格，避免内容重复渲染
-        if(
-            child.block_type === 32
-        ){
-            return;
-        }
-
-
-        html +=
-        renderBlock(
-            child,
-            blocks,
-            imageMap
-        );
-
-
-    }
-);
-
-
-
-    return html;
-
-}
-
-
-
-
-
-
-
-
-
-// =====================================
-// 渲染单个block
-// =====================================
-
-
-function renderBlock(
-    block,
-    blocks,
-    imageMap
-){
-
-    let html = "";
-
-
     const text =
-    getText(block);
-
-// =====================================
-// Before / After 标题识别
-// =====================================
-
-
-if(text){
-
-  if(
-    text.includes("Before") ||
-    text.includes("原来业务流程")
-)
-{
-
-return `
-
-<div class="before-title">
-
-${text}
-
-</div>
-
-`;
-
-}
-
-
-
-    if(
-    text.includes("After") ||
-    text.includes("AI工作流程")
-)
-{
-
-return `
-
-<div class="after-title">
-
-${text}
-
-</div>
-
-`;
-
-}
-
-}
-// =====================================
-// 飞书双栏布局
-// =====================================
-
-if(
-    block.children &&
-    block.children.length === 2
-){
-
-    const left =
-    findBlock(
-        block.children[0],
-        blocks
+    getText(
+        block
     );
 
 
-    const right =
-    findBlock(
-        block.children[1],
-        blocks
-    );
 
 
-    if(
-        left &&
-        right
-    ){
-
-        return `
-
-<div class="feishu-columns">
-
-<div class="feishu-column">
-
-${renderChildren(
-    left,
-    blocks,
-    imageMap
-)}
-
-</div>
 
 
-<div class="feishu-column">
 
-${renderChildren(
-    right,
-    blocks,
-    imageMap
-)}
 
-</div>
-
-</div>
-
-`;
-
-    }
-
-}
-
+    // =====================================
+    // 一级根节点
     // =====================================
-    // 飞书高亮卡片识别
-    // =====================================
-
-    if(text){
-
-        if(
-            text.includes("业务痛点")
-        ){
-
-            return `
-
-<div class="ai-card ai-card-yellow">
-
-<h3>⚠️ ${text}</h3>
-
-</div>
-
-`;
-
-        }
-
-
-
-
-
-        if(
-            text.includes("提效结果") ||
-            text.includes("质量优化结果") ||
-            text.includes("项目成果")
-        ){
-
-            return `
-
-<div class="ai-card ai-card-green">
-
-<h3>🚀 ${text}</h3>
-
-</div>
-
-`;
-
-        }
-
-
-    }
-
-
-
-    // =========================
-    // 页面
-    // =========================
 
     if(
         block.block_type === 1
@@ -754,117 +563,87 @@ ${renderChildren(
 
 
 
-    // =========================
-    // 表格单元格
-    // block_type 32
-    // =========================
-
-    if(
-        block.block_type === 32
-    ){
-
-        return renderChildren(
-            block,
-            blocks,
-            imageMap
-        );
-
-    }
 
 
 
 
-    // =========================
-    // 标题
-    // =========================
+    // =====================================
+    // 一级标题
+    // =====================================
 
-
-    if(
-        [
-            3,
-            4,
-            5
-        ].includes(
-            block.block_type
-        )
-    ){
-
-        html += `
-
-<h2 class="feishu-heading">
-${text}
-</h2>
-
-`;
-
-    }
-
-
-
-
-    // =========================
-    // 普通文本
-    // =========================
-
-
-    else if(
-        block.block_type === 2
-    ){
-
-        if(text){
-
-            html += `
-
-<div class="feishu-text">
-${text}
-</div>
-
-`;
-
-        }
-
-    }
-
-
-
-
-
-    // =========================
-    // 列表
-    // =========================
-
-
-    else if(
-        block.block_type === 12
-    ){
-
-        html += `
-
-<div class="feishu-list">
-• ${text}
-</div>
-
-`;
-
-    }
-
-
-
-// =====================================
-// 飞书提示块 callout
-// block_type 19
-// =====================================
-
-else if(
-    block.block_type === 19
+   if(
+    block.heading1
 ){
 
-console.log(
-    "进入callout:",
-    block.block_id
-);
+    html +=
+    renderTitle(
+        text,
+        1
+    );
 
-    html += `
+
+    html +=
+    renderChildren(
+        block,
+        blocks,
+        imageMap
+    );
+
+
+    return html;
+
+}
+
+
+
+
+
+
+
+    // =====================================
+    // 二级标题
+    // =====================================
+
+    if(
+    block.heading2 ||
+    block.heading3
+){
+
+    html +=
+    renderTitle(
+        text,
+        2
+    );
+
+
+    html +=
+    renderChildren(
+        block,
+        blocks,
+        imageMap
+    );
+
+
+    return html;
+
+}
+
+
+
+
+
+
+
+
+    // =====================================
+    // Callout
+    // =====================================
+
+    if(
+        block.block_type === 19
+    ){
+
+        html += `
 
 <div class="feishu-callout">
 
@@ -878,53 +657,208 @@ ${renderChildren(
 
 `;
 
+
+        return html;
+
+    }
+
+
+
+
+
+
+
+
+    // =====================================
+    // 图片
+    // =====================================
+
+    if(
+        block.image
+    ){
+
+
+        const token =
+        block.image.token;
+
+
+
+        const src =
+        getImageUrl(
+            token,
+            imageMap
+        );
+
+
+
+        if(src){
+
+            html += `
+
+<div class="feishu-image">
+
+<img src="${src}">
+
+</div>
+
+`;
+
+        }
+
+
+        return html;
+
+    }
+
+
+
+
+
+
+
+
+    // =====================================
+    // 普通文本
+    // =====================================
+
+    if(
+        hasText(block)
+    ){
+
+
+        if(
+            text
+        ){
+
+            html += `
+
+<div class="feishu-text">
+
+${text}
+
+</div>
+
+`;
+
+        }
+
+
+        return html;
+
+    }
+
+
+
+
+
+
+
+
+    // =====================================
+    // 列表
+    // =====================================
+
+    if(
+        block.bullet
+    ){
+
+
+        html += `
+
+<div class="feishu-list">
+
+• ${text}
+
+</div>
+
+`;
+
+
+
+        return html;
+
+    }
+
+
+
+
+
+
+
+
+    // =====================================
+    // 默认递归
+    // =====================================
+
+
+    return renderChildren(
+        block,
+        blocks,
+        imageMap
+    );
+
+
 }
 
-  //============================
-// 飞书表格主体
+// =====================================
+// Part 3
+// 表格 + 总入口
+// =====================================
+
+
+
+
+
+
+
+// =====================================
+// 普通飞书表格
 // block_type 31
-//============================
+// =====================================
 
-else if(
-    block.block_type === 31 &&
-    block.table
+function renderTable(
+    block,
+    blocks
 ){
+console.log(
+    "进入表格渲染:",
+    block.block_id
+);
+console.log(
+    "表格数据:",
+    JSON.stringify(
+        block.table,
+        null,
+        2
+    )
+);
+    if(
+        !block.table
+    ){
 
-    const cellIds =
-    block.table.cells ||
-    block.children ||
-    [];
+        return "";
+
+    }
+
 
 
     const cells =
-    cellIds
-    .map(
-        id =>
-        findBlock(
-            id,
-            blocks
-        )
-    )
-    .filter(Boolean);
+    block.table.cells || [];
 
 
 
     const columnSize =
-    block.table.property &&
-    block.table.property.column_size
-    ?
-    block.table.property.column_size
-    :
-    1;
+    block.table.property?.column_size || 1;
 
 
 
-    html += `
+   let html = `
+
+<div class="feishu-table-wrapper">
 
 <table class="feishu-table">
 
 <tbody>
-
 `;
 
 
@@ -943,30 +877,45 @@ else if(
 
 
 
-        cells
-        .slice(
-            i,
-            i + columnSize
-        )
-        .forEach(
-            cell=>{
+        for(
+            let j = 0;
+            j < columnSize;
+            j++
+        ){
 
 
-                html += `
+            const cellId =
+            cells[i+j];
+
+
+
+            const cell =
+            findBlock(
+                cellId,
+                blocks
+            );
+
+
+
+           const cellText =
+getCellText(
+    cell,
+    blocks
+);
+
+
+html += `
 
 <td>
 
-${getCellText(
-    cell,
-    blocks
-)}
+${cellText || ""}
 
 </td>
 
 `;
 
-            }
-        );
+        }
+
 
 
         html += `
@@ -985,145 +934,50 @@ ${getCellText(
 
 </table>
 
-`;
-
-
-
-}
-
-//================================
-// 飞书Grid布局
-// block_type 24
-//================================
-
-else if(
-    block.block_type === 24
-){
-
-    html += `
-
-<div class="feishu-grid">
-
-`;
-
-
-
-    block.children.forEach(
-        id=>{
-
-            const column =
-            findBlock(
-                id,
-                blocks
-            );
-
-
-            if(column){
-
-                html += `
-
-<div class="feishu-grid-column">
-
-${renderChildren(
-    column,
-    blocks,
-    imageMap
-)}
-
 </div>
 
 `;
 
-            }
+console.log(
+    "生成表格HTML长度:",
+    html.length
+);
 
-
-        }
-    );
-
-
-
-    html += `
-
-</div>
-
-`;
+    return html;
 
 }
 
-//============================
-// 飞书Grid列
-// block_type 25
-//============================
-
-else if(
-    block.block_type === 25
-){
-
-    html += renderChildren(
-        block,
-        blocks,
-        imageMap
-    );
-
-}
-
-//============================
-//图片
-//============================
-
-else if(
-    block.block_type === 27 &&
-    block.image
-){
-
-        const token =
-        block.image.token;
 
 
-        if(
-            imageMap[token]
-        ){
-
-            html += `
-
-<div class="feishu-image">
-
-<img src="${imageMap[token]}">
-
-</div>
-
-`;
-
-        }
-
-    }
 
 
-//================================
-// 飞书在线表格（图片替代）
+
+
+
+
+// =====================================
+// 飞书在线表格
 // block_type 30
-//================================
+// =====================================
 
-else if(
-    block.block_type === 30 &&
-    block.sheet
+function renderSheet(
+    block
 ){
 
-    let sheetImage = "";
-
-
-   let sheetImage =
-"提效结果.png";
+    const token =
+    block.sheet?.token || "";
 
 
 
-    html += `
+    return `
 
 <div class="feishu-sheet">
 
 
 <div class="feishu-sheet-title">
+
 📊 飞书在线表格
+
 </div>
 
 
@@ -1131,280 +985,21 @@ else if(
 <div class="feishu-sheet-box">
 
 
-${
-sheetImage
-?
-`
-<img
-src="/提效结果.png"
-style="
-width:100%;
-max-width:900px;
-border-radius:8px;
-"
-/>
-}
+<a
 
-//================================
-// 飞书普通表格
-// block_type 31
-//================================
+href="https://feishu.cn/sheets/${token}"
 
-else if(
-    block.block_type === 31 &&
-    block.table
-){
+target="_blank"
 
-html += `
+>
 
-<table class="feishu-real-table">
+打开飞书原表
 
-<tbody>
+</a>
 
-`;
 
-const cells =
-block.table.cells;
+</div>
 
-
-const columnSize =
-block.table.property.column_size;
-
-
-
-for(
-let i=0;
-i<cells.length;
-i+=columnSize
-){
-
-html += "<tr>";
-
-
-for(
-let j=0;
-j<columnSize;
-j++
-){
-
-const cellId =
-cells[i+j];
-
-
-const cell =
-blocks.find(
-b=>b.block_id===cellId
-);
-
-
-let text="";
-
-
-if(cell){
-
-const textBlock =
-blocks.find(
-b=>b.parent_id===cell.block_id
-);
-
-
-if(
-textBlock?.text?.elements
-){
-
-text =
-textBlock.text.elements
-.map(
-e=>e.text_run?.content || ""
-)
-.join("");
-
-}
-
-}
-
-
-html += `
-
-<td>
-${text}
-</td>
-
-`;
-
-}
-
-
-html += "</tr>";
-
-}
-
-
-html += `
-
-</tbody>
-
-</table>
-
-`;
-
-}
-//================================
-// 飞书表格真实内容
-// block_type 31
-//================================
-
-else if(
-    block.block_type === 31 &&
-    block.table
-){
-
-    html += `
-
-<table class="feishu-real-table">
-
-<tbody>
-
-`;
-
-
-const cells =
-block.table.cells || [];
-
-
-const columnSize =
-block.table.property?.column_size || 1;
-
-
-
-for(
-let i = 0;
-i < cells.length;
-i += columnSize
-){
-
-    html += "<tr>";
-
-
-    for(
-        let j = 0;
-        j < columnSize;
-        j++
-    ){
-
-        const cellId =
-        cells[i+j];
-
-
-        let text = "";
-
-
-        const cellBlock =
-        blocks.find(
-            b =>
-            b.block_id === cellId
-        );
-
-
-        if(cellBlock && cellBlock.children){
-
-            for(
-                const childId of cellBlock.children
-            ){
-
-                const child =
-                blocks.find(
-                    b =>
-                    b.block_id === childId
-                );
-
-
-                if(
-                    child &&
-                    child.text_run
-                ){
-
-                    text +=
-                    child.text_run.content;
-
-                }
-
-            }
-
-        }
-
-
-        html += `
-
-<td>
-${text}
-</td>
-
-`;
-
-    }
-
-
-    html += "</tr>";
-
-}
-
-
-html += `
-
-</tbody>
-
-</table>
-
-`;
-
-}
-
-
-    // =========================
-    // 子节点
-    // =========================
-
-
-    const noChildrenRender = [
-
-    19, // callout
-    27, // 图片
-    31  // 表格
-
-];
-
-
-if(
-    !noChildrenRender.includes(
-        block.block_type
-    )
-){
-
-    html +=
-    renderChildren(
-        block,
-        blocks,
-        imageMap
-    );
-
-}
-
-// =====================================
-// 未识别block兜底
-// 防止飞书新增类型导致文字丢失
-// =====================================
-
-if(
-    html === "" &&
-    text
-){
-
-    html += `
-
-<div class="feishu-text">
-
-${text}
 
 </div>
 
@@ -1412,14 +1007,8 @@ ${text}
 
 }
 
-    return html;
 
-}
 
-// =====================================
-// 第三部分
-// 总入口 + export
-// =====================================
 
 
 
@@ -1427,27 +1016,69 @@ ${text}
 
 
 // =====================================
-// 总渲染入口
+// 总入口
 // =====================================
-
 
 function renderFeishuBlocks(
     blocks,
-    imageMap
+    imageMap={}
 ){
 
     let html = "";
 
-
-    const rootBlocks =
+console.log(
+    "渲染表格数量:",
     blocks.filter(
-        block =>
-        block.parent_id === ""
-    );
+        b =>
+        b.block_type === 31 ||
+        b.block_type === 30 ||
+        b.block_type === 32
+    ).length
+);
 
 
-    rootBlocks.forEach(
-        block=>{
+console.log(
+    "表格父级:",
+    blocks.filter(
+        b =>
+        b.block_type === 31 ||
+        b.block_type === 30
+    )
+    .map(
+        b=>({
+            type:b.block_type,
+            parent:b.parent_id,
+            children:b.children
+        })
+    )
+);
+
+   const roots = blocks.filter(
+    block =>
+    block.block_type !== 32
+);
+
+
+
+    roots.forEach(
+    block=>{
+
+
+        if(
+            block.parent_id &&
+            block.block_type !== 31 &&
+            block.block_type !== 30
+        ){
+
+            return;
+
+        }
+
+
+           
+
+
+
 
             html +=
             renderBlock(
@@ -1456,13 +1087,16 @@ function renderFeishuBlocks(
                 imageMap
             );
 
+
         }
     );
+
 
 
     return html;
 
 }
+
 
 
 
@@ -1472,7 +1106,6 @@ function renderFeishuBlocks(
 // =====================================
 // 导出
 // =====================================
-
 
 export {
 

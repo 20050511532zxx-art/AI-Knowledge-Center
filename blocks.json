@@ -1776,8 +1776,8 @@
   },
   {
     "block_id": "U96tdR6mMorrbmxgNHIc3yR9nGb",
-    "block_type": 3,
-    "heading1": {
+    "block_type": 4,
+    "heading2": {
       "elements": [
         {
           "text_run": {
@@ -1958,8 +1958,8 @@
   },
   {
     "block_id": "AplfdbfyEo2pmpx3ZGWcbGFinoe",
-    "block_type": 3,
-    "heading1": {
+    "block_type": 4,
+    "heading2": {
       "elements": [
         {
           "text_run": {
@@ -2431,8 +2431,8 @@
   },
   {
     "block_id": "PeJGdNMgVoSPMGx1byNc0IgWnmb",
-    "block_type": 3,
-    "heading1": {
+    "block_type": 4,
+    "heading2": {
       "elements": [
         {
           "text_run": {
@@ -2722,8 +2722,8 @@
   },
   {
     "block_id": "NGbaddokmoXai5xE737cjgEancc",
-    "block_type": 3,
-    "heading1": {
+    "block_type": 4,
+    "heading2": {
       "elements": [
         {
           "text_run": {

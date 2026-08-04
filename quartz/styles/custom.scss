@@ -522,3 +522,68 @@ article {
     margin:20px 0;
 
 }
+
+.feishu-table{
+    width:100%;
+    border-collapse:collapse;
+    margin:20px 0;
+}
+
+
+.feishu-table td{
+    border:1px solid #ddd;
+    padding:10px;
+    text-align:left;
+}
+
+
+.feishu-table tr:nth-child(1){
+    font-weight:bold;
+}
+
+
+.feishu-table td p{
+    margin:0;
+    padding:0;
+}
+
+/* 飞书表格 */
+
+.feishu-table-wrapper {
+    width:100%;
+    overflow-x:auto;
+    margin:20px 0;
+}
+
+
+.feishu-table {
+    display: table !important;
+    width:100% !important;
+    border-collapse: collapse !important;
+    border-spacing:0;
+}
+
+
+.feishu-table tbody {
+    display: table-row-group !important;
+}
+
+
+.feishu-table tr {
+    display: table-row !important;
+}
+
+
+.feishu-table td {
+    display: table-cell !important;
+    border:1px solid #ddd;
+    padding:12px;
+    min-width:120px;
+    vertical-align:top;
+}
+
+
+.feishu-table td p {
+    margin:0 !important;
+    display:block;
+}

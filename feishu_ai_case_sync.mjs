@@ -595,6 +595,29 @@ item.wiki_token;
         token
     );
 
+console.log(
+    "所有block类型:",
+    [...new Set(
+        blocks.map(
+            b=>b.block_type
+        )
+    )]
+);
+
+
+console.log(
+    "表格相关:",
+    JSON.stringify(
+        blocks.filter(
+            b =>
+            b.table ||
+            b.sheet
+        ),
+        null,
+        2
+    )
+);
+
 fs.writeFileSync(
     "blocks.json",
     JSON.stringify(

@@ -11,26 +11,52 @@ export async function screenshotFeishuSheet(
     console.log("开始截图在线表格:", url);
 
 
-    const browser =
-    await chromium.launch({
-        headless:true
-    });
+const browser =
+await chromium.launchPersistentContext(
+    "./feishu_browser",
+    {
+        headless:false
+    }
+);
 
 
 
-    const page =
-    await browser.newPage({
+    const pages =
+browser.pages();
 
-        viewport:{
-            width:1600,
-            height:1200
-        }
 
-    });
+const page =
+pages.length
+?
+pages[0]
+:
+await browser.newPage();
+
+
+await page.setViewportSize({
+    width:1600,
+    height:1200
+});
 
 
 
  await page.goto(
+    url.replace("https://feishu.cn","https://www.feishu.cn"),
+    {
+        waitUntil:"domcontentloaded",
+        timeout:60000
+    }
+);
+
+
+console.log("等待飞书登录完成...");
+
+await page.waitForTimeout(60000);
+
+
+console.log("重新进入飞书表格...");
+
+await page.goto(
     url,
     {
         waitUntil:"domcontentloaded",
@@ -39,8 +65,8 @@ export async function screenshotFeishuSheet(
 );
 
 
+await page.waitForTimeout(10000);
 
-    await page.waitForTimeout(10000);
 
 
 
@@ -76,7 +102,7 @@ export async function screenshotFeishuSheet(
         safeName + ".png"
     );
 
-
+console.log("当前页面:", page.url());
 
     await page.screenshot({
 

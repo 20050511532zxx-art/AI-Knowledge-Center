@@ -11,78 +11,6 @@ import {
     renderFeishuBlocks
 } from "./feishu_renderer.js";
 
-import {
-    screenshotFeishuSheet
-}
-from "./feishu_sheet_screenshot.mjs";
-
-// ===============================
-// 读取飞书Sheet
-// ===============================
-
-async function loadSheetData(
-    blocks,
-    documentId,
-    token
-){
-
-    for(
-        const block of blocks
-    ){
-
-        if(
-            block.block_type === 30 &&
-            block.sheet
-        ){
-
-            console.log(
-                "发现Sheet:",
-                block.sheet.token
-            );
-
-
-            // 当前只保留表格标识
-            // 飞书嵌入表格无法直接通过spreadsheet_token读取
-
-            block.sheet.data = null;
-
-
-       const blockUrl =
-`https://open.feishu.cn/open-apis/docx/v1/documents/${documentId}/blocks/${block.block_id}`;
-
-console.log(
-    "读取Sheet参数:",
-    {
-        documentId,
-        blockId:block.block_id,
-        tokenLength:token?.length
-    }
-);
-
-const blockRes =
-await axios.get(
-    blockUrl,
-    {
-        headers:{
-            Authorization:
-            `Bearer ${token}`
-        }
-    }
-);
-
-
-console.log(
-    "Sheet block详情:",
-    JSON.stringify(
-        blockRes.data,
-        null,
-        2
-    )
-);
-  }
-    }
-         }
-
 // =====================================
 // 飞书配置
 // =====================================
@@ -600,35 +528,6 @@ await getDocumentBlocks(
     token
 );
 
-
-// 自动截图在线表格
-
-for(
-    const block of blocks
-){
-
-    if(
-        block.block_type === 30 &&
-        block.sheet
-    ){
-
-        const sheetToken =
-        block.sheet.token;
-
-
-        const sheetUrl =
-        `https://feishu.cn/sheets/${sheetToken}`;
-
-
-        await screenshotFeishuSheet(
-            sheetUrl,
-            sheetToken
-        );
-
-    }
-
-}
-
 console.log(
     "所有block类型:",
     [...new Set(
@@ -902,13 +801,6 @@ console.log(
 
 
 
-
-
-   await loadSheetData(
-    blocks,
-    documentId,
-    token
-);
 
 
 const markdown = 

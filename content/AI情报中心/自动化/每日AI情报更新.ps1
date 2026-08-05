@@ -86,6 +86,7 @@ function Invoke-CodexProcess {
     $process = Start-Process -FilePath $Command -ArgumentList $argumentLine -WorkingDirectory 'D:\obsidian' `
         -RedirectStandardInput $promptInputPath -RedirectStandardOutput $stdoutPath -RedirectStandardError $stderrPath `
         -NoNewWindow -PassThru
+    Write-Log "Codex 子进程已启动，PID：$($process.Id)。"
 
     if (-not $process.WaitForExit($maxRuntimeMinutes * 60 * 1000)) {
         try {
@@ -156,7 +157,6 @@ try {
         '--search',
         '--ask-for-approval', 'never',
         'exec',
-        '--model', 'gpt-5.5',
         '--sandbox', 'workspace-write',
         '--skip-git-repo-check',
         '--ephemeral',

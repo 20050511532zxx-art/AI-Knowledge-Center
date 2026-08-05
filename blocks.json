@@ -5,6 +5,7 @@
     "children": [
       "OwVGdCE6IobuxlxppAac1jcLnyg",
       "ZKOZdGJcWoFiNkxIne1cdCHanDg",
+      "SL6kdhOT9oCKMJxkaQUcuLawnzc",
       "YeY3dM0x2oBrwOxRfLLcEMFsnHC",
       "C8Podre7YonLN9xiGpfcXQyLncb",
       "Ozd9dfSKzo8uCbxljydcA2AwnKf",
@@ -1366,6 +1367,31 @@
       ],
       "style": {
         "align": 2,
+        "folded": false
+      }
+    }
+  },
+  {
+    "block_id": "SL6kdhOT9oCKMJxkaQUcuLawnzc",
+    "block_type": 2,
+    "parent_id": "Mnxjwiw1picy1Uk22QVcQGWAnbf",
+    "text": {
+      "elements": [
+        {
+          "text_run": {
+            "content": "",
+            "text_element_style": {
+              "bold": false,
+              "inline_code": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false
+            }
+          }
+        }
+      ],
+      "style": {
+        "align": 1,
         "folded": false
       }
     }
@@ -7444,7 +7470,7 @@
       ],
       "style": {
         "align": 1,
-        "folded": true
+        "folded": false
       }
     },
     "parent_id": "Mnxjwiw1picy1Uk22QVcQGWAnbf"

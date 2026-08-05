@@ -693,11 +693,11 @@ ${renderChildren(
 
         if(src){
 
-            html += `
+html +=`
 
 <div class="feishu-image">
 
-<img src="${src}">
+<img src="${src.replace(/^\/AI案例库/, "")}">
 
 </div>
 
@@ -994,79 +994,30 @@ function renderFeishuBlocks(
     imageMap={}
 ){
 
-    let html = "";
+    let html = `
+<div class="feishu-long-image">
+`;
 
-console.log(
-    "渲染表格数量:",
-    blocks.filter(
-        b =>
-        b.block_type === 31 ||
-        b.block_type === 30 ||
-        b.block_type === 32
-    ).length
-);
+    let index = 1;
 
+    while(index <= 30){
 
-console.log(
-    "表格父级:",
-    blocks.filter(
-        b =>
-        b.block_type === 31 ||
-        b.block_type === 30
-    )
-    .map(
-        b=>({
-            type:b.block_type,
-            parent:b.parent_id,
-            children:b.children
-        })
-    )
-);
+        html += `
+<img src="/images/feishu/customer_${index}.png">
+`;
 
-   const roots = blocks.filter(
-    block =>
-    block.block_type !== 32
-);
+        index++;
+
+    }
 
 
-
-    roots.forEach(
-    block=>{
-
-
-        if(
-            block.parent_id &&
-            block.block_type !== 31 &&
-            block.block_type !== 30
-        ){
-
-            return;
-
-        }
-
-
-           
-
-
-
-
-            html +=
-            renderBlock(
-                block,
-                blocks,
-                imageMap
-            );
-
-
-        }
-    );
-
-
+    html += `
+</div>
+`;
 
     return html;
 
 }
-
 
 
 

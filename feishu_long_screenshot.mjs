@@ -21,7 +21,7 @@ console.log(
 
 // 等待飞书渲染完成
 
-await page.waitForTimeout(20000);
+await page.waitForTimeout(30000);
 
 
 
@@ -29,7 +29,9 @@ console.log(
     "页面加载完成"
 );
 
+await page.waitForLoadState("networkidle").catch(()=>{});
 
+await page.waitForTimeout(5000);
 
 // 隐藏飞书悬浮按钮
 
@@ -53,7 +55,9 @@ console.log(
     "隐藏悬浮按钮完成"
 );
 
+await page.waitForTimeout(10000);
 
+console.log("等待飞书渲染完成");
 
 // 找正文滚动区域
 
@@ -68,19 +72,28 @@ page.locator(selector).first();
 
 
 await container.waitFor({
-    timeout:30000
+    state:"visible",
+    timeout:60000
 });
 
 
 
-const info =
-await container.evaluate(el=>({
+const info = await container.evaluate(
+(el)=>({
 
-    scrollHeight:el.scrollHeight,
+    scrollHeight:
+    el.scrollHeight,
 
-    clientHeight:el.clientHeight
+    clientHeight:
+    el.clientHeight
 
-}));
+})
+);
+
+console.log(
+    "最终滚动高度:",
+    info.scrollHeight
+);
 
 
 console.log(
@@ -143,14 +156,16 @@ y += step
 
 
 
-  await container.evaluate(
-    (el,y)=>{
+    await container.evaluate(
+        (el,y)=>{
 
-        el.scrollTop = y;
 
-    },
-    y
-);
+            el.scrollTop = y;
+
+
+        },
+        y
+    );
 
 
 

@@ -1096,42 +1096,6 @@ const scrollInfo = await page.evaluate(() => {
 
 console.log(scrollInfo);
 
-// 获取正文区域
-const box = await content.boundingBox();
-
-const totalHeight = await page.evaluate(() => {
-
-    let maxHeight = 0;
-
-    document.querySelectorAll("*").forEach(el => {
-
-        if(el.scrollHeight > maxHeight){
-
-            maxHeight = el.scrollHeight;
-
-        }
-
-    });
-
-    return maxHeight;
-
-});
-
-console.log("真实页面高度:", totalHeight);
-
-console.log("正文总高度:", totalHeight);
-
-
-await page.goto(
-    "https://my.feishu.cn/wiki/Mnxjwiw1picy1Uk22QVcQGWAnbf",
-    {
-        waitUntil:"load",
-        timeout:120000
-    }
-);
-
-
-await page.waitForTimeout(20000);
 
         console.log(
             "开始同步AI案例库..."

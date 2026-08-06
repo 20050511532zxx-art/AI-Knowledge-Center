@@ -1,201 +1,212 @@
 import { chromium } from "playwright";
 
 
-// 启动浏览器
-const browser = await chromium.launchPersistentContext(
-    "./feishu_browser",
-    {
-        headless:false
-    }
-);
-
-
-const pages = browser.pages();
-
-const page = pages.length
-    ? pages[0]
-    : await browser.newPage();
-
-
-// 设置窗口大小
-await page.setViewportSize({
-    width:1600,
-    height:1200
-});
-
-
-// 飞书文档地址
-const url =
-"https://my.feishu.cn/wiki/Mnxjwiw1picy1Uk22QVcQGWAnbf";
-
-
-// 打开文档
-await page.goto(
-    url,
-    {
-        waitUntil:"load",
-        timeout:120000
-    }
-);
-
-
-console.log("页面加载完成");
-
-
-// 等飞书渲染
-await page.waitForTimeout(20000);
-
-
-// 回到顶部
-await page.evaluate(()=>{
-    window.scrollTo(0,0);
-});
-
-
-console.log("等待正文加载");
-
-
-// 隐藏飞书多余按钮
-await page.evaluate(()=>{
-
-    document.querySelectorAll(
-        '[class*="float"],[class*="feedback"]'
-    ).forEach(el=>{
-        el.style.display="none";
-    });
-
-
-});
-
-console.log("隐藏悬浮按钮");
-
-
-
-// 找正文区域
-const content =
-    await page.locator(".garr-container-docx").first();
-
-
-
-console.log("找到正文区域");
-
-const scrollInfo = await page.evaluate(() => {
-
-    let result = [];
-
-    document.querySelectorAll("*").forEach(el => {
-
-        if(el.scrollHeight > el.clientHeight + 500){
-
-            result.push({
-
-                class: el.className,
-
-                scrollHeight: el.scrollHeight,
-
-                clientHeight: el.clientHeight
-
-            });
-
-        }
-
-    });
-
-    return result.slice(0,20);
-
-});
-
-
-console.log(scrollInfo);
-
-// 获取正文区域
-const box = await content.boundingBox();
-
-const totalHeight = await page.evaluate(() => {
-
-    let maxHeight = 0;
-
-    document.querySelectorAll("*").forEach(el => {
-
-        if(el.scrollHeight > maxHeight){
-
-            maxHeight = el.scrollHeight;
-
-        }
-
-    });
-
-    return maxHeight;
-
-});
-
-console.log("真实页面高度:", totalHeight);
-
-console.log("正文总高度:", totalHeight);
-
-
-// 每张截图高度
-const pageHeight = 1000;
-
-
-// 开始分页截图
-let index = 1;
-
-
-const overlap = 40;
-
-const step = 900;
-
-for(
- let y = 0;
- y < totalHeight - 200;
- y += pageHeight
+// =========================
+// 飞书分页截图函数
+// =========================
+
+export async function takeFeishuScreenshot(
+    page,
+    savePath,
+    section
 ){
 
 
-await page.evaluate((y)=>{
+console.log(
+    "当前截图项目:",
+    section.title
+);
 
-    const el = document.querySelector(
-        ".bear-web-x-container.catalogue-opened.docx-in-wiki"
+
+
+// 等待飞书渲染完成
+
+await page.waitForTimeout(20000);
+
+
+
+console.log(
+    "页面加载完成"
+);
+
+
+
+// 隐藏飞书悬浮按钮
+
+await page.evaluate(()=>{
+
+
+document.querySelectorAll(
+    '[class*="float"],[class*="feedback"]'
+)
+.forEach(el=>{
+
+    el.style.display="none";
+
+});
+
+
+});
+
+
+console.log(
+    "隐藏悬浮按钮完成"
+);
+
+
+
+// 找正文滚动区域
+
+const selector =
+".bear-web-x-container.catalogue-opened.docx-in-wiki";
+
+
+
+const container =
+page.locator(selector).first();
+
+
+
+await container.waitFor({
+    timeout:30000
+});
+
+
+
+const info =
+await container.evaluate(el=>({
+
+    scrollHeight:el.scrollHeight,
+
+    clientHeight:el.clientHeight
+
+}));
+
+
+console.log(
+    "正文高度:",
+    info
+);
+
+
+
+// 清理旧截图
+
+// 防止之前图片影响merge
+
+import("fs").then(fs=>{
+
+    const files =
+    fs.readdirSync(
+        "content/images/feishu"
     );
 
-    el.scrollTop = y;
 
-}, y);
+    files
+    .filter(
+        f =>
+        f.startsWith("customer_")
+        &&
+        f.endsWith(".png")
+    )
+    .forEach(
+        f=>
+        fs.unlinkSync(
+            "content/images/feishu/"+f
+        )
+    );
 
 
-
-    await page.waitForTimeout(2000);
-
-
-
-    await page.screenshot({
-
-        path:`content/images/feishu/customer_${index}.png`,
-
-        clip:{
-            x: box.x + 300,
-            y: box.y,
-            width: box.width - 400,
-            height: Math.min(
-    pageHeight,
-    totalHeight - y
-)
-        }
-
-    });
+});
 
 
 
-    console.log(`第${index}张截图完成`);
+await page.waitForTimeout(1000);
 
 
-    index++;
+
+// 开始分页截图
+
+
+let index = 1;
+
+
+const step = 900;
+
+
+
+for(
+let y = 0;
+y < info.scrollHeight;
+y += step
+){
+
+
+
+  await container.evaluate(
+    (el,y)=>{
+
+        el.scrollTop = y;
+
+    },
+    y
+);
+
+
+
+    await page.waitForTimeout(1500);
+
+
+
+    const box =
+    await container.boundingBox();
+
+
+
+    console.log(
+        "当前滚动:",
+        y,
+        "截图区域:",
+        box
+    );
+
+
+
+ await page.screenshot({
+
+    path:
+    `content/images/feishu/customer_${index}.png`,
+
+    clip:{
+
+        x:box.x + 300,
+
+        y:box.y,
+
+        width:box.width - 400,
+
+        height:900
+
+    }
+
+});
+
+
+console.log(
+    `第${index}张截图完成`
+);
+
+
+index++;
+
 
 }
 
-console.log("正文截图完成");
 
 
-// 不关闭浏览器
-// await browser.close();
+console.log(
+"分页截图完成"
+);
+
+
+}

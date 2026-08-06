@@ -1,6 +1,15 @@
-2026/08/04-16:40:00.677 5df8 Reusing MANIFEST D:\obsidian\仓库\quartz-site\feishu_browser\Default\Local Storage\leveldb/MANIFEST-000001
-2026/08/04-16:40:00.681 5df8 Recovering log #212
-2026/08/04-16:40:00.682 5df8 Reusing old log D:\obsidian\仓库\quartz-site\feishu_browser\Default\Local Storage\leveldb/000212.log 
-2026/08/04-16:41:00.686 2290 Level-0 table #216: started
-2026/08/04-16:41:00.688 2290 Level-0 table #216: 27294 bytes OK
-2026/08/04-16:41:00.689 2290 Delete type=0 #212
+2026/08/04-16:43:20.309 5328 Reusing MANIFEST D:\obsidian\仓库\quartz-site\feishu_browser\Default\Local Storage\leveldb/MANIFEST-000001
+2026/08/04-16:43:20.313 5328 Recovering log #215
+2026/08/04-16:43:20.314 5328 Reusing old log D:\obsidian\仓库\quartz-site\feishu_browser\Default\Local Storage\leveldb/000215.log 
+2026/08/04-16:44:20.328 58ec Level-0 table #219: started
+2026/08/04-16:44:20.330 58ec Level-0 table #219: 26986 bytes OK
+2026/08/04-16:44:20.331 58ec Delete type=0 #215
+2026/08/04-16:44:20.331 5328 Compacting 4@0 + 1@1 files
+2026/08/04-16:44:20.336 5328 Generated table #220@0: 100 keys, 375730 bytes
+2026/08/04-16:44:20.336 5328 Compacted 4@0 + 1@1 files => 375730 bytes
+2026/08/04-16:44:20.337 5328 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/08/04-16:44:20.338 5328 Delete type=2 #207
+2026/08/04-16:44:20.338 5328 Delete type=2 #210
+2026/08/04-16:44:20.338 5328 Delete type=2 #213
+2026/08/04-16:44:20.338 5328 Delete type=2 #216
+2026/08/04-16:44:20.338 5328 Delete type=2 #219

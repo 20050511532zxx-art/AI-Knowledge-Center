@@ -1,21 +1,12 @@
-2026/08/04-16:43:22.714 4c58 Reusing MANIFEST D:\obsidian\仓库\quartz-site\feishu_browser\Default\IndexedDB\https_my.feishu.cn_0.indexeddb.leveldb/MANIFEST-000001
-2026/08/04-16:43:22.714 4c58 Recovering log #186
-2026/08/04-16:43:22.716 4c58 Reusing old log D:\obsidian\仓库\quartz-site\feishu_browser\Default\IndexedDB\https_my.feishu.cn_0.indexeddb.leveldb/000186.log 
-2026/08/04-16:43:41.179 59f0 Level-0 table #191: started
-2026/08/04-16:43:41.187 59f0 Level-0 table #191: 2141513 bytes OK
-2026/08/04-16:43:41.188 59f0 Delete type=0 #186
-2026/08/04-16:43:42.903 59f0 Compacting 1@1 + 1@2 files
-2026/08/04-16:43:42.914 59f0 Generated table #192@1: 10537 keys, 745440 bytes
-2026/08/04-16:43:42.914 59f0 Compacted 1@1 + 1@2 files => 745440 bytes
-2026/08/04-16:43:42.914 59f0 compacted to: files[ 0 0 1 0 0 0 0 ]
-2026/08/04-16:43:42.914 59f0 Delete type=2 #188
-2026/08/04-16:43:42.914 59f0 Delete type=2 #191
-2026/08/04-16:46:32.782 4150 Level-0 table #194: started
-2026/08/04-16:46:32.790 4150 Level-0 table #194: 1656246 bytes OK
-2026/08/04-16:46:32.791 4150 Delete type=0 #190
-2026/08/04-16:48:28.469 59f0 Compacting 1@1 + 1@2 files
-2026/08/04-16:48:28.480 59f0 Generated table #195@1: 10573 keys, 805999 bytes
-2026/08/04-16:48:28.480 59f0 Compacted 1@1 + 1@2 files => 805999 bytes
-2026/08/04-16:48:28.481 59f0 compacted to: files[ 0 0 1 0 0 0 0 ]
-2026/08/04-16:48:28.481 59f0 Delete type=2 #192
-2026/08/04-16:48:28.481 59f0 Delete type=2 #194
+2026/08/05-13:28:37.738 5ec8 Reusing MANIFEST D:\obsidian\仓库\quartz-site\feishu_browser\Default\IndexedDB\https_my.feishu.cn_0.indexeddb.leveldb/MANIFEST-000001
+2026/08/05-13:28:37.738 5ec8 Recovering log #193
+2026/08/05-13:28:37.742 5ec8 Reusing old log D:\obsidian\仓库\quartz-site\feishu_browser\Default\IndexedDB\https_my.feishu.cn_0.indexeddb.leveldb/000193.log 
+2026/08/05-13:29:15.921 1614 Level-0 table #198: started
+2026/08/05-13:29:15.929 1614 Level-0 table #198: 1633055 bytes OK
+2026/08/05-13:29:15.930 1614 Delete type=0 #193
+2026/08/05-13:29:47.451 1614 Compacting 1@1 + 1@2 files
+2026/08/05-13:29:47.464 1614 Generated table #199@1: 11143 keys, 812860 bytes
+2026/08/05-13:29:47.464 1614 Compacted 1@1 + 1@2 files => 812860 bytes
+2026/08/05-13:29:47.465 1614 compacted to: files[ 0 0 1 0 0 0 0 ]
+2026/08/05-13:29:47.465 1614 Delete type=2 #195
+2026/08/05-13:29:47.465 1614 Delete type=2 #198

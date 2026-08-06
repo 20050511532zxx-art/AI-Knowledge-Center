@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import axios from "axios";
 import dotenv from "dotenv";
+import { chromium } from "playwright";
 
 dotenv.config({
     path: ".feishu.env"
@@ -10,6 +11,10 @@ dotenv.config({
 import {
     renderFeishuBlocks
 } from "./feishu_renderer.js";
+
+import {
+    takeFeishuScreenshot
+} from "./feishu_long_screenshot.mjs";
 
 // =====================================
 // 飞书配置
@@ -497,8 +502,141 @@ source: 飞书知识库
 }
 
 
+// =========================
+// 获取block文字
+// =========================
+
+function getText(
+    block
+){
+
+    if(!block){
+        return "";
+    }
 
 
+    let elements=[];
+
+
+    if(block.heading1?.elements){
+
+        elements =
+        block.heading1.elements;
+
+    }
+    else if(block.heading2?.elements){
+
+        elements =
+        block.heading2.elements;
+
+    }
+    else if(block.heading3?.elements){
+
+        elements =
+        block.heading3.elements;
+
+    }
+    else if(block.text?.elements){
+
+        elements =
+        block.text.elements;
+
+    }
+
+
+    let text="";
+
+
+    elements.forEach(
+        item=>{
+
+            if(item.text_run){
+
+                text +=
+                item.text_run.content || "";
+
+            }
+
+        }
+    );
+
+
+    return text.trim();
+
+}
+
+
+
+// =========================
+// 标题拆分函数
+// =========================
+
+function splitByHeading(
+    blocks
+){
+
+    const sections = [];
+
+    let current = null;
+
+
+    blocks.forEach(block=>{
+
+
+        const text =
+        getText(block);
+
+
+
+        // 只识别项目标题
+const isProjectTitle =
+(
+    text.includes("客服AI项目定级")
+)
+||
+(
+    /^0\d[、.\-]/.test(text)
+)
+||
+(
+    /^1\d[、.\-]/.test(text)
+)
+||
+(
+    /^[一二三四五六七八九十]+、/.test(text)
+);
+
+        if(isProjectTitle){
+
+
+            current = {
+
+                title:text,
+
+                blocks:[block]
+
+            };
+
+
+            sections.push(current);
+
+
+        }
+        else if(current){
+
+
+            current.blocks.push(block);
+
+
+        }
+
+
+    });
+
+
+    return sections;
+
+}
 
 // =====================================
 // 同步单个案例
@@ -506,7 +644,8 @@ source: 飞书知识库
 
 async function syncCase(
     item,
-    token
+    token,
+    page
 ){
 
     console.log(
@@ -526,6 +665,11 @@ item.wiki_token;
 await getDocumentBlocks(
     documentId,
     token
+);
+
+const sections =
+splitByHeading(
+    blocks
 );
 
 console.log(
@@ -728,6 +872,7 @@ console.log(
 
 
     const imageMap = {};
+    let imageMarkdown = "";
 
 
 
@@ -779,7 +924,10 @@ console.log(
                 imageMap[imageToken] =
                 `/AI案例库/${item.department}/${item.name}/${imageName}`;
 
+imageMarkdown += 
+`![](/AI案例库/${item.department}/${item.name}/${imageName})
 
+`;
 
             }
             catch(e){
@@ -802,25 +950,53 @@ console.log(
 
 
 
+for(
+    const section of sections
+){
 
-const markdown = 
-createFrontMatter(item)
-+
-renderFeishuBlocks(
-    blocks,
-    imageMap
+console.log(
+    "项目:",
+    section.title,
+    "block数量:",
+    section.blocks.length
+);
+
+const screenshotPath =
+path.join(
+    ASSET_DIR,
+    item.department,
+    section.title + ".png"
 );
 
 
+console.log(
+    "当前截图项目:",
+    section.title,
+    item
+);
+
+    const markdown =
+    `
+---
+title: ${section.title}
+department: ${item.department}
+source: 飞书知识库
+---
+
+# ${section.title}
+
+`
 
     fs.writeFileSync(
         path.join(
             saveDir,
-            `${item.name}.md`
+            `${section.title}.md`
         ),
         markdown,
         "utf8"
     );
+}
+
 
 
 
@@ -843,6 +1019,120 @@ async function main(){
 
     try{
 
+const browser = await chromium.launch({
+            headless:false
+        });
+
+
+        const page = await browser.newPage();
+
+
+        await page.setViewportSize({
+            width:1600,
+            height:1200
+        });
+
+
+
+    console.log("页面加载完成");
+
+
+
+    // 等待飞书渲染
+    await page.waitForTimeout(20000);
+
+// 隐藏飞书多余按钮
+await page.evaluate(()=>{
+
+    document.querySelectorAll(
+        '[class*="float"],[class*="feedback"]'
+    ).forEach(el=>{
+        el.style.display="none";
+    });
+
+
+});
+
+console.log("隐藏悬浮按钮");
+
+
+
+// 找正文区域
+const content =
+    await page.locator(
+        ".bear-web-x-container.catalogue-opened.docx-in-wiki"
+    ).first();
+
+
+
+console.log("找到正文区域");
+
+const scrollInfo = await page.evaluate(() => {
+
+    let result = [];
+
+    document.querySelectorAll("*").forEach(el => {
+
+        if(el.scrollHeight > el.clientHeight + 500){
+
+            result.push({
+
+                class: el.className,
+
+                scrollHeight: el.scrollHeight,
+
+                clientHeight: el.clientHeight
+
+            });
+
+        }
+
+    });
+
+    return result.slice(0,20);
+
+});
+
+
+console.log(scrollInfo);
+
+// 获取正文区域
+const box = await content.boundingBox();
+
+const totalHeight = await page.evaluate(() => {
+
+    let maxHeight = 0;
+
+    document.querySelectorAll("*").forEach(el => {
+
+        if(el.scrollHeight > maxHeight){
+
+            maxHeight = el.scrollHeight;
+
+        }
+
+    });
+
+    return maxHeight;
+
+});
+
+console.log("真实页面高度:", totalHeight);
+
+console.log("正文总高度:", totalHeight);
+
+
+await page.goto(
+    "https://my.feishu.cn/wiki/Mnxjwiw1picy1Uk22QVcQGWAnbf",
+    {
+        waitUntil:"load",
+        timeout:120000
+    }
+);
+
+
+await page.waitForTimeout(20000);
+
         console.log(
             "开始同步AI案例库..."
         );
@@ -862,10 +1152,11 @@ async function main(){
             const item of CASE_LIST
         ){
 
-            await syncCase(
-                item,
-                token
-            );
+await syncCase(
+    item,
+    token,
+    page
+);
 
         }
 

@@ -994,26 +994,40 @@ function renderFeishuBlocks(
     imageMap={}
 ){
 
-    let html = `
-<div class="feishu-long-image">
-`;
+    let html = "";
 
-    let index = 1;
 
-    while(index <= 30){
+    const root =
+    blocks.find(
+        b=>b.block_type===1
+    );
 
-        html += `
-<img src="/images/feishu/customer_${index}.png">
-`;
 
-        index++;
+    if(root){
+
+        html += renderChildren(
+            root,
+            blocks,
+            imageMap
+        );
+
+    }
+    else{
+
+        blocks.forEach(
+            block=>{
+
+                html += renderBlock(
+                    block,
+                    blocks,
+                    imageMap
+                );
+
+            }
+        );
 
     }
 
-
-    html += `
-</div>
-`;
 
     return html;
 

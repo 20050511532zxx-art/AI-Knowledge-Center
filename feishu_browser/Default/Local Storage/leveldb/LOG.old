@@ -1,15 +1,18 @@
-2026/08/04-16:43:20.309 5328 Reusing MANIFEST D:\obsidian\仓库\quartz-site\feishu_browser\Default\Local Storage\leveldb/MANIFEST-000001
-2026/08/04-16:43:20.313 5328 Recovering log #215
-2026/08/04-16:43:20.314 5328 Reusing old log D:\obsidian\仓库\quartz-site\feishu_browser\Default\Local Storage\leveldb/000215.log 
-2026/08/04-16:44:20.328 58ec Level-0 table #219: started
-2026/08/04-16:44:20.330 58ec Level-0 table #219: 26986 bytes OK
-2026/08/04-16:44:20.331 58ec Delete type=0 #215
-2026/08/04-16:44:20.331 5328 Compacting 4@0 + 1@1 files
-2026/08/04-16:44:20.336 5328 Generated table #220@0: 100 keys, 375730 bytes
-2026/08/04-16:44:20.336 5328 Compacted 4@0 + 1@1 files => 375730 bytes
-2026/08/04-16:44:20.337 5328 compacted to: files[ 0 1 1 0 0 0 0 ]
-2026/08/04-16:44:20.338 5328 Delete type=2 #207
-2026/08/04-16:44:20.338 5328 Delete type=2 #210
-2026/08/04-16:44:20.338 5328 Delete type=2 #213
-2026/08/04-16:44:20.338 5328 Delete type=2 #216
-2026/08/04-16:44:20.338 5328 Delete type=2 #219
+2026/08/07-09:31:22.634 17d8 Reusing MANIFEST D:\obsidian\仓库\quartz-site\feishu_browser\Default\Local Storage\leveldb/MANIFEST-000001
+2026/08/07-09:31:22.638 17d8 Recovering log #229
+2026/08/07-09:31:22.638 17d8 Level-0 table #231: started
+2026/08/07-09:31:22.641 17d8 Level-0 table #231: 25913 bytes OK
+2026/08/07-09:31:22.641 17d8 Recovering log #230
+2026/08/07-09:31:22.642 17d8 Reusing old log D:\obsidian\仓库\quartz-site\feishu_browser\Default\Local Storage\leveldb/000230.log 
+2026/08/07-09:31:22.644 17d8 Delete type=0 #229
+2026/08/07-09:31:22.644 5b24 Compacting 4@0 + 1@1 files
+2026/08/07-09:31:22.654 5b24 Generated table #232@0: 100 keys, 377459 bytes
+2026/08/07-09:31:22.654 5b24 Compacted 4@0 + 1@1 files => 377459 bytes
+2026/08/07-09:31:22.654 5b24 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/08/07-09:31:22.655 5b24 Delete type=2 #220
+2026/08/07-09:31:22.655 5b24 Delete type=2 #223
+2026/08/07-09:31:22.655 5b24 Delete type=2 #226
+2026/08/07-09:31:22.655 5b24 Delete type=2 #228
+2026/08/07-09:31:22.655 5b24 Delete type=2 #231
+2026/08/07-09:31:59.208 17d8 Level-0 table #234: started
+2026/08/07-09:31:59.213 17d8 Level-0 table #234: 26846 bytes OK

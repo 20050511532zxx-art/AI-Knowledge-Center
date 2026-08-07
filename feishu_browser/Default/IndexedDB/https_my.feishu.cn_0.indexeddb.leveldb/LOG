@@ -1,12 +1,3 @@
-2026/08/05-13:28:37.738 5ec8 Reusing MANIFEST D:\obsidian\仓库\quartz-site\feishu_browser\Default\IndexedDB\https_my.feishu.cn_0.indexeddb.leveldb/MANIFEST-000001
-2026/08/05-13:28:37.738 5ec8 Recovering log #193
-2026/08/05-13:28:37.742 5ec8 Reusing old log D:\obsidian\仓库\quartz-site\feishu_browser\Default\IndexedDB\https_my.feishu.cn_0.indexeddb.leveldb/000193.log 
-2026/08/05-13:29:15.921 1614 Level-0 table #198: started
-2026/08/05-13:29:15.929 1614 Level-0 table #198: 1633055 bytes OK
-2026/08/05-13:29:15.930 1614 Delete type=0 #193
-2026/08/05-13:29:47.451 1614 Compacting 1@1 + 1@2 files
-2026/08/05-13:29:47.464 1614 Generated table #199@1: 11143 keys, 812860 bytes
-2026/08/05-13:29:47.464 1614 Compacted 1@1 + 1@2 files => 812860 bytes
-2026/08/05-13:29:47.465 1614 compacted to: files[ 0 0 1 0 0 0 0 ]
-2026/08/05-13:29:47.465 1614 Delete type=2 #195
-2026/08/05-13:29:47.465 1614 Delete type=2 #198
+2026/08/07-09:34:29.665 834 Reusing MANIFEST D:\obsidian\仓库\quartz-site\feishu_browser\Default\IndexedDB\https_my.feishu.cn_0.indexeddb.leveldb/MANIFEST-000001
+2026/08/07-09:34:29.666 834 Recovering log #205
+2026/08/07-09:34:29.669 834 Reusing old log D:\obsidian\仓库\quartz-site\feishu_browser\Default\IndexedDB\https_my.feishu.cn_0.indexeddb.leveldb/000205.log 

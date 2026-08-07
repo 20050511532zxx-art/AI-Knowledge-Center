@@ -1,37 +1,27 @@
-import { chromium } from "playwright";
+import fs from "fs";
 
 
 // =========================
-// 飞书分页截图函数
+// 飞书正文区域长截图
 // =========================
 
 export async function takeFeishuScreenshot(
     page,
     savePath,
-    section
+    item
 ){
 
 
 console.log(
     "当前截图项目:",
-    section.title
+    item?.name
 );
 
 
+// 等待页面稳定
 
-// 等待飞书渲染完成
+await page.waitForTimeout(20000);
 
-await page.waitForTimeout(30000);
-
-
-
-console.log(
-    "页面加载完成"
-);
-
-await page.waitForLoadState("networkidle").catch(()=>{});
-
-await page.waitForTimeout(5000);
 
 // 隐藏飞书悬浮按钮
 
@@ -39,7 +29,7 @@ await page.evaluate(()=>{
 
 
 document.querySelectorAll(
-    '[class*="float"],[class*="feedback"]'
+    '[class*="float"],[class*="feedback"],[class*="toolbar"]'
 )
 .forEach(el=>{
 
@@ -50,174 +40,349 @@ document.querySelectorAll(
 
 });
 
+await page.addStyleTag({
+
+    content:`
+
+    ::-webkit-scrollbar{
+
+        display:none !important;
+
+    }
+
+    `
+
+});
 
 console.log(
-    "隐藏悬浮按钮完成"
+"页面加载完成"
 );
 
-await page.waitForTimeout(10000);
-
-console.log("等待飞书渲染完成");
-
-// 找正文滚动区域
-
-const selector =
-".bear-web-x-container.catalogue-opened.docx-in-wiki";
 
 
+// 找正文容器
 
 const container =
-page.locator(selector).first();
+page.locator(
+".bear-web-x-container.docx-in-wiki"
+)
+.first();
+
+
+await page.waitForTimeout(5000);
+
+
+console.log(
+"正文容器数量:",
+await page.locator(
+".bear-web-x-container.docx-in-wiki"
+).count()
+);
 
 
 
-await container.waitFor({
-    state:"visible",
-    timeout:60000
+console.log(
+"找到正文区域"
+);
+
+console.log(
+await page.locator("body").innerText()
+);
+
+const elements = await page.evaluate(()=>{
+
+    return [...document.querySelectorAll("*")]
+    .filter(el=>{
+        return el.scrollHeight > el.clientHeight + 500;
+    })
+    .map(el=>({
+
+        class:
+        el.className,
+
+        scrollHeight:
+        el.scrollHeight,
+
+        clientHeight:
+        el.clientHeight
+
+    }))
+    .slice(0,20);
+
+});
+
+
+console.log(
+"可滚动元素:",
+elements
+);
+
+// 先滚到底触发飞书加载
+
+await container.evaluate(
+(el)=>{
+    el.scrollTop = el.scrollHeight;
+}
+);
+
+await page.waitForTimeout(5000);
+
+
+console.log(
+"触发底部加载完成"
+);
+
+// 获取正文尺寸
+
+const box =
+await container.boundingBox();
+
+const clipBox = {
+
+    x:600,
+
+    y:64,
+
+    width:1250,
+
+  height:900
+
+};
+
+const info =
+await page.evaluate(()=>{
+
+    let maxHeight = 0;
+
+    document.querySelectorAll("*")
+    .forEach(el=>{
+
+        if(el.scrollHeight > maxHeight){
+
+            maxHeight = el.scrollHeight;
+
+        }
+
+    });
+
+
+    return {
+
+        scrollHeight:maxHeight,
+
+        clientHeight:1136
+
+    };
+
 });
 
 
 
-const info = await container.evaluate(
-(el)=>({
+console.log(
+"正文区域:",
+box
+);
 
-    scrollHeight:
-    el.scrollHeight,
 
-    clientHeight:
-    el.clientHeight
+console.log(
+"正文高度:",
+info
+);
 
+console.log(
+"最后500字符:",
+await container.evaluate(
+el => el.innerText.slice(-500)
+)
+);
+
+console.log(
+"页面最大高度:",
+await page.evaluate(()=>{
+    return document.documentElement.scrollHeight;
 })
 );
 
-console.log(
-    "最终滚动高度:",
-    info.scrollHeight
-);
+// 创建图片目录
+
+const dir =
+"content/images/feishu";
 
 
-console.log(
-    "正文高度:",
-    info
-);
+if(!fs.existsSync(dir)){
+
+    fs.mkdirSync(
+        dir,
+        {
+            recursive:true
+        }
+    );
+
+}
 
 
 
 // 清理旧截图
 
-// 防止之前图片影响merge
+const oldFiles =
+fs.readdirSync(dir)
+.filter(
+f=>
+f.startsWith("customer_")
+&&
+f.endsWith(".png")
+&&
+!f.includes("full")
+);
 
-import("fs").then(fs=>{
 
-    const files =
-    fs.readdirSync(
-        "content/images/feishu"
+for(const f of oldFiles){
+
+    fs.unlinkSync(
+        `${dir}/${f}`
+    );
+
+}
+
+// 强制滚动到底部，触发飞书加载隐藏内容
+
+let lastHeight = 0;
+
+for(let i=0;i<20;i++){
+
+    await container.evaluate(el=>{
+        el.scrollTop = el.scrollHeight;
+    });
+
+
+    await page.waitForTimeout(2000);
+
+
+    const height =
+    await container.evaluate(
+        el=>el.scrollHeight
     );
 
 
-    files
-    .filter(
-        f =>
-        f.startsWith("customer_")
-        &&
-        f.endsWith(".png")
-    )
-    .forEach(
-        f=>
-        fs.unlinkSync(
-            "content/images/feishu/"+f
-        )
+    console.log(
+        "当前高度:",
+        height
     );
 
 
-});
+    if(height === lastHeight){
+        break;
+    }
 
 
+    lastHeight = height;
 
-await page.waitForTimeout(1000);
-
-
-
-// 开始分页截图
+}
 
 
-let index = 1;
+// 回顶部
+
+await container.evaluate(
+el=>{
+    el.scrollTop=0;
+}
+);
 
 
-const step = 900;
+await page.waitForTimeout(3000);
 
+// 开始截图
+
+let index=1;
+
+
+const step=900;
 
 
 for(
-let y = 0;
-y < info.scrollHeight;
-y += step
+let y=0;
+y<info.scrollHeight;
+y+=step
 ){
 
 
-
-    await container.evaluate(
-        (el,y)=>{
-
-
-            el.scrollTop = y;
-
-
-        },
+    console.log(
+        "当前滚动:",
         y
     );
 
 
 
-    await page.waitForTimeout(1500);
+    await container.evaluate(
+    (el,y)=>{
 
+        el.scrollTop=y;
 
+    },
+    y
+    );
 
-    const box =
-    await container.boundingBox();
-
-
-
-    console.log(
-        "当前滚动:",
-        y,
-        "截图区域:",
-        box
+    await page.waitForTimeout(
+        1500
     );
 
 
 
- await page.screenshot({
+    await page.screenshot({
 
-    path:
-    `content/images/feishu/customer_${index}.png`,
+        path:
+        `${dir}/customer_${index}.png`,
 
-    clip:{
+        clip:{
 
-        x:box.x + 300,
+            x:600,
 
-        y:box.y,
+            y:64,
 
-        width:box.width - 400,
+            width:1250,
 
-        height:900
+            height:900
 
-    }
+        }
 
-});
+    });
 
 
-console.log(
+
+    console.log(
     `第${index}张截图完成`
-);
+    );
 
 
-index++;
-
+    index++;
 
 }
 
+// 补拍最后一屏
+await container.evaluate(
+(el)=>{
+    el.scrollTop = el.scrollHeight;
+}
+);
 
+await page.waitForTimeout(2000);
+
+
+await page.screenshot({
+
+path:
+`${dir}/customer_last.png`,
+
+clip:{
+    x:600,
+    y:64,
+    width:1250,
+    height:900
+}
+
+});
+
+console.log("最后补拍完成");
 
 console.log(
 "分页截图完成"

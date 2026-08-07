@@ -10,18 +10,38 @@ const imageDir = "./content/images/feishu";
 // 获取所有customer截图
 const files = fs.readdirSync(imageDir)
 .filter(
-    f => f.startsWith("customer_") && f.endsWith(".png")
+    f =>
+    (
+        /^customer_\d+\.png$/.test(f)
+        ||
+        f === "customer_last.png"
+    )
 )
 .sort(
     (a,b)=>{
-        const na=parseInt(a.match(/\d+/)[0]);
-        const nb=parseInt(b.match(/\d+/)[0]);
+
+        const na =
+        a === "customer_last.png"
+        ? 9999
+        : parseInt(a.match(/\d+/)[0]);
+
+
+        const nb =
+        b === "customer_last.png"
+        ? 9999
+        : parseInt(b.match(/\d+/)[0]);
+
+
         return na-nb;
+
     }
 );
 
 
-console.log("发现图片:",files.length);
+console.log(
+    "发现图片:",
+    files.length
+);
 
 
 // 读取图片尺寸

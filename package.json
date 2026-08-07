@@ -98,6 +98,7 @@
     "sharp": "^0.34.5",
     "shiki": "^1.26.2",
     "source-map-support": "^0.5.21",
+    "tesseract.js": "^7.0.0",
     "to-vfile": "^8.0.0",
     "toml": "^3.0.0",
     "undici": "^8.8.0",

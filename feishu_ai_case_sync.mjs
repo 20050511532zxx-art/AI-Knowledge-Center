@@ -667,9 +667,25 @@ await getDocumentBlocks(
     token
 );
 
+console.log(
+    "blocks获取完成:",
+    blocks.length
+);
+
 const sections =
 splitByHeading(
     blocks
+);
+
+console.log(
+    "sections数量:",
+    sections.length
+);
+
+console.log(
+    sections.map(
+        x=>x.title
+    )
 );
 
 console.log(
@@ -950,52 +966,11 @@ imageMarkdown +=
 
 
 
-for(
-    const section of sections
-){
-
-console.log(
-    "项目:",
-    section.title,
-    "block数量:",
-    section.blocks.length
-);
-
-const screenshotPath =
-path.join(
+await takeFeishuScreenshot(
+    page,
     ASSET_DIR,
-    item.department,
-    section.title + ".png"
-);
-
-
-console.log(
-    "当前截图项目:",
-    section.title,
     item
 );
-
-    const markdown =
-    `
----
-title: ${section.title}
-department: ${item.department}
-source: 飞书知识库
----
-
-# ${section.title}
-
-`
-
-    fs.writeFileSync(
-        path.join(
-            saveDir,
-            `${section.title}.md`
-        ),
-        markdown,
-        "utf8"
-    );
-}
 
 
 
@@ -1058,10 +1033,13 @@ console.log("隐藏悬浮按钮");
 
 
 // 找正文区域
-const content =
-    await page.locator(
-        ".bear-web-x-container.catalogue-opened.docx-in-wiki"
-    ).first();
+await page.goto(
+"https://my.feishu.cn/wiki/Mnxjwiw1picy1Uk22QVcQGWAnbf",
+{
+waitUntil:"load",
+timeout:120000
+}
+);
 
 
 

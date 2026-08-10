@@ -1,18 +1,15 @@
-2026/08/07-09:31:22.634 17d8 Reusing MANIFEST D:\obsidian\仓库\quartz-site\feishu_browser\Default\Local Storage\leveldb/MANIFEST-000001
-2026/08/07-09:31:22.638 17d8 Recovering log #229
-2026/08/07-09:31:22.638 17d8 Level-0 table #231: started
-2026/08/07-09:31:22.641 17d8 Level-0 table #231: 25913 bytes OK
-2026/08/07-09:31:22.641 17d8 Recovering log #230
-2026/08/07-09:31:22.642 17d8 Reusing old log D:\obsidian\仓库\quartz-site\feishu_browser\Default\Local Storage\leveldb/000230.log 
-2026/08/07-09:31:22.644 17d8 Delete type=0 #229
-2026/08/07-09:31:22.644 5b24 Compacting 4@0 + 1@1 files
-2026/08/07-09:31:22.654 5b24 Generated table #232@0: 100 keys, 377459 bytes
-2026/08/07-09:31:22.654 5b24 Compacted 4@0 + 1@1 files => 377459 bytes
-2026/08/07-09:31:22.654 5b24 compacted to: files[ 0 1 1 0 0 0 0 ]
-2026/08/07-09:31:22.655 5b24 Delete type=2 #220
-2026/08/07-09:31:22.655 5b24 Delete type=2 #223
-2026/08/07-09:31:22.655 5b24 Delete type=2 #226
-2026/08/07-09:31:22.655 5b24 Delete type=2 #228
-2026/08/07-09:31:22.655 5b24 Delete type=2 #231
-2026/08/07-09:31:59.208 17d8 Level-0 table #234: started
-2026/08/07-09:31:59.213 17d8 Level-0 table #234: 26846 bytes OK
+2026/08/07-14:56:34.170 58c4 Reusing MANIFEST D:\obsidian\仓库\quartz-site\feishu_browser\Default\Local Storage\leveldb/MANIFEST-000001
+2026/08/07-14:56:34.174 58c4 Recovering log #375
+2026/08/07-14:56:34.175 58c4 Reusing old log D:\obsidian\仓库\quartz-site\feishu_browser\Default\Local Storage\leveldb/000375.log 
+2026/08/07-14:57:34.192 2630 Level-0 table #379: started
+2026/08/07-14:57:34.194 2630 Level-0 table #379: 26589 bytes OK
+2026/08/07-14:57:34.195 2630 Delete type=0 #375
+2026/08/07-14:57:34.195 58c4 Compacting 4@0 + 1@1 files
+2026/08/07-14:57:34.201 58c4 Generated table #380@0: 100 keys, 377188 bytes
+2026/08/07-14:57:34.201 58c4 Compacted 4@0 + 1@1 files => 377188 bytes
+2026/08/07-14:57:34.201 58c4 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/08/07-14:57:34.202 58c4 Delete type=2 #367
+2026/08/07-14:57:34.202 58c4 Delete type=2 #370
+2026/08/07-14:57:34.202 58c4 Delete type=2 #373
+2026/08/07-14:57:34.202 58c4 Delete type=2 #376
+2026/08/07-14:57:34.202 58c4 Delete type=2 #379

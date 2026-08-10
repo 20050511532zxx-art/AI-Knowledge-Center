@@ -972,7 +972,67 @@ await takeFeishuScreenshot(
     item
 );
 
+// 生成markdown文件
+const markdown = createFrontMatter(item)
++
+sections.map((section,index)=>{
 
+console.log(
+ section.title,
+ section.blocks.length
+);
+
+    return `
+# ${section.title}
+
+console.log("当前章节:", section.title, "blocks数量:", section.blocks.length);
+
+${renderFeishuBlocks(section.blocks,imageMap)}
+
+`;
+
+}).join("\n");
+
+
+for (const section of sections) {
+
+const markdown =
+createFrontMatter({
+ title: section.title,
+ department: "客服部",
+ source: "飞书知识库",
+})
++
+`
+# ${section.title}
+
+${section.image}
+`;
+
+const mdPath = path.join(
+ saveDir,
+ section.title + ".md"
+);
+
+fs.writeFileSync(
+ mdPath,
+ markdown,
+ "utf8"
+);
+
+console.log(
+"生成章节:",
+section.title
+);
+
+console.log(section.imageMap);
+
+}
+
+
+console.log(
+"md更新完成"
+);
 
 
     console.log(
@@ -1024,6 +1084,7 @@ await page.evaluate(()=>{
     ).forEach(el=>{
         el.style.display="none";
     });
+
 
 
 });

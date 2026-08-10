@@ -973,21 +973,15 @@ await takeFeishuScreenshot(
 );
 
 // 生成markdown文件
-const markdown = createFrontMatter(item)
+const markdown =
+createFrontMatter(item)
 +
 sections.map((section,index)=>{
 
-console.log(
- section.title,
- section.blocks.length
-);
-
-    return `
+return `
 # ${section.title}
 
-console.log("当前章节:", section.title, "blocks数量:", section.blocks.length);
-
-${renderFeishuBlocks(section.blocks,imageMap)}
+![](/images/feishu/customer_cases/${String(index+1).padStart(2,"0")}_${section.title.replace(/[\\/:*?"<>|]/g,"")}.png)
 
 `;
 
@@ -1006,7 +1000,7 @@ createFrontMatter({
 `
 # ${section.title}
 
-${section.image}
+${imageMarkdown}
 `;
 
 const mdPath = path.join(
@@ -1024,8 +1018,6 @@ console.log(
 "生成章节:",
 section.title
 );
-
-console.log(section.imageMap);
 
 }
 

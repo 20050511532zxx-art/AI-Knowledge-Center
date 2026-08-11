@@ -1011,6 +1011,14 @@ for (const section of sections){
         continue;
     }
 
+const sectionIndex = sections.indexOf(section) + 1;
+
+console.log(
+    "检测到变化项目:",
+    sectionIndex,
+    section.title
+);
+
 await takeFeishuScreenshot(
 page,
 ASSET_DIR,

@@ -1,20 +1,19 @@
 import fs from "fs";
 
 
-// =========================
+// =====================================
 // 飞书正文区域长截图
-// =========================
+// =====================================
 
 export async function takeFeishuScreenshot(
-    page,
-    savePath,
-    item
+page,
+savePath,
+item
 ){
 
-
 console.log(
-    "当前截图项目:",
-    item?.name
+"当前截图项目:",
+item?.name
 );
 
 
@@ -27,9 +26,8 @@ await page.waitForTimeout(20000);
 
 await page.evaluate(()=>{
 
-
 document.querySelectorAll(
-    '[class*="float"],[class*="feedback"],[class*="toolbar"]'
+'[class*="float"],[class*="feedback"],[class*="toolbar"]'
 )
 .forEach(el=>{
 
@@ -37,22 +35,25 @@ document.querySelectorAll(
 
 });
 
-
 });
+
+
+// 隐藏滚动条
 
 await page.addStyleTag({
 
-    content:`
+content:`
 
-    ::-webkit-scrollbar{
+::-webkit-scrollbar{
 
-        display:none !important;
+    display:none !important;
 
-    }
+}
 
-    `
+`
 
 });
+
 
 console.log(
 "页面加载完成"
@@ -60,7 +61,9 @@ console.log(
 
 
 
+// =====================================
 // 找正文容器
+// =====================================
 
 const container =
 page.locator(
@@ -80,50 +83,25 @@ await page.locator(
 );
 
 
-
 console.log(
 "找到正文区域"
 );
 
-console.log(
-await page.locator("body").innerText()
-);
-
-const elements = await page.evaluate(()=>{
-
-    return [...document.querySelectorAll("*")]
-    .filter(el=>{
-        return el.scrollHeight > el.clientHeight + 500;
-    })
-    .map(el=>({
-
-        class:
-        el.className,
-
-        scrollHeight:
-        el.scrollHeight,
-
-        clientHeight:
-        el.clientHeight
-
-    }))
-    .slice(0,20);
-
-});
 
 
-console.log(
-"可滚动元素:",
-elements
-);
-
-// 先滚到底触发飞书加载
+// =====================================
+// 触发飞书加载全部内容
+// =====================================
 
 await container.evaluate(
 (el)=>{
-    el.scrollTop = el.scrollHeight;
+
+el.scrollTop =
+el.scrollHeight;
+
 }
 );
+
 
 await page.waitForTimeout(5000);
 
@@ -132,56 +110,27 @@ console.log(
 "触发底部加载完成"
 );
 
-// 获取正文尺寸
 
-const box =
-await container.boundingBox();
 
-const clipBox = {
+// =====================================
+// 获取正文高度
+// =====================================
 
-    x:600,
+const info =
+await container.evaluate(
+(el)=>{
 
-    y:64,
+return {
 
-    width:1250,
+scrollHeight:
+el.scrollHeight,
 
-  height:900
+clientHeight:
+el.clientHeight
 
 };
 
-const info =
-await page.evaluate(()=>{
-
-    let maxHeight = 0;
-
-    document.querySelectorAll("*")
-    .forEach(el=>{
-
-        if(el.scrollHeight > maxHeight){
-
-            maxHeight = el.scrollHeight;
-
-        }
-
-    });
-
-
-    return {
-
-        scrollHeight:maxHeight,
-
-        clientHeight:1136
-
-    };
-
 });
-
-
-
-console.log(
-"正文区域:",
-box
-);
 
 
 console.log(
@@ -189,40 +138,32 @@ console.log(
 info
 );
 
-console.log(
-"最后500字符:",
-await container.evaluate(
-el => el.innerText.slice(-500)
-)
-);
 
-console.log(
-"页面最大高度:",
-await page.evaluate(()=>{
-    return document.documentElement.scrollHeight;
-})
-);
 
-// 创建图片目录
+// =====================================
+// 图片目录
+// =====================================
 
 const dir =
-"content/images/feishu";
+"content/images/feishu/customer_cases";
 
 
 if(!fs.existsSync(dir)){
 
-    fs.mkdirSync(
-        dir,
-        {
-            recursive:true
-        }
-    );
+fs.mkdirSync(
+dir,
+{
+recursive:true
+}
+);
 
 }
 
 
 
-// 清理旧截图
+// =====================================
+// 清理当前旧分页截图
+// =====================================
 
 const oldFiles =
 fs.readdirSync(dir)
@@ -231,72 +172,94 @@ f=>
 f.startsWith("customer_")
 &&
 f.endsWith(".png")
-&&
-!f.includes("full")
 );
 
 
 for(const f of oldFiles){
 
-    fs.unlinkSync(
-        `${dir}/${f}`
-    );
+fs.unlinkSync(
+`${dir}/${f}`
+);
 
 }
 
-// 强制滚动到底部，触发飞书加载隐藏内容
+
+
+// =====================================
+// 滚动加载
+// =====================================
 
 let lastHeight = 0;
 
+
 for(let i=0;i<20;i++){
 
-    await container.evaluate(el=>{
-        el.scrollTop = el.scrollHeight;
-    });
+
+await container.evaluate(
+(el)=>{
+
+el.scrollTop =
+el.scrollHeight;
+
+}
+);
 
 
-    await page.waitForTimeout(2000);
+await page.waitForTimeout(2000);
 
 
-    const height =
-    await container.evaluate(
-        el=>el.scrollHeight
-    );
+const height =
+await container.evaluate(
+el=>el.scrollHeight
+);
 
 
-    console.log(
-        "当前高度:",
-        height
-    );
+console.log(
+"当前高度:",
+height
+);
 
 
-    if(height === lastHeight){
-        break;
-    }
+if(height===lastHeight){
 
-
-    lastHeight = height;
+break;
 
 }
 
 
+lastHeight = height;
+
+
+}
+
+
+
+// =====================================
 // 回顶部
+// =====================================
 
 await container.evaluate(
-el=>{
-    el.scrollTop=0;
+(el)=>{
+
+el.scrollTop=0;
+
 }
 );
 
 
 await page.waitForTimeout(3000);
 
+
+
+// =====================================
 // 开始截图
+// =====================================
 
-let index=1;
+let index = 1;
 
 
-const step=900;
+const step = 900;
+
 
 
 for(
@@ -306,66 +269,78 @@ y+=step
 ){
 
 
-    console.log(
-        "当前滚动:",
-        y
-    );
+console.log(
+"当前滚动:",
+y
+);
 
 
 
-    await container.evaluate(
-    (el,y)=>{
+await container.evaluate(
+(el,y)=>{
 
-        el.scrollTop=y;
+el.scrollTop=y;
 
-    },
-    y
-    );
-
-    await page.waitForTimeout(
-        1500
-    );
+},
+y
+);
 
 
 
-    await page.screenshot({
-
-        path:
-        `${dir}/customer_${index}.png`,
-
-        clip:{
-
-            x:600,
-
-            y:64,
-
-            width:1250,
-
-            height:900
-
-        }
-
-    });
+await page.waitForTimeout(1500);
 
 
 
-    console.log(
-    `第${index}张截图完成`
-    );
+await page.screenshot({
+
+path:
+`${dir}/customer_${index}.png`,
 
 
-    index++;
+clip:{
+
+x:600,
+
+y:64,
+
+width:1250,
+
+height:900
 
 }
 
-// 补拍最后一屏
+});
+
+
+
+console.log(
+`第${index}张截图完成`
+);
+
+
+index++;
+
+
+}
+
+
+
+// =====================================
+// 最后一屏补拍
+// =====================================
+
 await container.evaluate(
 (el)=>{
-    el.scrollTop = el.scrollHeight;
+
+el.scrollTop =
+el.scrollHeight;
+
 }
 );
 
+
 await page.waitForTimeout(2000);
+
 
 
 await page.screenshot({
@@ -373,20 +348,33 @@ await page.screenshot({
 path:
 `${dir}/customer_last.png`,
 
+
 clip:{
-    x:600,
-    y:64,
-    width:1250,
-    height:900
+
+x:600,
+
+y:64,
+
+width:1250,
+
+height:900
+
 }
 
 });
 
-console.log("最后补拍完成");
+
+
+console.log(
+"最后补拍完成"
+);
+
+
 
 console.log(
 "分页截图完成"
 );
+
 
 
 }

@@ -3,6 +3,8 @@ import path from "path";
 import axios from "axios";
 import dotenv from "dotenv";
 import { chromium } from "playwright";
+import crypto from "crypto";
+
 
 dotenv.config({
     path: ".feishu.env"
@@ -491,7 +493,7 @@ function createFrontMatter(
 
     return `
 ---
-title: ${item.name}
+title: section.title
 category: AI案例库
 department: ${item.department}
 source: 飞书知识库
@@ -647,6 +649,17 @@ async function syncCase(
     token,
     page
 ){
+
+// 读取同步缓存
+const cachePath = "./feishu/feishu_sync_cache.json";
+
+let syncCache = {};
+
+if(fs.existsSync(cachePath)){
+    syncCache = JSON.parse(
+        fs.readFileSync(cachePath,"utf8")
+    );
+}
 
     console.log(
         "\n正在同步:",
@@ -888,7 +901,6 @@ console.log(
 
 
     const imageMap = {};
-    let imageMarkdown = "";
 
 
 
@@ -926,36 +938,33 @@ console.log(
 
 
 
-            try{
+/*
+try{
 
+    await downloadImage(
+        imageToken,
+        savePath,
+        token
+    );
 
-                await downloadImage(
-                    imageToken,
-                    savePath,
-                    token
-                );
+    imageMap[imageToken] =
+    `/AI案例库/${item.department}/${item.name}/${imageName}`;
 
-
-
-                imageMap[imageToken] =
-                `/AI案例库/${item.department}/${item.name}/${imageName}`;
-
-imageMarkdown += 
-`![](/AI案例库/${item.department}/${item.name}/${imageName})
+    imageMarkdown +=
+    `![](/AI案例库/${item.department}/${item.name}/${imageName})
 
 `;
 
-            }
-            catch(e){
+}
+catch(e){
 
+    console.log(
+        "图片下载失败:",
+        imageToken
+    );
 
-                console.log(
-                    "图片下载失败:",
-                    imageToken
-                );
-
-
-            }
+}
+*/
 
 
         }
@@ -966,11 +975,6 @@ imageMarkdown +=
 
 
 
-await takeFeishuScreenshot(
-    page,
-    ASSET_DIR,
-    item
-);
 
 // 生成markdown文件
 const markdown =
@@ -988,16 +992,75 @@ return `
 }).join("\n");
 
 
-for (const section of sections) {
+for (const section of sections){
 
-const markdown =
-createFrontMatter({
- title: section.title,
- department: "客服部",
- source: "飞书知识库",
-})
-+
-`
+    const sectionText = JSON.stringify(section.blocks);
+
+    const sectionHash =
+    crypto
+    .createHash("md5")
+    .update(sectionText)
+    .digest("hex");
+
+
+    // 判断是否变化
+    const oldHash = syncCache[section.title]?.hash;
+
+    if(oldHash === sectionHash){
+        console.log("未变化，跳过:", section.title);
+        continue;
+    }
+
+await takeFeishuScreenshot(
+page,
+ASSET_DIR,
+item,
+section
+);
+
+    // 保存新的hash
+    syncCache[section.title] = {
+        hash: sectionHash,
+        updateTime: new Date().toISOString()
+    };
+
+
+let imageMarkdown = "";
+
+// 根据章节顺序匹配已有截图
+const imageIndex = sections.indexOf(section) + 1;
+
+const imageFiles = [
+"01_客服AI项目定级.png",
+"02_客服聊天记录质检分析.png",
+"03_AI外呼系统.png",
+"04_多平台退款率分析软件.png",
+"05_E店S店亚马逊三平台马帮建退款单软件.png",
+"06_探域机器人使用情况.png",
+"07_跨境进口退款核对工具.png",
+"08_亚马逊发货物流查询AI.png",
+"09_大疆激活查询软件.png",
+"10_长租售后查询关联订单筛选.png",
+"11_美客多跟单软件.png",
+"12_跨境韩国本土店退货跟单软件.png",
+"13_微信聊天记录分析系统.png"
+];
+
+const imagePath =
+`/images/feishu/customer_cases/${imageFiles[imageIndex-1]}`;
+
+imageMarkdown += 
+`![](${imagePath})
+
+`;
+
+const markdown = `---
+title: ${section.title}
+category: AI案例库
+department: 客服部
+source: 飞书知识库
+---
+
 # ${section.title}
 
 ${imageMarkdown}
@@ -1021,6 +1084,12 @@ section.title
 
 }
 
+// 保存本次章节指纹
+fs.writeFileSync(
+    cachePath,
+    JSON.stringify(syncCache, null, 2),
+    "utf8"
+);
 
 console.log(
 "md更新完成"
@@ -1154,7 +1223,6 @@ await syncCase(
 );
 
         }
-
 
         console.log(
             "全部同步完成"

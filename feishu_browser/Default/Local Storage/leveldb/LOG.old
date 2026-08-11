@@ -1,15 +1,6 @@
-2026/08/07-14:56:34.170 58c4 Reusing MANIFEST D:\obsidian\仓库\quartz-site\feishu_browser\Default\Local Storage\leveldb/MANIFEST-000001
-2026/08/07-14:56:34.174 58c4 Recovering log #375
-2026/08/07-14:56:34.175 58c4 Reusing old log D:\obsidian\仓库\quartz-site\feishu_browser\Default\Local Storage\leveldb/000375.log 
-2026/08/07-14:57:34.192 2630 Level-0 table #379: started
-2026/08/07-14:57:34.194 2630 Level-0 table #379: 26589 bytes OK
-2026/08/07-14:57:34.195 2630 Delete type=0 #375
-2026/08/07-14:57:34.195 58c4 Compacting 4@0 + 1@1 files
-2026/08/07-14:57:34.201 58c4 Generated table #380@0: 100 keys, 377188 bytes
-2026/08/07-14:57:34.201 58c4 Compacted 4@0 + 1@1 files => 377188 bytes
-2026/08/07-14:57:34.201 58c4 compacted to: files[ 0 1 1 0 0 0 0 ]
-2026/08/07-14:57:34.202 58c4 Delete type=2 #367
-2026/08/07-14:57:34.202 58c4 Delete type=2 #370
-2026/08/07-14:57:34.202 58c4 Delete type=2 #373
-2026/08/07-14:57:34.202 58c4 Delete type=2 #376
-2026/08/07-14:57:34.202 58c4 Delete type=2 #379
+2026/08/07-15:02:09.425 44a0 Reusing MANIFEST D:\obsidian\仓库\quartz-site\feishu_browser\Default\Local Storage\leveldb/MANIFEST-000001
+2026/08/07-15:02:09.429 44a0 Recovering log #378
+2026/08/07-15:02:09.429 44a0 Reusing old log D:\obsidian\仓库\quartz-site\feishu_browser\Default\Local Storage\leveldb/000378.log 
+2026/08/07-15:04:11.928 120c Level-0 table #383: started
+2026/08/07-15:04:11.930 120c Level-0 table #383: 26686 bytes OK
+2026/08/07-15:04:11.930 120c Delete type=0 #378

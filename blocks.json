@@ -167,6 +167,7 @@
       "CMkpdRA2JoKvLwxrkjQcLhTsn0b",
       "EJmBdwFV2oGnrAxHUY1cEHyvnyb",
       "FWZ5dn3vvorSatxeEkGcZtrJnnb",
+      "Lgm4d0oVMoOwGGxnuwjcfX9Nn3e",
       "QYZTdK7DnoaBFzxy1NeceaYGnkb",
       "QUIwd9OcDoijw9xDTxicUqhjn2B",
       "Ya10d0nbxoYL51xaBvrcxGBDnTg",
@@ -11606,6 +11607,31 @@
     "parent_id": "Mnxjwiw1picy1Uk22QVcQGWAnbf",
     "sheet": {
       "token": "Q2pKsaAdUhw5JStYjlMcIaX1nFj_TK9Bte"
+    }
+  },
+  {
+    "block_id": "Lgm4d0oVMoOwGGxnuwjcfX9Nn3e",
+    "block_type": 2,
+    "parent_id": "Mnxjwiw1picy1Uk22QVcQGWAnbf",
+    "text": {
+      "elements": [
+        {
+          "text_run": {
+            "content": "测试自动更新",
+            "text_element_style": {
+              "bold": false,
+              "inline_code": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false
+            }
+          }
+        }
+      ],
+      "style": {
+        "align": 1,
+        "folded": false
+      }
     }
   },
   {

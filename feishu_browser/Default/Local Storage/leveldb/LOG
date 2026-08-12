@@ -1,6 +1,9 @@
-2026/08/10-16:34:05.786 c0c Reusing MANIFEST D:\obsidian\仓库\quartz-site\feishu_browser\Default\Local Storage\leveldb/MANIFEST-000001
-2026/08/10-16:34:05.790 c0c Recovering log #382
-2026/08/10-16:34:05.791 c0c Reusing old log D:\obsidian\仓库\quartz-site\feishu_browser\Default\Local Storage\leveldb/000382.log 
-2026/08/10-16:35:05.808 6d38 Level-0 table #386: started
-2026/08/10-16:35:05.812 6d38 Level-0 table #386: 247652 bytes OK
-2026/08/10-16:35:05.813 6d38 Delete type=0 #382
+2026/08/12-09:02:57.064 44cc Reusing MANIFEST D:\obsidian\仓库\quartz-site\feishu_browser\Default\Local Storage\leveldb/MANIFEST-000001
+2026/08/12-09:02:57.068 44cc Recovering log #488
+2026/08/12-09:02:57.069 44cc Level-0 table #491: started
+2026/08/12-09:02:57.073 44cc Level-0 table #491: 248359 bytes OK
+2026/08/12-09:02:57.074 44cc Recovering log #490
+2026/08/12-09:02:57.074 44cc Reusing old log D:\obsidian\仓库\quartz-site\feishu_browser\Default\Local Storage\leveldb/000490.log 
+2026/08/12-09:02:57.076 44cc Delete type=0 #488
+2026/08/12-09:03:54.173 44cc Level-0 table #493: started
+2026/08/12-09:03:54.176 44cc Level-0 table #493: 26150 bytes OK

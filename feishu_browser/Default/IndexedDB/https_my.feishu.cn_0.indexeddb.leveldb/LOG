@@ -1,34 +1,12 @@
-2026/08/10-16:34:08.853 66ac Reusing MANIFEST D:\obsidian\仓库\quartz-site\feishu_browser\Default\IndexedDB\https_my.feishu.cn_0.indexeddb.leveldb/MANIFEST-000001
-2026/08/10-16:34:08.853 66ac Recovering log #501
-2026/08/10-16:34:08.862 66ac Reusing old log D:\obsidian\仓库\quartz-site\feishu_browser\Default\IndexedDB\https_my.feishu.cn_0.indexeddb.leveldb/000501.log 
-2026/08/10-16:34:26.449 6ce0 Level-0 table #506: started
-2026/08/10-16:34:26.456 6ce0 Level-0 table #506: 1504805 bytes OK
-2026/08/10-16:34:26.457 6ce0 Delete type=0 #501
-2026/08/10-16:34:26.487 10f4 Level-0 table #508: started
-2026/08/10-16:34:26.489 10f4 Level-0 table #508: 108771 bytes OK
-2026/08/10-16:34:26.490 10f4 Delete type=0 #505
-2026/08/10-16:34:26.490 66ac Manual compaction at level-0 from '\x00\x12\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x13\x00\x00\x00' @ 0 : 0; will stop at '\x00\x17\x04\x02\x01\x10\x00f\x00f\x00c\x00b\x001\x004\x008\x00a\x006\x00e\x00b\x005\x00a\x005\x00b\x00e' @ 580062 : 1
-2026/08/10-16:34:26.490 66ac Compacting 1@0 + 1@1 files
-2026/08/10-16:34:26.500 66ac Generated table #509@0: 10071 keys, 234800 bytes
-2026/08/10-16:34:26.500 66ac Compacted 1@0 + 1@1 files => 234800 bytes
-2026/08/10-16:34:26.501 66ac compacted to: files[ 0 1 1 0 0 0 0 ]
-2026/08/10-16:34:26.501 66ac Delete type=2 #508
-2026/08/10-16:34:26.501 66ac Manual compaction at level-0 from '\x00\x17\x04\x02\x01\x10\x00f\x00f\x00c\x00b\x001\x004\x008\x00a\x006\x00e\x00b\x005\x00a\x005\x00b\x00e' @ 580062 : 1 .. '\x00\x13\x00\x00\x00' @ 0 : 0; will stop at (end)
-2026/08/10-16:34:26.501 66ac Manual compaction at level-1 from '\x00\x12\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x13\x00\x00\x00' @ 0 : 0; will stop at '\x00\x1f\x01 \x01\x04\x00i\x00n\x00f\x00o\x00\x03\x00\x00\x00\x00\x00\x006@' @ 579544 : 1
-2026/08/10-16:34:26.501 66ac Compacting 1@1 + 1@2 files
-2026/08/10-16:34:26.519 66ac Generated table #510@1: 14298 keys, 1247492 bytes
-2026/08/10-16:34:26.519 66ac Compacted 1@1 + 1@2 files => 1247492 bytes
-2026/08/10-16:34:26.520 66ac compacted to: files[ 0 0 1 0 0 0 0 ]
-2026/08/10-16:34:26.520 66ac Delete type=2 #509
-2026/08/10-16:34:26.520 66ac Manual compaction at level-1 from '\x00\x1f\x01 \x01\x04\x00i\x00n\x00f\x00o\x00\x03\x00\x00\x00\x00\x00\x006@' @ 579544 : 1 .. '\x00\x13\x00\x00\x00' @ 0 : 0; will stop at (end)
-2026/08/10-16:35:11.424 6ce0 Level-0 table #512: started
-2026/08/10-16:35:11.434 6ce0 Level-0 table #512: 2320193 bytes OK
-2026/08/10-16:35:11.436 6ce0 Delete type=2 #503
-2026/08/10-16:35:11.436 6ce0 Delete type=2 #506
-2026/08/10-16:35:11.436 6ce0 Delete type=0 #507
-2026/08/10-16:35:38.878 6ce0 Compacting 1@1 + 1@2 files
-2026/08/10-16:35:38.905 6ce0 Generated table #513@1: 14192 keys, 1228221 bytes
-2026/08/10-16:35:38.905 6ce0 Compacted 1@1 + 1@2 files => 1228221 bytes
-2026/08/10-16:35:38.906 6ce0 compacted to: files[ 0 0 1 0 0 0 0 ]
-2026/08/10-16:35:38.907 6ce0 Delete type=2 #510
-2026/08/10-16:35:38.907 6ce0 Delete type=2 #512
+2026/08/12-09:03:00.326 5ab8 Reusing MANIFEST D:\obsidian\仓库\quartz-site\feishu_browser\Default\IndexedDB\https_my.feishu.cn_0.indexeddb.leveldb/MANIFEST-000001
+2026/08/12-09:03:00.326 5ab8 Recovering log #715
+2026/08/12-09:03:00.328 5ab8 Reusing old log D:\obsidian\仓库\quartz-site\feishu_browser\Default\IndexedDB\https_my.feishu.cn_0.indexeddb.leveldb/000715.log 
+2026/08/12-09:03:06.612 5ae8 Compacting 1@1 + 1@2 files
+2026/08/12-09:03:06.635 5ae8 Generated table #718@1: 22925 keys, 2003377 bytes
+2026/08/12-09:03:06.635 5ae8 Compacted 1@1 + 1@2 files => 2003377 bytes
+2026/08/12-09:03:06.636 5ae8 compacted to: files[ 0 0 1 0 0 0 0 ]
+2026/08/12-09:03:06.636 5ae8 Delete type=2 #713
+2026/08/12-09:03:06.636 5ae8 Delete type=2 #716
+2026/08/12-09:03:33.379 5ae8 Level-0 table #720: started
+2026/08/12-09:03:33.386 5ae8 Level-0 table #720: 2119933 bytes OK
+2026/08/12-09:03:33.387 5ae8 Delete type=0 #715

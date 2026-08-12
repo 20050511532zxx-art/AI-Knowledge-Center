@@ -8,16 +8,28 @@ import sharp from "sharp";
 // 基础配置
 // ======================================================
 
-const url =
-"https://my.feishu.cn/wiki/Mnxjwiw1picy1Uk22QVcQGWAnbf?fromScene=spaceOverview";
+const wikiToken =
+process.argv[2] || "Mnxjwiw1picy1Uk22QVcQGWAnbf";
 
+
+const url =
+`https://my.feishu.cn/wiki/${wikiToken}?fromScene=spaceOverview`;
+
+const targetSection =
+process.argv[3] || null;
+
+const imageDir =
+process.argv[4] || "customer_cases";
 
 const outputDir =
-"./content/images/feishu/customer_cases";
-
+targetSection
+?
+`./content/images/feishu/temp_${imageDir}`
+:
+`./content/images/feishu/${imageDir}`;
 
 const tempDir =
-"./content/images/feishu/customer_cases_temp";
+`./content/images/feishu/${imageDir}_temp`;
 
 
 const containerSelector =
@@ -218,8 +230,8 @@ async function collectHeadings() {
     rect.height < 50
 ) {
 
-                    const isMainTitle =
-                    clean === "客服AI项目定级";
+const isMainTitle =
+clean.endsWith("AI项目定级");
 
 
 const isCaseTitle =
@@ -379,9 +391,9 @@ await collectHeadings();
 allHeadings =
 allHeadings.filter(item => {
 
-    if (
-        item.text === "客服AI项目定级"
-    ) {
+  if (
+    item.text.endsWith("AI项目定级")
+) {
         return true;
     }
 
@@ -405,9 +417,9 @@ for (
     let key;
 
 
-    if (
-        item.text === "客服AI项目定级"
-    ) {
+   if (
+    item.text.endsWith("AI项目定级")
+) {
 
         key =
         "客服AI项目定级";
@@ -462,70 +474,14 @@ null
 // 强制使用正确章节顺序
 // ======================================================
 
-const expectedOrder = [
+const expectedOrder = Array.from(headingMap.entries()).map(([key,item],index)=>{
 
-    {
-        key: "客服AI项目定级",
-        name: "01_客服AI项目定级"
-    },
+    return {
+        key:key,
+        name:`${String(index+1).padStart(2,"0")}_${item.text.replace(/[\/\\:*?"<>|]/g,"")}`
+    };
 
-    {
-        key: "一",
-        name: "02_客服聊天记录质检分析"
-    },
-
-    {
-        key: "二",
-        name: "03_AI外呼系统"
-    },
-
-    {
-        key: "三",
-        name: "04_多平台退款率分析软件"
-    },
-
-    {
-        key: "四",
-        name: "05_E店S店亚马逊三平台马帮建退款单软件"
-    },
-
-    {
-        key: "五",
-        name: "06_探域机器人使用情况"
-    },
-
-    {
-        key: "六",
-        name: "07_跨境进口退款核对工具"
-    },
-
-    {
-        key: "七",
-        name: "08_亚马逊发货物流查询AI"
-    },
-
-    {
-        key: "八",
-        name: "09_大疆激活查询软件"
-    },
-
-    {
-        key: "九",
-        name: "10_长租售后查询关联订单筛选"
-    },
-
-    {
-        key: "十",
-        name: "11_美客多跟单软件"
-    },
-
-    {
-        key: "十一",
-        name: "12_跨境韩国本土店退货跟单软件"
-    },
-
-
-];
+});
 
 
 const headings = [];
@@ -647,6 +603,18 @@ for (
     i < headings.length;
     i++
 ) {
+
+if(
+    targetSection &&
+    !headings[i].text.includes(targetSection)
+){
+    console.log(
+        "跳过章节:",
+        headings[i].text
+    );
+
+    continue;
+}
 
     const section =
     headings[i];
@@ -1104,6 +1072,30 @@ captureHeight - OVERLAP;
         outputFile
     );
 
+// 单项目更新时，覆盖正式图片
+
+if(targetSection){
+
+const finalFile =
+path.join(
+    `./content/images/feishu/${imageDir}`,
+    `${section.name}.png`
+);
+
+
+    fs.copyFileSync(
+        outputFile,
+        finalFile
+    );
+
+
+    console.log(
+        "✅ 覆盖正式图片:",
+        finalFile
+    );
+
+}
+
 }
 
 
@@ -1141,7 +1133,4 @@ console.log(
 );
 
 
-// 浏览器保持打开，方便查看
-await page.waitForTimeout(
-    999999
-);
+await context.close();

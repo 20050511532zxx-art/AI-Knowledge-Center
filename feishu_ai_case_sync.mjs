@@ -4,7 +4,7 @@ import axios from "axios";
 import dotenv from "dotenv";
 import { chromium } from "playwright";
 import crypto from "crypto";
-
+import { execSync } from "child_process";
 
 dotenv.config({
     path: ".feishu.env"
@@ -58,18 +58,20 @@ const ASSET_DIR =
 // 案例列表
 // =====================================
 
-const CASE_LIST = [
-
-    {
-        name:"客服+AI数字化解决案例",
-        department:"客服部",
-        wiki_token:"Mnxjwiw1picy1Uk22QVcQGWAnbf"
-    },
-
-];
+const CASE_LIST = JSON.parse(
+    fs.readFileSync(
+        "./feishu_departments.json",
+        "utf-8"
+    )
+);
 
 
-
+console.log(
+    "当前部门配置:",
+    CASE_LIST.map(
+        item => item.name
+    )
+);
 
 // =====================================
 // 工具函数
@@ -666,7 +668,18 @@ if(fs.existsSync(cachePath)){
         item.name
     );
 
+await page.goto(
+`https://my.feishu.cn/wiki/${item.wiki_token}`,
+{
+waitUntil:"load",
+timeout:120000
+}
+);
 
+console.log(
+"打开页面:",
+item.name
+);
 
    const documentId =
 item.wiki_token;
@@ -674,20 +687,41 @@ item.wiki_token;
 
 
 
-    const blocks =
+const blocks =
 await getDocumentBlocks(
     documentId,
     token
 );
 
+
+// 过滤其他知识库残留内容
+const cleanBlocks = blocks.filter(block => {
+
+    return block.parent_id !== "Mnxjwiw1picy1Uk22QVcQGWAnbf";
+
+});
+
+
 console.log(
-    "blocks获取完成:",
-    blocks.length
+"原始blocks:",
+blocks.length
+);
+
+
+console.log(
+"过滤后blocks:",
+cleanBlocks.length
+);
+
+
+console.log(
+"blocks获取完成:",
+cleanBlocks.length
 );
 
 const sections =
 splitByHeading(
-    blocks
+    cleanBlocks
 );
 
 console.log(
@@ -985,7 +1019,7 @@ sections.map((section,index)=>{
 return `
 # ${section.title}
 
-![](/images/feishu/customer_cases/${String(index+1).padStart(2,"0")}_${section.title.replace(/[\\/:*?"<>|]/g,"")}.png)
+![ ](/images/feishu/${item.imageDir}/${String(index+1).padStart(2,"0")}_${section.title.replace(/[\\/:*?"<>|]/g,"")}.png)
 
 `;
 
@@ -1026,6 +1060,46 @@ item,
 section
 );
 
+console.log(
+"准备更新截图:",
+section.title
+);
+
+// =====================================
+// 根据变化章节重新生成对应案例截图
+// =====================================
+
+try{
+
+console.log(
+"开始更新章节图片:",
+section.title
+);
+
+
+execSync(
+`node feishu_body_split_final.mjs "${item.wiki_token}" "${section.title}" "${item.imageDir}"`,
+{
+    stdio:"inherit"
+}
+);
+
+
+console.log(
+"章节图片更新完成:",
+section.title
+);
+
+
+}catch(e){
+
+console.log(
+"章节图片更新失败:",
+e.message
+);
+
+}
+
     // 保存新的hash
     syncCache[section.title] = {
         hash: sectionHash,
@@ -1035,27 +1109,20 @@ section
 
 let imageMarkdown = "";
 
-// 根据章节顺序匹配已有截图
+// 根据章节顺序动态匹配截图
 const imageIndex = sections.indexOf(section) + 1;
 
-const imageFiles = [
-"01_客服AI项目定级.png",
-"02_客服聊天记录质检分析.png",
-"03_AI外呼系统.png",
-"04_多平台退款率分析软件.png",
-"05_E店S店亚马逊三平台马帮建退款单软件.png",
-"06_探域机器人使用情况.png",
-"07_跨境进口退款核对工具.png",
-"08_亚马逊发货物流查询AI.png",
-"09_大疆激活查询软件.png",
-"10_长租售后查询关联订单筛选.png",
-"11_美客多跟单软件.png",
-"12_跨境韩国本土店退货跟单软件.png",
-"13_微信聊天记录分析系统.png"
-];
+
+const safeTitle =
+section.title.replace(/[\/\\:*?"<>|]/g,"");
+
+
+const imageFile =
+`${String(imageIndex).padStart(2,"0")}_${safeTitle}.png`;
+
 
 const imagePath =
-`/images/feishu/customer_cases/${imageFiles[imageIndex-1]}`;
+`/images/feishu/${item.imageDir}/${imageFile}`;
 
 imageMarkdown += 
 `![](${imagePath})
@@ -1065,7 +1132,7 @@ imageMarkdown +=
 const markdown = `---
 title: ${section.title}
 category: AI案例库
-department: 客服部
+department: ${item.department}
 source: 飞书知识库
 ---
 
@@ -1108,6 +1175,11 @@ console.log(
         "完成:",
         item.name
     );
+
+console.log(
+    "准备退出syncCase:",
+    item.name
+);
 
 }
 
@@ -1162,18 +1234,7 @@ console.log("隐藏悬浮按钮");
 
 
 
-// 找正文区域
-await page.goto(
-"https://my.feishu.cn/wiki/Mnxjwiw1picy1Uk22QVcQGWAnbf",
-{
-waitUntil:"load",
-timeout:120000
-}
-);
 
-
-
-console.log("找到正文区域");
 
 const scrollInfo = await page.evaluate(() => {
 
@@ -1224,20 +1285,35 @@ console.log(scrollInfo);
             const item of CASE_LIST
         ){
 
+console.log(
+"循环次数:",
+CASE_LIST.indexOf(item)+1,
+"当前:",
+item.department
+);
+
+console.log(
+    "当前执行部门:",
+    item.department,
+    item.name,
+    item.imageDir
+);
+
 await syncCase(
     item,
     token,
     page
 );
 
-        }
+console.log(
+    "syncCase完成:",
+    item.department
+);
 
-        console.log(
-            "全部同步完成"
-        );
+}
 
+}
 
-    }
     catch(e){
 
         console.log(

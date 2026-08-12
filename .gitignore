@@ -18,3 +18,26 @@ feishu_*_test.mjs
 # 日志文件
 *.log
 feishu_browser/
+
+# ==============================
+# 飞书本地运行文件
+# ==============================
+
+# 浏览器登录环境
+feishu_browser/
+
+# 截图临时目录
+content/images/feishu/temp_*/
+content/images/feishu/*_temp/
+
+# 本地程序备份
+feishu_ai_case_sync - *.mjs
+feishu_body_split_final - *.mjs
+feishu_departments - *.json
+feishu/feishu_sync_cache - *.json
+
+# 调试输出
+blocks.json
+
+# 一次性修复工具
+fix_md_image_paths.mjs

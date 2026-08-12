@@ -1,14 +1,44 @@
 [
   {
-    "name":"客服+AI数字化解决案例",
-    "department":"客服部",
-    "wiki_token":"Mnxjwiw1picy1Uk22QVcQGWAnbf",
-    "imageDir":"customer_cases"
+    "name": "客服+AI数字化解决案例",
+    "department": "客服部",
+    "wiki_token": "Mnxjwiw1picy1Uk22QVcQGWAnbf",
+    "imageDir": "customer_cases"
   },
-{
-  "name": "财务+A数字化解决案例",
-  "department": "财务部",
-  "wiki_token": "Uq78whyMCim8QGkC5ufc9mpKnQc",
-  "imageDir": "finance_cases"
-}
+  {
+    "name": "财务+A数字化解决案例",
+    "department": "财务部",
+    "wiki_token": "Uq78whyMCim8QGkC5ufc9mpKnQc",
+    "imageDir": "finance_cases"
+  },
+  {
+    "name": "国内运营+AI数字化解决案例",
+    "department": "国内运营部",
+    "wiki_token": "ADpqw8kiOidhQgkHszEcVjOFnMf",
+    "imageDir": "domestic_operation_cases"
+  },
+  {
+    "name": "职能+AI数字化解决案例",
+    "department": "职能部",
+    "wiki_token": "JNHaw82eZiJWLsk1MM8cqp4PnWd",
+    "imageDir": "functional_cases"
+  },
+  {
+    "name": "采购+AI数字化解决案例",
+    "department": "采购部",
+    "wiki_token": "PvdCwMWshix1LikFGAEcg668nrc",
+    "imageDir": "purchase_cases"
+  },
+  {
+    "name": "跨境运营+AI数字化解决案例",
+    "department": "跨境运营部",
+    "wiki_token": "OpvQw2PGUiBSVmkM3LIcvObsnig",
+    "imageDir": "cross_border_operation_cases"
+  },
+  {
+    "name": "仓储+AI数字化解决案例",
+    "department": "仓储部",
+    "wiki_token": "CUpHwHLLWilgzJkqA1mcy6lKnOf",
+    "imageDir": "warehouse_cases"
+  }
 ]

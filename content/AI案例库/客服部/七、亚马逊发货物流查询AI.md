@@ -5,6 +5,6 @@ department: 客服部
 source: 飞书知识库
 ---
 
-![](/images/feishu/customer_cases/08_亚马逊发货物流查询AI.png)
+![](/images/feishu/customer_cases/08_七、亚马逊发货物流查询AI.png)
 
 

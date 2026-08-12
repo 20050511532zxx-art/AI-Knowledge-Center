@@ -17,3 +17,4 @@ feishu_*_test.mjs
 
 # 日志文件
 *.log
+feishu_browser/

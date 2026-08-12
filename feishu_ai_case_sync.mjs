@@ -547,6 +547,12 @@ function getText(
 
     }
 
+else if(block.bullet?.elements){
+    elements = block.bullet.elements;
+}
+else if(block.ordered?.elements){
+    elements = block.ordered.elements;
+}
 
     let text="";
 
@@ -590,39 +596,27 @@ function splitByHeading(
         const text =
         getText(block);
 
+console.log("BLOCK:", block.block_type, JSON.stringify(text));
 
+console.log("检测标题:", text);
 
         // 只识别项目标题
 const isProjectTitle =
 (
-    text.includes("客服AI项目定级")
-)
-||
-(
-    /^0\d[、.\-]/.test(text)
-)
-||
-(
-    /^1\d[、.\-]/.test(text)
-)
-||
-(
-    /^[一二三四五六七八九十]+、/.test(text)
+ text.endsWith("AI项目定级")
+ ||
+ /^[一二三四五六七八九十]+、/.test(text)
 );
 
         if(isProjectTitle){
 
 
-            current = {
+current = {
+    title:text,
+    blocks:[block]
+};
 
-                title:text,
-
-                blocks:[block]
-
-            };
-
-
-            sections.push(current);
+sections.push(current);
 
 
         }
@@ -694,12 +688,7 @@ await getDocumentBlocks(
 );
 
 
-// 过滤其他知识库残留内容
-const cleanBlocks = blocks.filter(block => {
-
-    return block.parent_id !== "Mnxjwiw1picy1Uk22QVcQGWAnbf";
-
-});
+const cleanBlocks = blocks;
 
 
 console.log(
@@ -1028,7 +1017,8 @@ return `
 
 for (const section of sections){
 
-    const sectionText = JSON.stringify(section.blocks);
+const sectionText = JSON.stringify(section.blocks);
+
 
     const sectionHash =
     crypto
@@ -1045,60 +1035,24 @@ for (const section of sections){
         continue;
     }
 
-const sectionIndex = sections.indexOf(section) + 1;
-
 console.log(
-    "检测到变化项目:",
-    sectionIndex,
+    "检测到变化，重新截图:",
     section.title
 );
 
-await takeFeishuScreenshot(
-page,
-ASSET_DIR,
-item,
-section
-);
 
-console.log(
-"准备更新截图:",
-section.title
+execSync(
+`node feishu_body_split_final.mjs "${item.wiki_token}" "${item.imageDir}" "${section.title}"`,
+{
+    stdio:"inherit"
+}
 );
 
 // =====================================
 // 根据变化章节重新生成对应案例截图
 // =====================================
 
-try{
 
-console.log(
-"开始更新章节图片:",
-section.title
-);
-
-
-execSync(
-`node feishu_body_split_final.mjs "${item.wiki_token}" "${section.title}" "${item.imageDir}"`,
-{
-    stdio:"inherit"
-}
-);
-
-
-console.log(
-"章节图片更新完成:",
-section.title
-);
-
-
-}catch(e){
-
-console.log(
-"章节图片更新失败:",
-e.message
-);
-
-}
 
     // 保存新的hash
     syncCache[section.title] = {
@@ -1281,58 +1235,57 @@ console.log(scrollInfo);
         );
 
 
-        for(
-            const item of CASE_LIST
-        ){
+for(
+const item of CASE_LIST
+){
 
-console.log(
-"循环次数:",
-CASE_LIST.indexOf(item)+1,
-"当前:",
-item.department
-);
+    console.log(
+        "循环次数:",
+        CASE_LIST.indexOf(item)+1,
+        "当前:",
+        item.department
+    );
 
-console.log(
-    "当前执行部门:",
-    item.department,
-    item.name,
-    item.imageDir
-);
+    console.log(
+        "当前执行部门:",
+        item.department,
+        item.name,
+        item.imageDir
+    );
 
-await syncCase(
-    item,
-    token,
-    page
-);
 
-console.log(
-    "syncCase完成:",
-    item.department
-);
+    await syncCase(
+        item,
+        token,
+        page
+    );
+
+
+
 
 }
 
-}
-
-    catch(e){
-
-        console.log(
-            "同步出现错误:"
-        );
-
-
-        console.log(
-            e.response?.data || e.message
-        );
-
-
-        console.log(
-            e
-        );
-
-    }
 
 }
+catch(e){
 
+    console.log(
+        "同步出现错误:"
+    );
+
+
+    console.log(
+        e.response?.data || e.message
+    );
+
+
+    console.log(
+        e
+    );
+
+}
+
+
+}
 
 main();

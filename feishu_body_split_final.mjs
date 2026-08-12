@@ -15,11 +15,19 @@ process.argv[2] || "Mnxjwiw1picy1Uk22QVcQGWAnbf";
 const url =
 `https://my.feishu.cn/wiki/${wikiToken}?fromScene=spaceOverview`;
 
-const targetSection =
-process.argv[3] || null;
+let imageDir = process.argv[3] || "customer_cases";
+let targetSection = process.argv[4] || null;
 
-const imageDir =
-process.argv[4] || "customer_cases";
+
+console.log(
+    "参数检查:",
+    process.argv
+);
+
+console.log(
+    "当前imageDir:",
+    imageDir
+);
 
 const outputDir =
 targetSection
@@ -82,22 +90,38 @@ resetDir(tempDir);
 // 浏览器
 // ======================================================
 
-const context =
-await chromium.launchPersistentContext(
-    "./feishu_browser",
-    {
-        headless: false,
+let context;
+let page;
 
-        viewport: {
-            width: 1600,
-            height: 1200
+
+if(global.page){
+
+    console.log("复用已有飞书页面");
+
+    page = global.page;
+
+
+}else{
+
+    console.log("独立启动飞书页面");
+
+    context =
+    await chromium.launchPersistentContext(
+        "./feishu_browser",
+        {
+            headless:false,
+            viewport:{
+                width:1600,
+                height:1200
+            }
         }
-    }
-);
+    );
 
 
-const page =
-await context.newPage();
+    page =
+    await context.newPage();
+
+}
 
 
 console.log("打开飞书");
@@ -249,6 +273,8 @@ const isCaseTitle =
                         ||
                         isCaseTitle
                     ) {
+
+console.log("发现标题:", clean);
 
                         result.push({
 
@@ -417,27 +443,28 @@ for (
     let key;
 
 
-   if (
+if (
     item.text.endsWith("AI项目定级")
-) {
+){
+    key = item.text;
+}
 
-        key =
-        "客服AI项目定级";
-
-    } else {
+ else {
 
 const match =
 item.text.match(
 /^([一二三四五六七八九十]+)、/
 )
-||
-(
-item.text.includes("微信聊天记录分析系统")
-?
-["","十二"]
-:
-null
-);
+;
+
+// 排除正文中误识别的小标题
+if (
+ item.text.includes("微信聊天记录分析系统")
+ &&
+ item.top > 21000
+){
+    continue;
+}
 
         if (!match) {
             continue;
@@ -538,21 +565,54 @@ item.text.includes("微信聊天记录分析系统")
 );
 
 
-headings.push({
+if(imageDir === "customer_cases"){
 
-    text:"十二、微信聊天记录分析系统",
+    headings.push({
 
-    top:22000,
+        text:"十二、微信聊天记录分析系统",
 
-    name:"13_微信聊天记录分析系统"
+        top:22000,
 
-});
+        name:"13_微信聊天记录分析系统"
+
+    });
+
+}
 
 // 重新排序
 headings.sort(
 (a,b)=>
 a.top-b.top
 );
+
+// 删除飞书误识别的小标题
+const removeTitles = [];
+
+if(imageDir === "finance_cases"){
+    removeTitles.push(
+        "微信聊天记录分析系统"
+    );
+}
+
+
+for(
+    const title of removeTitles
+){
+    const index = headings.findIndex(
+        item => item.text.includes(title)
+    );
+
+    if(index !== -1){
+
+        console.log(
+            "删除误识别章节:",
+            headings[index].text
+        );
+
+        headings.splice(index,1);
+
+    }
+}
 
 console.log(
     "\n========== 最终章节 =========="
@@ -686,6 +746,12 @@ if(
     continue;
 }
 
+if(
+    targetSection &&
+    section.text !== targetSection
+){
+    continue;
+}
 
     console.log(
         "\n开始截图:",
@@ -1082,6 +1148,12 @@ path.join(
     `${section.name}.png`
 );
 
+fs.mkdirSync(
+    `./content/images/feishu/${imageDir}`,
+    {
+        recursive: true
+    }
+);
 
     fs.copyFileSync(
         outputFile,

@@ -7,6 +7,6 @@ source: 飞书知识库
 
 # 十二、售后打款ocr系统
 
-![](/images/feishu/finance_cases/12_十二、售后打款ocr系统.png)
+![](/images/feishu/finance_cases/13_十二、售后打款ocr系统.png)
 
 

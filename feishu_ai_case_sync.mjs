@@ -589,51 +589,83 @@ function splitByHeading(
 
     let current = null;
 
+    // 保存“AI项目定级”之前的内容
+    const prefixBlocks = [];
+
+    let firstProjectFound = false;
+
 
     blocks.forEach(block=>{
-
 
         const text =
         getText(block);
 
-console.log("BLOCK:", block.block_type, JSON.stringify(text));
+        console.log(
+            "BLOCK:",
+            block.block_type,
+            JSON.stringify(text)
+        );
 
-console.log("检测标题:", text);
+        console.log(
+            "检测标题:",
+            text
+        );
 
-        // 只识别项目标题
-const isProjectTitle =
-(
- text.endsWith("AI项目定级")
- ||
- /^[一二三四五六七八九十]+、/.test(text)
-);
+
+        const isProjectTitle =
+        (
+            text.endsWith("AI项目定级")
+            ||
+            /^[一二三四五六七八九十]+、/.test(text)
+        );
+
 
         if(isProjectTitle){
 
+            // 第一次遇到正式项目标题时，
+            // 把它之前的所有内容单独生成一个章节
+            if(
+                !firstProjectFound
+                &&
+                prefixBlocks.length > 0
+            ){
 
-current = {
-    title:text,
-    blocks:[block]
-};
+                sections.push({
+                    title: "部门前置内容",
+                    blocks: [...prefixBlocks],
+                    isOverview: true
+                });
 
-sections.push(current);
+            }
 
+            firstProjectFound = true;
+
+            current = {
+                title: text,
+                blocks: [block]
+            };
+
+            sections.push(current);
 
         }
-        else if(current){
 
+        else if(current){
 
             current.blocks.push(block);
 
-
         }
 
+        else{
+
+            // 还没有遇到第一个正式项目标题
+            prefixBlocks.push(block);
+
+        }
 
     });
 
 
     return sections;
-
 }
 
 // =====================================
@@ -995,50 +1027,42 @@ catch(e){
 
     }
 
-
 // =====================================================
-// 自动清理当前部门已经失效的旧 Markdown
-// 项目改名 / 删除后，自动删除旧 .md
+// 安全清理：只删除“以前同步过、现在已不存在”的旧项目MD
+// 不碰部门说明页、待上线页等其他Markdown
 // =====================================================
 
-const currentTitles = new Set(
+const currentTitles =
+new Set(
     sections.map(section => section.title)
 );
 
-const existingMdFiles =
-fs.readdirSync(saveDir)
-.filter(file =>
-    file.toLowerCase().endsWith(".md")
-);
+for (const oldTitle of Object.keys(syncCache)) {
 
-for(const file of existingMdFiles){
+    if (currentTitles.has(oldTitle)) {
+        continue;
+    }
 
-    const oldTitle =
-    path.basename(file, ".md");
+    const oldMdPath =
+    path.join(
+        CONTENT_DIR,
+        item.department,
+        oldTitle + ".md"
+    );
 
-    if(!currentTitles.has(oldTitle)){
+    if (fs.existsSync(oldMdPath)) {
 
-        const oldMdPath =
-        path.join(
-            saveDir,
-            file
-        );
-
-        fs.unlinkSync(
-            oldMdPath
-        );
+        fs.unlinkSync(oldMdPath);
 
         console.log(
-            "🗑 删除失效旧MD:",
+            "🗑 删除旧项目MD:",
             oldMdPath
         );
 
-        // 同时清掉旧标题缓存
-        if(syncCache[oldTitle]){
-            delete syncCache[oldTitle];
-        }
+        delete syncCache[oldTitle];
     }
 }
+
 
 
 // 生成markdown文件
@@ -1047,15 +1071,32 @@ createFrontMatter(item)
 +
 sections.map((section,index)=>{
 
-return `
+    const hasOverview =
+    sections.some(
+        item => item.isOverview
+    );
+
+    const imageIndex =
+    section.isOverview
+    ?
+    0
+    :
+    (
+        hasOverview
+        ?
+        index
+        :
+        index + 1
+    );
+
+    return `
 # ${section.title}
 
-![ ](/images/feishu/${item.imageDir}/${String(index+1).padStart(2,"0")}_${section.title.replace(/[\\/:*?"<>|]/g,"")}.png)
+![](/images/feishu/${item.imageDir}/${String(imageIndex).padStart(2,"0")}_${section.title.replace(/[\/\\:*?"<>|]/g,"")}.png)
 
 `;
 
 }).join("\n");
-
 
 for (const section of sections){
 
@@ -1106,7 +1147,26 @@ execSync(
 let imageMarkdown = "";
 
 // 根据章节顺序动态匹配截图
-const imageIndex = sections.indexOf(section) + 1;
+const sectionIndex =
+sections.indexOf(section);
+
+const hasOverview =
+sections.some(
+    item => item.isOverview
+);
+
+const imageIndex =
+section.isOverview
+?
+0
+:
+(
+    hasOverview
+    ?
+    sectionIndex
+    :
+    sectionIndex + 1
+);
 
 
 const safeTitle =

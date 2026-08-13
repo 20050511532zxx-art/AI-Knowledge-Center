@@ -996,7 +996,49 @@ catch(e){
     }
 
 
+// =====================================================
+// 自动清理当前部门已经失效的旧 Markdown
+// 项目改名 / 删除后，自动删除旧 .md
+// =====================================================
 
+const currentTitles = new Set(
+    sections.map(section => section.title)
+);
+
+const existingMdFiles =
+fs.readdirSync(saveDir)
+.filter(file =>
+    file.toLowerCase().endsWith(".md")
+);
+
+for(const file of existingMdFiles){
+
+    const oldTitle =
+    path.basename(file, ".md");
+
+    if(!currentTitles.has(oldTitle)){
+
+        const oldMdPath =
+        path.join(
+            saveDir,
+            file
+        );
+
+        fs.unlinkSync(
+            oldMdPath
+        );
+
+        console.log(
+            "🗑 删除失效旧MD:",
+            oldMdPath
+        );
+
+        // 同时清掉旧标题缓存
+        if(syncCache[oldTitle]){
+            delete syncCache[oldTitle];
+        }
+    }
+}
 
 
 // 生成markdown文件

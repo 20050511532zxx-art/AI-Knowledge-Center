@@ -243,15 +243,30 @@ async function collectHeadings() {
                 el.getBoundingClientRect();
 
 
-                // 只取正文区域中的“小标题节点”
-        if (
+// 特殊处理：微信聊天记录分析系统标题可能因为文字较长而换行
+const isWechatTitle =
+clean.startsWith("十二、")
+&&
+clean.includes("微信聊天记录分析系统");
+
+
+// 只取正文区域中的“小标题节点”
+if (
     rect.left > 620
     &&
     rect.top > 200
     &&
     rect.height >= 25
     &&
-    rect.height < 50
+    (
+        rect.height < 50
+        ||
+        (
+            isWechatTitle
+            &&
+            rect.height < 120
+        )
+    )
 ) {
 
 const isMainTitle =
@@ -261,11 +276,7 @@ clean.endsWith("AI项目定级");
 const isCaseTitle =
 /^[一二三四五六七八九十]+、/.test(clean)
 ||
-(
-    clean.includes("微信聊天记录分析系统")
-    &&
-    clean.startsWith("十二、")
-);
+isWechatTitle;
 
 
                     if (
@@ -459,9 +470,9 @@ item.text.match(
 
 // 排除正文中误识别的小标题
 if (
- item.text.includes("微信聊天记录分析系统")
- &&
- item.top > 21000
+    item.text.includes("微信聊天记录分析系统")
+    &&
+    !item.text.startsWith("十二、")
 ){
     continue;
 }
@@ -554,28 +565,46 @@ headings.sort(
 
 // ===============================
 // 自动寻找十二、微信聊天记录分析系统
+// 使用飞书页面真实位置，不再写死 top
 // ===============================
 
 const wechatTitle =
 allHeadings.find(
-item =>
-item.text.startsWith("十二、")
-&&
-item.text.includes("微信聊天记录分析系统")
+    item =>
+        item.text.startsWith("十二、")
+        &&
+        item.text.includes("微信聊天记录分析系统")
 );
 
 
-if(imageDir === "customer_cases"){
+if(
+    imageDir === "customer_cases"
+    &&
+    wechatTitle
+){
 
-    headings.push({
+    // 先确认 headings 里是否已经存在，防止重复
+    const alreadyExists =
+    headings.some(
+        item =>
+            item.text.includes("微信聊天记录分析系统")
+    );
 
-        text:"十二、微信聊天记录分析系统",
+    if(!alreadyExists){
 
-        top:22000,
+        headings.push({
 
-        name:"13_微信聊天记录分析系统"
+            ...wechatTitle,
 
-    });
+            text:
+            "十二、微信聊天记录分析系统",
+
+            name:
+            "13_微信聊天记录分析系统"
+
+        });
+
+    }
 
 }
 
@@ -634,6 +663,46 @@ console.log(
     headings.length
 );
 
+// =====================================================
+// AI项目定级之前的内容，自动作为部门前置内容
+// 不限制具体标题，所有部门通用
+// =====================================================
+
+const mainTitleIndex =
+headings.findIndex(
+    item =>
+        item.text &&
+        item.text.endsWith("AI项目定级")
+);
+
+if(mainTitleIndex !== -1){
+
+    const mainTitle =
+    headings[mainTitleIndex];
+
+    // 正常情况下 AI项目定级 很靠近页面顶部。
+    // 如果它已经明显下移，说明它前面新增了正文内容。
+    if(mainTitle.top > 300){
+
+        const overviewSection = {
+            text: "部门前置内容",
+            name: "00_部门前置内容",
+            top: 0,
+            height: 0,
+            isOverview: true
+        };
+
+        headings.unshift(
+            overviewSection
+        );
+
+        console.log(
+            "✅ 检测到AI项目定级前存在内容，增加部门前置章节"
+        );
+
+    }
+
+}
 
 // ======================================================
 // 获取最终正文高度
@@ -657,6 +726,55 @@ console.log(
 // ======================================================
 // 分章节截图并拼接
 // ======================================================
+
+// =====================================================
+// 自动清理已经失效的旧截图
+// 项目改名、删除、编号变化后，删除旧 PNG
+// =====================================================
+
+const finalImageDir = path.join(
+    "./content/images/feishu",
+    imageDir
+);
+
+fs.mkdirSync(
+    finalImageDir,
+    { recursive: true }
+);
+
+// 当前飞书页面实际应该存在的全部截图文件名
+const validImageNames = new Set(
+    headings.map(
+        item => `${item.name}.png`
+    )
+);
+
+// 只有整部门同步时才清理旧图
+// 单项目更新 targetSection 时绝对不做全目录清理
+if (!targetSection) {
+
+    for (const file of fs.readdirSync(finalImageDir)) {
+
+        if (!file.toLowerCase().endsWith(".png")) {
+            continue;
+        }
+
+        if (!validImageNames.has(file)) {
+
+            const oldFile = path.join(
+                finalImageDir,
+                file
+            );
+
+            fs.unlinkSync(oldFile);
+
+            console.log(
+                "🗑 删除失效旧图片:",
+                file
+            );
+        }
+    }
+}
 
 for (
     let i = 0;
@@ -719,9 +837,13 @@ if(
 }
 
 
-// 十二单独到底
+// 如果后面没有下一章节，才截到正文最底部
+// 如果已经识别到“十二、微信聊天记录分析系统”，
+// 就使用十二的真实 top 作为十一的结束位置
 if(
     section.name.includes("跨境韩国本土店退货跟单软件")
+    &&
+    !next
 ){
     sectionEnd =
     finalScrollHeight;

@@ -11,7 +11,7 @@ echo ==========================================
 
 echo.
 echo [1/5] 检查飞书案例更新...
-node feishu_ai_case_sync.mjs
+node run_feishu_sync.mjs
 
 if errorlevel 1 (
     echo.

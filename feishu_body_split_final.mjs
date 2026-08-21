@@ -250,11 +250,17 @@ clean.startsWith("十二、")
 clean.includes("微信聊天记录分析系统");
 
 
+// "AI项目定级"标题可能在文档最顶部（rect.top 很小），
+// 需豁免 top 限制，否则"定级标题在最前"的文档（如跨境运营部）会漏识别
+const isMainTitle =
+clean.endsWith("AI项目定级");
+
+
 // 只取正文区域中的“小标题节点”
 if (
     rect.left > 620
     &&
-    rect.top > 200
+    (rect.top > 200 || isMainTitle)
     &&
     rect.height >= 25
     &&
@@ -268,10 +274,6 @@ if (
         )
     )
 ) {
-
-const isMainTitle =
-clean.endsWith("AI项目定级");
-
 
 const isCaseTitle =
 /^[一二三四五六七八九十]+、/.test(clean)
@@ -289,7 +291,8 @@ console.log("发现标题:", clean);
 
                         result.push({
 
-                            text: clean,
+                            // 保留原始文字（含空格），使生成的文件名与 .md 引用一致
+                            text: text,
 
                             // 转成正文容器里的绝对Y坐标
                             top:
@@ -870,7 +873,7 @@ if(
 
 if(
     targetSection &&
-    section.text !== targetSection
+    section.text.replace(/\s+/g, "") !== targetSection.replace(/\s+/g, "")
 ){
     continue;
 }

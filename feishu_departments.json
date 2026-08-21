@@ -40,5 +40,17 @@
     "department": "仓储部",
     "wiki_token": "CUpHwHLLWilgzJkqA1mcy6lKnOf",
     "imageDir": "warehouse_cases"
+  },
+  {
+    "name": "舆情相关案例",
+    "department": "专项案例",
+    "wiki_token": "G2BPwNg1TiJhKgkJDjBcuEcNnxc",
+    "imageDir": "yuqing_cases"
+  },
+  {
+    "name": "旺店通API自动化解决案例",
+    "department": "专项案例",
+    "wiki_token": "MLHYwcFxHilziJk2axkcHAIqnMc",
+    "imageDir": "wangdian_api_cases"
   }
 ]

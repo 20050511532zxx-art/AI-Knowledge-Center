@@ -931,7 +931,22 @@ console.log(
     )
 );
 
+    // 同一 department 下有多个案例（如"专项案例"下的舆情/旺店通）时，
+    // 按案例名分子目录存放 .md，避免两个案例互相误删对方的文件
+    const sameDeptCases =
+    CASE_LIST.filter(
+        c => c.department === item.department
+    );
+
     const saveDir =
+    sameDeptCases.length > 1
+    ?
+    path.join(
+        CONTENT_DIR,
+        item.department,
+        item.name
+    )
+    :
     path.join(
         CONTENT_DIR,
         item.department
@@ -1044,6 +1059,15 @@ for (const oldTitle of Object.keys(syncCache)) {
     }
 
     const oldMdPath =
+    sameDeptCases.length > 1
+    ?
+    path.join(
+        CONTENT_DIR,
+        item.department,
+        item.name,
+        oldTitle + ".md"
+    )
+    :
     path.join(
         CONTENT_DIR,
         item.department,

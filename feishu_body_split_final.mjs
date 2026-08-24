@@ -871,10 +871,18 @@ if(
     continue;
 }
 
-if(
-    targetSection &&
-    section.text.replace(/\s+/g, "") !== targetSection.replace(/\s+/g, "")
-){
+// 对比前统一规范化：去空格 + NFC，消除隐藏字符/编码差异
+const norm = s => s.replace(/\s+/g, "").normalize("NFC");
+// 用正则前缀匹配，只要 section.text 以 targetSection 的规范化结果开头即可匹配
+// 这样 "七、Shopify 主题..." 和 "七、Shopify主题..."（含空格差异）都能对上
+const tgtNorm = targetSection ? norm(targetSection) : "";
+const sectionNorm = norm(section.text);
+const isMatch = targetSection && sectionNorm.startsWith(tgtNorm);
+if(!isMatch){
+    // "七"开头的特殊调试
+    if(section.text.startsWith("七") || targetSection.startsWith("七")){
+        console.log(`[DEBUG] norm比较: "${sectionNorm}" vs "${tgtNorm}" startsWith=${sectionNorm.startsWith(tgtNorm)}`);
+    }
     continue;
 }
 

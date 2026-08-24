@@ -250,10 +250,11 @@ clean.startsWith("十二、")
 clean.includes("微信聊天记录分析系统");
 
 
-// "AI项目定级"标题可能在文档最顶部（rect.top 很小），
-// 需豁免 top 限制，否则"定级标题在最前"的文档（如跨境运营部）会漏识别
+// "AI项目定级"标题可能在文档最顶部（rect.top 很小），需豁免 top 限制
+// 同时豁免"旺店通核心项目总览"这类紧跟定级标题的无编号概述性标题
 const isMainTitle =
-clean.endsWith("AI项目定级");
+clean.endsWith("AI项目定级") ||
+clean.endsWith("核心项目总览");
 
 
 // 只取正文区域中的“小标题节点”
@@ -519,7 +520,7 @@ const expectedOrder = Array.from(headingMap.entries()).map(([key,item],index)=>{
 
     return {
         key:key,
-        name:`${String(index+1).padStart(2,"0")}_${item.text.replace(/[\/\\:*?"<>|]/g,"")}`
+        name:`${String(index+1).padStart(2,"0")}_${item.text.replace(/[\/\\:*?"<>|]/g,"").replace(/[\u200b\u200c\u200d]/g,"")}`
     };
 
 });

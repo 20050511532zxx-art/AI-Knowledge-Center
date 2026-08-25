@@ -600,7 +600,7 @@
       "property": {
         "column_size": 5,
         "column_width": [
-          173,
+          174,
           103,
           189,
           222,
@@ -4033,7 +4033,7 @@
       "elements": [
         {
           "text_run": {
-            "content": "多功能机器人将欠单、备货、订单查询等单一功能聚合封装为",
+            "content": "多功能机器人将欠单、备货、订单查询等单一功能聚合封装",
             "text_element_style": {
               "bold": false,
               "inline_code": false,

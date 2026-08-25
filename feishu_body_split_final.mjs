@@ -434,6 +434,7 @@ allHeadings.filter(item => {
 
   if (
     item.text.endsWith("AI项目定级")
+    || item.text.endsWith("核心项目总览")
 ) {
         return true;
     }
@@ -566,6 +567,29 @@ headings.sort(
     (a, b) =>
     a.top - b.top
 );
+
+
+// 特殊处理：部门前置内容（飞书文档最开头到第一个标题之间的内容）
+// syncCase 那边会传 targetSection="部门前置内容"，但这不是飞书里的真标题
+// 这里在 headings 数组头部插入一个 top=0 的虚拟标题，让现有截图流程能正常处理
+if (
+    targetSection === "部门前置内容"
+    && headings.length > 0
+) {
+
+    headings.unshift({
+        text: "部门前置内容",
+        top: 0,
+        height: 0,
+        name: "00_部门前置内容"
+    });
+
+    console.log(
+        "[特殊处理] 部门前置内容：在 headings 头部插入虚拟标题，top=0 →",
+        headings[1].top
+    );
+
+}
 
 // ===============================
 // 自动寻找十二、微信聊天记录分析系统

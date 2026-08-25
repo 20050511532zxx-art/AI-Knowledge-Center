@@ -250,23 +250,22 @@ clean.startsWith("十二、")
 clean.includes("微信聊天记录分析系统");
 
 
-// "AI项目定级"标题可能在文档最顶部（rect.top 很小），需豁免 top 限制
-// 同时豁免"旺店通核心项目总览"这类紧跟定级标题的无编号概述性标题
+// "AI项目定级"标题可能在文档最顶部（rect.top 很小），
+// 需豁免 top 限制，否则"定级标题在最前"的文档（如跨境运营部）会漏识别
 const isMainTitle =
-clean.endsWith("AI项目定级") ||
-clean.endsWith("核心项目总览");
+clean.endsWith("AI项目定级");
 
 
 // 只取正文区域中的"小标题节点"
 if (
     rect.left > 620
     &&
-    (rect.top > 200 || isMainTitle)
+    rect.top > 200
     &&
     rect.height >= 25
     &&
     (
-        !isMainTitle && rect.height < 50
+        rect.height < 50
         ||
         (
             isWechatTitle
@@ -292,8 +291,7 @@ console.log("发现标题:", clean);
 
                         result.push({
 
-                            // 保留原始文字（含空格），使生成的文件名与 .md 引用一致
-                            text: text,
+                            text: clean,
 
                             // 转成正文容器里的绝对Y坐标
                             top:
@@ -434,7 +432,6 @@ allHeadings.filter(item => {
 
   if (
     item.text.endsWith("AI项目定级")
-    || item.text.endsWith("核心项目总览")
 ) {
         return true;
     }
@@ -521,7 +518,7 @@ const expectedOrder = Array.from(headingMap.entries()).map(([key,item],index)=>{
 
     return {
         key:key,
-        name:`${String(index+1).padStart(2,"0")}_${item.text.replace(/[\/\\:*?"<>|]/g,"").replace(/[\u200b\u200c\u200d]/g,"")}`
+        name:`${String(index+1).padStart(2,"0")}_${item.text.replace(/[\/\\:*?"<>|]/g,"")}`
     };
 
 });
@@ -567,29 +564,6 @@ headings.sort(
     (a, b) =>
     a.top - b.top
 );
-
-
-// 特殊处理：部门前置内容（飞书文档最开头到第一个标题之间的内容）
-// syncCase 那边会传 targetSection="部门前置内容"，但这不是飞书里的真标题
-// 这里在 headings 数组头部插入一个 top=0 的虚拟标题，让现有截图流程能正常处理
-if (
-    targetSection === "部门前置内容"
-    && headings.length > 0
-) {
-
-    headings.unshift({
-        text: "部门前置内容",
-        top: 0,
-        height: 0,
-        name: "00_部门前置内容"
-    });
-
-    console.log(
-        "[特殊处理] 部门前置内容：在 headings 头部插入虚拟标题，top=0 →",
-        headings[1].top
-    );
-
-}
 
 
 // ===============================
@@ -898,13 +872,9 @@ if(
 }
 
 // 对比前统一规范化：去空格 + NFC，消除隐藏字符/编码差异
-const norm = s => s.replace(/\s+/g, "").normalize("NFC");
-// 用正则前缀匹配，只要 section.text 以 targetSection 的规范化结果开头即可匹配
-// 这样 "七、Shopify 主题..." 和 "七、Shopify主题..."（含空格差异）都能对上
-const tgtNorm = targetSection ? norm(targetSection) : "";
-const sectionNorm = norm(section.text);
-const isMatch = targetSection && sectionNorm.startsWith(tgtNorm);
-if(!isMatch){
+const tgtNorm = targetSection ? targetSection.replace(/\s+/g, "") : "";
+const sectionNorm = section.text.replace(/\s+/g, "");
+if(targetSection && sectionNorm !== tgtNorm){
     continue;
 }
 

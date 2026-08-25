@@ -777,9 +777,10 @@ const validImageNames = new Set(
     )
 );
 
-// 只有整部门同步时才清理旧图
-// 单项目更新 targetSection 时绝对不做全目录清理
-if (!targetSection) {
+// 只要成功检测到 headings 就清理失效旧图
+// 单项目更新 targetSection 时也会清理（之前的 gate 太严，新旧图共存导致网页显示老图）
+// 安全保障：headings.length === 0 时不清理（页面加载失败场景下防止误删）
+if (headings.length > 0) {
 
     for (const file of fs.readdirSync(finalImageDir)) {
 

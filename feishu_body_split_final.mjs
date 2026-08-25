@@ -266,9 +266,13 @@ if (
     rect.height >= 25
     &&
     (
-        isMainTitle
-        || (isWechatTitle && rect.height < 120)
-        || rect.height < 50
+        !isMainTitle && rect.height < 50
+        ||
+        (
+            isWechatTitle
+            &&
+            rect.height < 120
+        )
     )
 ) {
 
@@ -509,45 +513,15 @@ if (
 }
 
 
-// 注入"部门前置内容"到 headingMap
-// 当飞书文档有项目标题（一、xxx / AI项目定级 / 核心项目总览）时，
-// syncCase 会合成一个"部门前置内容" section（位于所有真标题之前）
-// 这里也注入对应的虚拟标题，让截图脚本能生成 00_部门前置内容.png
-// 注入到 headingMap 后会进入 expectedOrder 和 headings，
-// validImageNames 也会包含它，cleanup 时不会被误删
-if (
-    headingMap.size > 0
-    && !headingMap.has("__overview__")
-) {
-
-    headingMap.set(
-        "__overview__",
-        {
-            text: "部门前置内容",
-            top: 0,
-            height: 0
-        }
-    );
-
-}
-
-
 // ======================================================
 // 强制使用正确章节顺序
 // ======================================================
-
-// 编号起点：检测到"部门前置内容"时从 00 开始（和 syncCase 生成的 .md 引用对齐）
-// 没有部门前置内容时从 01 开始（保持向后兼容）
-const startIndex =
-headingMap.has("__overview__")
-? 0
-: 1;
 
 const expectedOrder = Array.from(headingMap.entries()).map(([key,item],index)=>{
 
     return {
         key:key,
-        name:`${String(index+startIndex).padStart(2,"0")}_${item.text.replace(/[\/\\:*?"<>|]/g,"").replace(/[\u200b\u200c\u200d]/g,"")}`
+        name:`${String(index+1).padStart(2,"0")}_${item.text.replace(/[\/\\:*?"<>|]/g,"").replace(/[\u200b\u200c\u200d]/g,"")}`
     };
 
 });
@@ -593,6 +567,29 @@ headings.sort(
     (a, b) =>
     a.top - b.top
 );
+
+
+// 特殊处理：部门前置内容（飞书文档最开头到第一个标题之间的内容）
+// syncCase 那边会传 targetSection="部门前置内容"，但这不是飞书里的真标题
+// 这里在 headings 数组头部插入一个 top=0 的虚拟标题，让现有截图流程能正常处理
+if (
+    targetSection === "部门前置内容"
+    && headings.length > 0
+) {
+
+    headings.unshift({
+        text: "部门前置内容",
+        top: 0,
+        height: 0,
+        name: "00_部门前置内容"
+    });
+
+    console.log(
+        "[特殊处理] 部门前置内容：在 headings 头部插入虚拟标题，top=0 →",
+        headings[1].top
+    );
+
+}
 
 
 // ===============================
@@ -781,10 +778,9 @@ const validImageNames = new Set(
     )
 );
 
-// 只要成功检测到 headings 就清理失效旧图
-// 单项目更新 targetSection 时也会清理（之前的 gate 太严，新旧图共存导致网页显示老图）
-// 安全保障：headings.length === 0 时不清理（页面加载失败场景下防止误删）
-if (headings.length > 0) {
+// 只有整部门同步时才清理旧图
+// 单项目更新 targetSection 时绝对不做全目录清理
+if (!targetSection) {
 
     for (const file of fs.readdirSync(finalImageDir)) {
 

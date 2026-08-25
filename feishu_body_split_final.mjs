@@ -257,7 +257,7 @@ clean.endsWith("AI项目定级") ||
 clean.endsWith("核心项目总览");
 
 
-// 只取正文区域中的“小标题节点”
+// 只取正文区域中的"小标题节点"
 if (
     rect.left > 620
     &&
@@ -266,7 +266,7 @@ if (
     rect.height >= 25
     &&
     (
-        rect.height < 50
+        !isMainTitle && rect.height < 50
         ||
         (
             isWechatTitle
@@ -880,10 +880,6 @@ const tgtNorm = targetSection ? norm(targetSection) : "";
 const sectionNorm = norm(section.text);
 const isMatch = targetSection && sectionNorm.startsWith(tgtNorm);
 if(!isMatch){
-    // "七"开头的特殊调试
-    if(section.text.startsWith("七") || targetSection.startsWith("七")){
-        console.log(`[DEBUG] norm比较: "${sectionNorm}" vs "${tgtNorm}" startsWith=${sectionNorm.startsWith(tgtNorm)}`);
-    }
     continue;
 }
 

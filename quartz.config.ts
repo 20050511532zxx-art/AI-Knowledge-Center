@@ -8,7 +8,7 @@ import * as Plugin from "./quartz/plugins"
  */
 const config: QuartzConfig = {
   configuration: {
-    pageTitle: "AI情报中心",
+    pageTitle: "AI知识库",
     pageTitleSuffix: "",
     enableSPA: true,
     enablePopovers: true,
@@ -23,6 +23,11 @@ const config: QuartzConfig = {
       ".obsidian",
       "AI情报中心/自动化/**",
       "AI情报中心/AI日报.md",
+      "AI情报中心/AI工具监控规则.md",
+      "AI情报中心/AI情报采集员.md",
+      "AI情报中心/AI情报分析员.md",
+      "AI情报中心/AI日报生成员.md",
+      "AI情报中心/AI知识库管理员.md",
     ],
     defaultDateType: "created",
     theme: {

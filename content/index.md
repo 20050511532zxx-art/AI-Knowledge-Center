@@ -1,6 +1,6 @@
 ---
 
-title: 🚀 AI情报中心
+title: 🚀 AI知识库
 
 description: 面向企业AI应用、电商运营自动化、AI工具发展的持续更新知识库
 
@@ -8,7 +8,7 @@ description: 面向企业AI应用、电商运营自动化、AI工具发展的持
 
 
 
-# 🚀 AI情报中心
+# 🚀 AI知识库
 
 
 

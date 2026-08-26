@@ -1,0 +1,61 @@
+{
+  "contentType": "技术课程",
+  "courses": [
+    {
+      "name": "OpenAI Codex 使用",
+      "wiki_token": "CizCwUjCliYbqskDwkGcl1MHn9c",
+      "outputDir": "课程库",
+      "outputFileName": "OpenAI_Codex.md",
+      "title": "OpenAI Codex 使用",
+      "description": "OpenAI Codex AI 编程助手使用教程"
+    },
+    {
+      "name": "QClaw 使用",
+      "wiki_token": "EyG8wFALViAZVhkHuEmcjl1snmd",
+      "outputDir": "课程库",
+      "outputFileName": "QClaw 使用.md",
+      "title": "QClaw 使用",
+      "description": ""
+    },
+    {
+      "name": "Cursor 使用指南",
+      "wiki_token": "TBjowY6iUi5lIUkAzA6cV9yCnxe",
+      "outputDir": "课程库",
+      "outputFileName": "Cursor 使用指南.md",
+      "title": "Cursor 使用指南",
+      "description": ""
+    },
+    {
+      "name": "Coze 扣子平台",
+      "wiki_token": "B9iFwNDkIiA0UrkLkQocYOtqn6c",
+      "outputDir": "课程库",
+      "outputFileName": "Coze 扣子平台.md",
+      "title": "Coze 扣子平台",
+      "description": ""
+    },
+    {
+      "name": "AutoClaw 使用",
+      "wiki_token": "CPJEwZjH2iE6WmkE27Ac8On2nhd",
+      "outputDir": "课程库",
+      "outputFileName": "AutoClaw 使用.md",
+      "title": "AutoClaw 使用",
+      "description": ""
+    },
+    {
+      "name": "Trae使用指南",
+      "wiki_token": "NXpSwud3rilNKokLKa3cZ4n3nZd",
+      "outputDir": "课程库",
+      "outputFileName": "Trae使用指南.md",
+      "title": "Trae使用指南",
+      "description": ""
+    },
+    {
+      "name": "WorkBuddy使用",
+      "wiki_token": "OUYiwtSjMiqILzk9xPbcvnS3nTd",
+      "outputDir": "课程库",
+      "outputFileName": "WorkBuddy使用.md",
+      "title": "WorkBuddy使用",
+      "description": ""
+    }
+  ]
+}

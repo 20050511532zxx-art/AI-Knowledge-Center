@@ -752,20 +752,13 @@ const validImageNames = new Set(
     )
 );
 
-// 当 targetSection 为 部门前置内容 时，把它加进 validImageNames
-// 否则下面的清理门控会把 00_部门前置内容.png 当成孤儿删掉
-if (targetSection === "部门前置内容") {
-    validImageNames.add("00_部门前置内容.png");
-}
+// 部门前置内容 是 syncCase 合成出来的虚拟标题，飞书 DOM 里抓不到
+// 任何路径都不能把它当孤儿删掉
+validImageNames.add("00_部门前置内容.png");
 
-// 清理失效旧图片
-// 触发条件：(没有传 targetSection 走整部门同步) OR (单节更新时只要 headings 加载成功也清理)
-// 安全保障：headings.length 为 0 时（页面加载失败）不清理，防止误删全部
-const allowCleanup =
-    !targetSection
-    || headings.length > 0;
-
-if (allowCleanup) {
+// 只有整部门同步时才清理旧图
+// 单项目更新 targetSection 时绝对不做全目录清理（避免误删其他章节的图）
+if (!targetSection) {
 
     for (const file of fs.readdirSync(finalImageDir)) {
 

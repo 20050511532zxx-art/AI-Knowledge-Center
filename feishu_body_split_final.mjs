@@ -1504,6 +1504,12 @@ fs.mkdirSync(
     }
 );
 
+    // 覆盖式写入：先删旧的（避免新图和旧图共存导致网页显示错乱）
+    // 只删自己即将覆盖的那一张，不会误删其他章节
+    if (fs.existsSync(finalFile)) {
+        fs.unlinkSync(finalFile);
+    }
+
     fs.copyFileSync(
         outputFile,
         finalFile

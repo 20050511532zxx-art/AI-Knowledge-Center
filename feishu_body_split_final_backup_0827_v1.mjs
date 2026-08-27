@@ -17,10 +17,6 @@ const url =
 
 let imageDir = process.argv[3] || "customer_cases";
 let targetSection = process.argv[4] || null;
-// syncCase 第 4 个参数会传"section.title（API 原文）"，
-// 用于在算 expectedOrder.name 时和 syncCase 算 imageFile 完全一致
-// → 保证截图脚本生成的 finalFile 和 syncCase 写 .md 引用的 imageFile 同名
-let apiTitleOverride = process.argv[5] || null;
 
 
 console.log(
@@ -520,15 +516,9 @@ if (
 
 const expectedOrder = Array.from(headingMap.entries()).map(([key,item],index)=>{
 
-    // 优先用 syncCase 传过来的 section.title（API 原文）算文件名，
-    // 这样最终生成的 finalFile 跟 syncCase 写的 .md 引用 100% 一致
-    // 没有 apiTitleOverride 时回退到 DOM 抓的 item.text
-    const titleForName =
-    apiTitleOverride ? apiTitleOverride : item.text;
-
     return {
         key:key,
-        name:`${String(index+1).padStart(2,"0")}_${titleForName.replace(/[\/\\:*?"<>|]/g,"")}`
+        name:`${String(index+1).padStart(2,"0")}_${item.text.replace(/[\/\\:*?"<>|]/g,"")}`
     };
 
 });
@@ -766,13 +756,12 @@ const validImageNames = new Set(
 // 任何路径都不能把它当孤儿删掉
 validImageNames.add("00_部门前置内容.png");
 
-// 清理失效旧图片
-// ⚠️ 暂不启用：validImageNames 用 DOM 算的图名，syncCase .md 引用用 API 算的图名
-// 两者字符串源不同（DOM vs API），如果按 validImageNames 清孤儿，会误杀
-// syncCase 实际引用的图，造成 .md 404
+// 只有整部门同步时才清理旧图
+// 单项目更新 targetSection 时绝对不做全目录清理
+// ⚠️ 已禁用：该逻辑会误删财务部图片（2026-08-27）
 // 如需清理旧图，请手动删除 content/images/feishu/{imageDir}/ 下的文件
 /*
-if (headings.length > 0) {
+if (!targetSection) {
 
     for (const file of fs.readdirSync(finalImageDir)) {
 

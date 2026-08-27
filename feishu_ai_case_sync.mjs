@@ -1149,7 +1149,7 @@ console.log(
 
 
 execSync(
-`node feishu_body_split_final.mjs "${item.wiki_token}" "${item.imageDir}" "${section.title}"`,
+`node feishu_body_split_final.mjs "${item.wiki_token}" "${item.imageDir}" "${section.title}" "${section.title}"`,
 {
     stdio:"inherit"
 }

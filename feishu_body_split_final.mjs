@@ -757,7 +757,10 @@ const validImageNames = new Set(
 validImageNames.add("00_部门前置内容.png");
 
 // 只有整部门同步时才清理旧图
-// 单项目更新 targetSection 时绝对不做全目录清理（避免误删其他章节的图）
+// 单项目更新 targetSection 时绝对不做全目录清理
+// ⚠️ 已禁用：该逻辑会误删财务部图片（2026-08-27）
+// 如需清理旧图，请手动删除 content/images/feishu/{imageDir}/ 下的文件
+/*
 if (!targetSection) {
 
     for (const file of fs.readdirSync(finalImageDir)) {
@@ -782,6 +785,7 @@ if (!targetSection) {
         }
     }
 }
+*/
 
 // =====================================================
 // 部门前置内容 特判（同步脚本侧会传 targetSection="部门前置内容"）

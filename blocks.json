@@ -9940,7 +9940,31 @@
       "elements": [
         {
           "text_run": {
-            "content": "这是一款利用旺店通调拨单查询接口，进行异常调拨单自动巡检与回写的工具。",
+            "content": "这是一款利用旺店通调拨单查询接口，进行",
+            "text_element_style": {
+              "bold": false,
+              "inline_code": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false
+            }
+          }
+        },
+        {
+          "text_run": {
+            "content": "异常调拨单自动巡检与回写",
+            "text_element_style": {
+              "bold": true,
+              "inline_code": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false
+            }
+          }
+        },
+        {
+          "text_run": {
+            "content": "的工具。",
             "text_element_style": {
               "bold": false,
               "inline_code": false,
@@ -15193,7 +15217,31 @@
       "elements": [
         {
           "text_run": {
-            "content": "这是一款基于旺店通库存数据接口，专门为星曜仓库制定的每日定时库存巡检与预警系统。",
+            "content": "这是一款基于旺店通库存数据接口，专门为星曜仓库制定的",
+            "text_element_style": {
+              "bold": false,
+              "inline_code": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false
+            }
+          }
+        },
+        {
+          "text_run": {
+            "content": "每日定时库存巡检与预警系统",
+            "text_element_style": {
+              "bold": true,
+              "inline_code": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false
+            }
+          }
+        },
+        {
+          "text_run": {
+            "content": "。",
             "text_element_style": {
               "bold": false,
               "inline_code": false,
@@ -20798,7 +20846,31 @@
       "elements": [
         {
           "text_run": {
-            "content": "这是一款基于旺店通库存接口，实现多个租赁仓库库存明细“一键聚合导出”的工具。",
+            "content": "这是一款基于旺店通库存接口，实现多个租赁仓库库存明细",
+            "text_element_style": {
+              "bold": false,
+              "inline_code": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false
+            }
+          }
+        },
+        {
+          "text_run": {
+            "content": "“一键聚合导出”",
+            "text_element_style": {
+              "bold": true,
+              "inline_code": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false
+            }
+          }
+        },
+        {
+          "text_run": {
+            "content": "的工具。",
             "text_element_style": {
               "bold": false,
               "inline_code": false,

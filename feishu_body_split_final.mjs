@@ -1505,37 +1505,23 @@ captureHeight - OVERLAP;
 // 单项目更新时，覆盖正式图片
 
 if(targetSection){
-
-const finalFile =
-path.join(
-    `./content/images/feishu/${imageDir}`,
-    `${section.name}.png`
-);
-
-fs.mkdirSync(
-    `./content/images/feishu/${imageDir}`,
-    {
-        recursive: true
-    }
-);
-
-    // 覆盖式写入：先删旧的（避免新图和旧图共存导致网页显示错乱）
-    // 只删自己即将覆盖的那一张，不会误删其他章节
+    const finalFile = path.join(
+        `./content/images/feishu/${imageDir}`,
+        `${section.name}.png`
+    );
+    fs.mkdirSync(
+        `./content/images/feishu/${imageDir}`,
+        {
+            recursive: true
+        }
+    );
+    // 先删除旧文件（如果有）
     if (fs.existsSync(finalFile)) {
         fs.unlinkSync(finalFile);
+        console.log("🗑 删除旧图片:", finalFile);
     }
-
-    fs.copyFileSync(
-        outputFile,
-        finalFile
-    );
-
-
-    console.log(
-        "✅ 覆盖正式图片:",
-        finalFile
-    );
-
+    fs.copyFileSync(outputFile, finalFile);
+    console.log("✅ 覆盖正式图片:", finalFile);
 }
 
 }
